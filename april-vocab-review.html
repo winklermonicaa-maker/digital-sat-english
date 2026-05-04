@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>April Vocabulary Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --paper: #faf8f3;
+    --accent: #c84b31;
+    --accent2: #2d6a4f;
+    --accent3: #e9c46a;
+    --muted: #6b6b7b;
+    --border: #ddd8cc;
+    --correct: #2d6a4f;
+    --wrong: #c84b31;
+    --card: #ffffff;
+    --week-bg: #f0ece2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .hero {
+    background: var(--ink);
+    color: white;
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 30px,
+      rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 31px
+    );
+  }
+  .hero-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Week tabs */
+  .week-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    scrollbar-width: none;
+  }
+  .week-nav::-webkit-scrollbar { display: none; }
+  .week-tab {
+    flex: 1;
+    min-width: 100px;
+    padding: 14px 8px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.45);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .week-tab:hover { color: rgba(255,255,255,0.8); }
+  .week-tab.active {
+    color: var(--accent3);
+    border-bottom-color: var(--accent3);
+  }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    height: 4px;
+    background: var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  /* Main content */
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* Week sections */
+  .week-section {
+    display: none;
+    animation: fadeSlide 0.3s ease;
+  }
+  .week-section.active { display: block; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .week-header {
+    padding: 32px 0 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .week-label {
+    font-family: 'Fraunces', serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .week-theme {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .week-divider {
+    height: 2px;
+    background: var(--border);
+    margin-bottom: 24px;
+  }
+
+  /* Question cards */
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .q-card:hover { border-color: #bbb; }
+  .q-card.answered-correct { border-left: 4px solid var(--correct); }
+  .q-card.answered-wrong { border-left: 4px solid var(--wrong); }
+
+  .q-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .q-text em {
+    font-style: italic;
+    color: var(--accent);
+    font-family: 'Fraunces', serif;
+    font-size: 1.05em;
+  }
+
+  /* Multiple choice */
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .choice-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .choice-label:hover { border-color: var(--ink); background: var(--week-bg); }
+  .choice-label input[type="radio"] { display: none; }
+  .choice-letter {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+  .choice-label:has(input:checked) .choice-letter {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: white;
+  }
+  .choice-label:has(input:checked) {
+    border-color: var(--ink);
+    background: rgba(26,26,46,0.04);
+  }
+  .choice-label.reveal-correct {
+    border-color: var(--correct);
+    background: rgba(45,106,79,0.08);
+  }
+  .choice-label.reveal-correct .choice-letter {
+    background: var(--correct);
+    border-color: var(--correct);
+    color: white;
+  }
+  .choice-label.reveal-wrong {
+    border-color: var(--wrong);
+    background: rgba(200,75,49,0.06);
+  }
+  .choice-label.reveal-wrong .choice-letter {
+    background: var(--wrong);
+    border-color: var(--wrong);
+    color: white;
+  }
+
+  /* Matching */
+  .match-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 520px) {
+    .match-grid { grid-template-columns: 1fr; }
+  }
+  .match-col-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .match-word {
+    padding: 10px 14px;
+    background: var(--week-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Fraunces', serif;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .match-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b7b' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+    transition: border-color 0.15s;
+  }
+  .match-select:focus { outline: none; border-color: var(--ink); }
+  .match-row { margin-bottom: 12px; }
+  .match-row.reveal-correct .match-select { border-color: var(--correct); background-color: rgba(45,106,79,0.06); }
+  .match-row.reveal-wrong .match-select { border-color: var(--wrong); background-color: rgba(200,75,49,0.06); }
+
+  /* Fill in blank */
+  .blank-input {
+    display: inline-block;
+    border: none;
+    border-bottom: 2px solid var(--ink);
+    padding: 2px 8px;
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--accent);
+    background: transparent;
+    width: 160px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .blank-input:focus { border-bottom-color: var(--accent); }
+  .blank-input.reveal-correct { border-bottom-color: var(--correct); color: var(--correct); }
+  .blank-input.reveal-wrong { border-bottom-color: var(--wrong); color: var(--wrong); }
+
+  .word-bank {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: var(--week-bg);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .word-bank strong { color: var(--ink); font-weight: 600; }
+
+  /* Feedback message */
+  .q-feedback {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    display: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+  }
+  .q-feedback.correct {
+    display: block;
+    background: rgba(45,106,79,0.08);
+    color: var(--correct);
+  }
+  .q-feedback.wrong {
+    display: block;
+    background: rgba(200,75,49,0.08);
+    color: var(--wrong);
+  }
+
+  /* Section submit */
+  .section-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn-check {
+    padding: 13px 28px;
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-check:hover { background: #2d2d4a; transform: translateY(-1px); }
+  .btn-check:active { transform: translateY(0); }
+  .btn-next {
+    padding: 13px 28px;
+    background: var(--accent3);
+    color: var(--ink);
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: none;
+  }
+  .btn-next:hover { filter: brightness(0.92); transform: translateY(-1px); }
+
+  .section-score {
+    font-size: 14px;
+    color: var(--muted);
+    display: none;
+  }
+  .section-score span { font-weight: 700; color: var(--ink); }
+
+  /* Writing prompt */
+  .writing-card {
+    background: var(--ink);
+    color: white;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .writing-card .q-text { color: rgba(255,255,255,0.85); }
+  .writing-card .q-num { color: var(--accent3); }
+  .writing-textarea {
+    width: 100%;
+    min-height: 100px;
+    margin-top: 12px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.07);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .writing-textarea::placeholder { color: rgba(255,255,255,0.35); }
+  .writing-textarea:focus { border-color: var(--accent3); }
+
+  /* Final submit */
+  .final-section {
+    margin-top: 32px;
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+  .final-section h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+  .final-section p { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
+  .btn-final {
+    padding: 15px 40px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-final:hover { background: #a83a22; transform: translateY(-2px); }
+
+  /* Results */
+  .results-panel {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+    animation: fadeSlide 0.4s ease;
+  }
+  .results-panel.show { display: block; }
+  .big-score {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 10vw, 5rem);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .score-label { font-size: 14px; color: var(--muted); margin-top: 4px; margin-bottom: 24px; }
+  .score-breakdown {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin: 24px 0;
+  }
+  .score-week {
+    text-align: center;
+  }
+  .score-week-num { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .score-week-val { font-size: 1.4rem; font-weight: 700; font-family: 'Fraunces', serif; }
+  .score-msg {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 440px;
+    margin: 0 auto 28px;
+  }
+  .btn-restart {
+    padding: 12px 28px;
+    background: var(--week-bg);
+    color: var(--ink);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-restart:hover { border-color: var(--ink); }
+
+  /* Nav dots */
+  .nav-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 20px 0 4px;
+  }
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .nav-dot.active { background: var(--ink); transform: scale(1.2); }
+  .nav-dot.done { background: var(--correct); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">SAT Vocabulary · Units 11–14</div>
+  <h1>April Vocabulary<br>Review</h1>
+  <p>Work through each week's words. Check your answers as you go, then submit at the end.</p>
+</div>
+
+<div class="week-nav" id="weekNav">
+  <button class="week-tab active" onclick="showWeek(0, this)">Week 11</button>
+  <button class="week-tab" onclick="showWeek(1, this)">Week 12</button>
+  <button class="week-tab" onclick="showWeek(2, this)">Week 13</button>
+  <button class="week-tab" onclick="showWeek(3, this)">Week 14</button>
+  <button class="week-tab" onclick="showWeek(4, this)">Writing</button>
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" id="progressBar"></div>
+</div>
+
+<div class="content" id="mainContent">
+
+<!-- ============ WEEK 11 ============ -->
+<div class="week-section active" id="week-0">
+  <div class="week-header">
+    <span class="week-label">Week 11</span>
+    <span class="week-theme">Descriptive &amp; Conceptual</span>
+  </div>
+  <div class="week-divider"></div>
+
+  <!-- Q1: novel -->
+  <div class="q-card" id="q11-1">
+    <div class="q-num">Question 1</div>
+    <div class="q-text">Which sentence uses <em>novel</em> correctly as an SAT vocabulary word?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q11-1" value="a"><span class="choice-letter">A</span> She stayed up all night reading a novel she borrowed from the library.</label>
+      <label class="choice-label"><input type="radio" name="q11-1" value="b"><span class="choice-letter">B</span> The scientist proposed a novel approach that no researcher had tried before.</label>
+      <label class="choice-label"><input type="radio" name="q11-1" value="c"><span class="choice-letter">C</span> The novel idea had been used for decades without any changes.</label>
+      <label class="choice-label"><input type="radio" name="q11-1" value="d"><span class="choice-letter">D</span> She found the assignment novel because it was exactly like her homework last year.</label>
+    </div>
+    <div class="q-feedback" id="fb11-1"></div>
+  </div>
+
+  <!-- Q2: outpace -->
+  <div class="q-card" id="q11-2">
+    <div class="q-num">Question 2</div>
+    <div class="q-text">The word <em>outpace</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q11-2" value="a"><span class="choice-letter">A</span> to slow down gradually</label>
+      <label class="choice-label"><input type="radio" name="q11-2" value="b"><span class="choice-letter">B</span> to move at the same speed as something else</label>
+      <label class="choice-label"><input type="radio" name="q11-2" value="c"><span class="choice-letter">C</span> to exceed or surpass in speed, growth, or progress</label>
+      <label class="choice-label"><input type="radio" name="q11-2" value="d"><span class="choice-letter">D</span> to carefully measure the pace of a process</label>
+    </div>
+    <div class="q-feedback" id="fb11-2"></div>
+  </div>
+
+  <!-- Q3: innocuous -->
+  <div class="q-card" id="q11-3">
+    <div class="q-num">Question 3</div>
+    <div class="q-text">The word <em>innocuous</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q11-3" value="a"><span class="choice-letter">A</span> harmless and unlikely to cause offense or damage</label>
+      <label class="choice-label"><input type="radio" name="q11-3" value="b"><span class="choice-letter">B</span> extremely dangerous and threatening</label>
+      <label class="choice-label"><input type="radio" name="q11-3" value="c"><span class="choice-letter">C</span> strongly opinionated and forceful</label>
+      <label class="choice-label"><input type="radio" name="q11-3" value="d"><span class="choice-letter">D</span> difficult to understand or interpret</label>
+    </div>
+    <div class="q-feedback" id="fb11-3"></div>
+  </div>
+
+  <!-- Q4: obsolete -->
+  <div class="q-card" id="q11-4">
+    <div class="q-num">Question 4</div>
+    <div class="q-text">Which word best replaces the underlined word? "The fax machine has become <u>outdated</u> now that email exists."</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q11-4" value="a"><span class="choice-letter">A</span> prevalent</label>
+      <label class="choice-label"><input type="radio" name="q11-4" value="b"><span class="choice-letter">B</span> ubiquitous</label>
+      <label class="choice-label"><input type="radio" name="q11-4" value="c"><span class="choice-letter">C</span> obsolete</label>
+      <label class="choice-label"><input type="radio" name="q11-4" value="d"><span class="choice-letter">D</span> prominent</label>
+    </div>
+    <div class="q-feedback" id="fb11-4"></div>
+  </div>
+
+  <!-- Q5: prevalent vs ubiquitous -->
+  <div class="q-card" id="q11-5">
+    <div class="q-num">Question 5</div>
+    <div class="q-text">What is the key difference between <em>prevalent</em> and <em>ubiquitous</em>?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q11-5" value="a"><span class="choice-letter">A</span> Prevalent means completely nonexistent; ubiquitous means very common.</label>
+      <label class="choice-label"><input type="radio" name="q11-5" value="b"><span class="choice-letter">B</span> Prevalent means widely common; ubiquitous means present everywhere at once.</label>
+      <label class="choice-label"><input type="radio" name="q11-5" value="c"><span class="choice-letter">C</span> They are exact synonyms with no meaningful difference.</label>
+      <label class="choice-label"><input type="radio" name="q11-5" value="d"><span class="choice-letter">D</span> Prevalent refers only to diseases; ubiquitous refers only to technology.</label>
+    </div>
+    <div class="q-feedback" id="fb11-5"></div>
+  </div>
+
+  <!-- Q6: prominent -->
+  <div class="q-card" id="q11-6">
+    <div class="q-num">Question 6</div>
+    <div class="q-text">The word <em>prominent</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q11-6" value="a"><span class="choice-letter">A</span> hidden or concealed from view</label>
+      <label class="choice-label"><input type="radio" name="q11-6" value="b"><span class="choice-letter">C</span> well-known, noticeable, or standing out</label>
+      <label class="choice-label"><input type="radio" name="q11-6" value="c"><span class="choice-letter">C</span> harmful or dangerous to others</label>
+      <label class="choice-label"><input type="radio" name="q11-6" value="d"><span class="choice-letter">D</span> recently discovered or invented</label>
+    </div>
+    <div class="q-feedback" id="fb11-6"></div>
+  </div>
+
+  <!-- Q7: auspicious -->
+  <div class="q-card" id="q11-7">
+    <div class="q-num">Question 7</div>
+    <div class="q-text">Which sentence uses <em>auspicious</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q11-7" value="a"><span class="choice-letter">A</span> The team's loss in the first game was an auspicious beginning to their championship season.</label>
+      <label class="choice-label"><input type="radio" name="q11-7" value="b"><span class="choice-letter">B</span> Winning the state championship on opening night was an auspicious start to the season.</label>
+      <label class="choice-label"><input type="radio" name="q11-7" value="c"><span class="choice-letter">C</span> The storm was auspicious, flooding the town and causing widespread damage.</label>
+      <label class="choice-label"><input type="radio" name="q11-7" value="d"><span class="choice-letter">D</span> Her auspicious attitude made everyone around her feel hopeless.</label>
+    </div>
+    <div class="q-feedback" id="fb11-7"></div>
+  </div>
+
+  <!-- Q8: verisimilitude -->
+  <div class="q-card" id="q11-8">
+    <div class="q-num">Question 8</div>
+    <div class="q-text">The word <em>verisimilitude</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q11-8" value="a"><span class="choice-letter">A</span> the quality of being completely and provably true</label>
+      <label class="choice-label"><input type="radio" name="q11-8" value="b"><span class="choice-letter">B</span> the appearance of being true or real; believability</label>
+      <label class="choice-label"><input type="radio" name="q11-8" value="c"><span class="choice-letter">C</span> a tendency to exaggerate or distort the truth</label>
+      <label class="choice-label"><input type="radio" name="q11-8" value="d"><span class="choice-letter">D</span> similarity between two unrelated things</label>
+    </div>
+    <div class="q-feedback" id="fb11-8"></div>
+  </div>
+
+  <div class="section-actions">
+    <button class="btn-check" onclick="checkWeek(0)">Check Answers</button>
+    <button class="btn-next" id="next-0" onclick="showWeek(1, null)">Next: Week 12 →</button>
+    <div class="section-score" id="score-0"></div>
+  </div>
+</div>
+
+<!-- ============ WEEK 12 ============ -->
+<div class="week-section" id="week-1">
+  <div class="week-header">
+    <span class="week-label">Week 12</span>
+    <span class="week-theme">Power &amp; Conflict</span>
+  </div>
+  <div class="week-divider"></div>
+
+  <!-- Matching -->
+  <div class="q-card" id="q12-match">
+    <div class="q-num">Questions 9–13 · Matching</div>
+    <div class="q-text">Match each word to its definition.</div>
+    <div class="match-grid">
+      <div>
+        <div class="match-col-label">Word</div>
+        <div class="match-row" id="mr12-1">
+          <div class="match-word">foment</div>
+          <select class="match-select" id="ms12-1"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb12-1"></div>
+        </div>
+        <div class="match-row" id="mr12-2">
+          <div class="match-word">galvanize</div>
+          <select class="match-select" id="ms12-2"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb12-2"></div>
+        </div>
+        <div class="match-row" id="mr12-3">
+          <div class="match-word">placate</div>
+          <select class="match-select" id="ms12-3"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb12-3"></div>
+        </div>
+        <div class="match-row" id="mr12-4">
+          <div class="match-word">enervate</div>
+          <select class="match-select" id="ms12-4"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb12-4"></div>
+        </div>
+        <div class="match-row" id="mr12-5">
+          <div class="match-word">capitulate</div>
+          <select class="match-select" id="ms12-5"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb12-5"></div>
+        </div>
+      </div>
+      <div>
+        <div class="match-col-label">Definition</div>
+        <div style="font-size:13px; line-height:1.7; color:var(--muted); padding-top:4px;">
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">to shock or stimulate into taking action</p>
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">to stir up or provoke trouble or conflict</p>
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">to weaken or drain energy</p>
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">to surrender or give in after resistance</p>
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">to calm or appease someone</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fill in blank W12 -->
+  <div class="q-card" id="q12-fill">
+    <div class="q-num">Questions 14–17 · Fill in the Blank</div>
+    <div class="q-text">Choose the best word from the word bank for each sentence.</div>
+
+    <div style="margin-bottom:20px;">
+      <p style="font-size:15px; line-height:2;">14. The general refused to <input class="blank-input" id="bi12-1" placeholder="________"> even when his forces were badly outnumbered, insisting they could still win.</p>
+    </div>
+    <div style="margin-bottom:20px;">
+      <p style="font-size:15px; line-height:2;">15. The company worked to <input class="blank-input" id="bi12-2" placeholder="________"> angry customers by offering a full refund and a personal apology.</p>
+    </div>
+    <div style="margin-bottom:20px;">
+      <p style="font-size:15px; line-height:2;">16. The documentary aimed to <input class="blank-input" id="bi12-3" placeholder="________"> the public into demanding stricter environmental laws.</p>
+    </div>
+    <div style="margin-bottom:20px;">
+      <p style="font-size:15px; line-height:2;">17. The heat and humidity seemed to <input class="blank-input" id="bi12-4" placeholder="________"> even the most energetic players, leaving them sluggish by halftime.</p>
+    </div>
+
+    <div class="word-bank"><strong>Word bank:</strong> foment · galvanize · dissent · placate · fortify · consolidate · enervate · capitulate · erode</div>
+    <div class="q-feedback" id="fb12-fill"></div>
+  </div>
+
+  <div class="section-actions">
+    <button class="btn-check" onclick="checkWeek(1)">Check Answers</button>
+    <button class="btn-next" id="next-1" onclick="showWeek(2, null)">Next: Week 13 →</button>
+    <div class="section-score" id="score-1"></div>
+  </div>
+</div>
+
+<!-- ============ WEEK 13 ============ -->
+<div class="week-section" id="week-2">
+  <div class="week-header">
+    <span class="week-label">Week 13</span>
+    <span class="week-theme">Research &amp; Causation</span>
+  </div>
+  <div class="week-divider"></div>
+
+  <!-- MC W13 -->
+  <div class="q-card" id="q13-1">
+    <div class="q-num">Question 18</div>
+    <div class="q-text">A study shows that students who eat breakfast get higher test scores. However, the researchers cannot prove that eating breakfast <em>causes</em> better scores. This relationship is best described as:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q13-1" value="a"><span class="choice-letter">A</span> causal</label>
+      <label class="choice-label"><input type="radio" name="q13-1" value="b"><span class="choice-letter">B</span> correlational</label>
+      <label class="choice-label"><input type="radio" name="q13-1" value="c"><span class="choice-letter">C</span> spurious</label>
+      <label class="choice-label"><input type="radio" name="q13-1" value="d"><span class="choice-letter">D</span> mediated</label>
+    </div>
+    <div class="q-feedback" id="fb13-1"></div>
+  </div>
+
+  <div class="q-card" id="q13-2">
+    <div class="q-num">Question 19</div>
+    <div class="q-text">A researcher finds a link between ice cream sales and drowning rates. Both rise in summer — but ice cream doesn't cause drowning. This is an example of a <em>spurious</em> correlation. What <em>confound</em> explains both?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q13-2" value="a"><span class="choice-letter">A</span> increased sugar consumption in summer</label>
+      <label class="choice-label"><input type="radio" name="q13-2" value="b"><span class="choice-letter">B</span> hot weather, which causes both more swimming and more ice cream eating</label>
+      <label class="choice-label"><input type="radio" name="q13-2" value="c"><span class="choice-letter">C</span> the fact that both ice cream and swimming are popular hobbies</label>
+      <label class="choice-label"><input type="radio" name="q13-2" value="d"><span class="choice-letter">D</span> there is no confound; the relationship is truly causal</label>
+    </div>
+    <div class="q-feedback" id="fb13-2"></div>
+  </div>
+
+  <!-- Fill in blank W13 -->
+  <div class="q-card" id="q13-fill">
+    <div class="q-num">Questions 20–23 · Fill in the Blank</div>
+    <div class="q-text">Choose the best word from the word bank.</div>
+
+    <div style="margin-bottom:20px;">
+      <p style="font-size:15px; line-height:2;">20. Researchers tried to <input class="blank-input" id="bi13-1" placeholder="________"> the spike in crime to rising unemployment rates in the region.</p>
+    </div>
+    <div style="margin-bottom:20px;">
+      <p style="font-size:15px; line-height:2;">21. The experiment was designed to <input class="blank-input" id="bi13-2" placeholder="________"> a chemical reaction in the lab under controlled conditions.</p>
+    </div>
+    <div style="margin-bottom:20px;">
+      <p style="font-size:15px; line-height:2;">22. The journalist argued that income inequality is a key <input class="blank-input" id="bi13-3" placeholder="________"> of social unrest in the region.</p>
+    </div>
+    <div style="margin-bottom:20px;">
+      <p style="font-size:15px; line-height:2;">23. The timing of the two events seemed meaningful, but they happened to <input class="blank-input" id="bi13-4" placeholder="________"> by chance rather than being connected.</p>
+    </div>
+
+    <div class="word-bank"><strong>Word bank:</strong> causal · correlational · coincide · confound · attribute · induce · spurious · determinant · mediate</div>
+    <div class="q-feedback" id="fb13-fill"></div>
+  </div>
+
+  <div class="section-actions">
+    <button class="btn-check" onclick="checkWeek(2)">Check Answers</button>
+    <button class="btn-next" id="next-2" onclick="showWeek(3, null)">Next: Week 14 →</button>
+    <div class="section-score" id="score-2"></div>
+  </div>
+</div>
+
+<!-- ============ WEEK 14 ============ -->
+<div class="week-section" id="week-3">
+  <div class="week-header">
+    <span class="week-label">Week 14</span>
+    <span class="week-theme">Tone &amp; Argument</span>
+  </div>
+  <div class="week-divider"></div>
+
+  <!-- Matching W14 -->
+  <div class="q-card" id="q14-match">
+    <div class="q-num">Questions 24–28 · Matching</div>
+    <div class="q-text">Match each word to its definition.</div>
+    <div class="match-grid">
+      <div>
+        <div class="match-col-label">Word</div>
+        <div class="match-row" id="mr14-1">
+          <div class="match-word">didactic</div>
+          <select class="match-select" id="ms14-1"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb14-1"></div>
+        </div>
+        <div class="match-row" id="mr14-2">
+          <div class="match-word">sardonic</div>
+          <select class="match-select" id="ms14-2"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb14-2"></div>
+        </div>
+        <div class="match-row" id="mr14-3">
+          <div class="match-word">pedantic</div>
+          <select class="match-select" id="ms14-3"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb14-3"></div>
+        </div>
+        <div class="match-row" id="mr14-4">
+          <div class="match-word">laudatory</div>
+          <select class="match-select" id="ms14-4"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb14-4"></div>
+        </div>
+        <div class="match-row" id="mr14-5">
+          <div class="match-word">subversive</div>
+          <select class="match-select" id="ms14-5"><option value="">— select —</option></select>
+          <div class="q-feedback" id="fb14-5"></div>
+        </div>
+      </div>
+      <div>
+        <div class="match-col-label">Definition</div>
+        <div style="font-size:13px; line-height:1.7; color:var(--muted); padding-top:4px;">
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">mocking or cynical, often bitter or sarcastic</p>
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">intended to teach a lesson, often in a preachy way</p>
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">quietly challenging or undermining authority</p>
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">overly focused on small details, missing the bigger point</p>
+          <p style="margin-bottom:8px; padding:8px; background:var(--week-bg); border-radius:6px;">expressing strong praise or admiration</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tone MC W14 -->
+  <div class="q-card" id="q14-1">
+    <div class="q-num">Question 29</div>
+    <div class="q-text">The critic wrote: "One must, I suppose, admire the author's dedication to footnotes — all 47 of them — though whether any reader will survive to the end of chapter one remains to be seen." The tone of this passage is best described as:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q14-1" value="a"><span class="choice-letter">A</span> laudatory</label>
+      <label class="choice-label"><input type="radio" name="q14-1" value="b"><span class="choice-letter">B</span> conciliatory</label>
+      <label class="choice-label"><input type="radio" name="q14-1" value="c"><span class="choice-letter">C</span> sardonic</label>
+      <label class="choice-label"><input type="radio" name="q14-1" value="d"><span class="choice-letter">D</span> deferential</label>
+    </div>
+    <div class="q-feedback" id="fb14-1-mc"></div>
+  </div>
+
+  <div class="q-card" id="q14-2">
+    <div class="q-num">Question 30</div>
+    <div class="q-text">A student writes an essay arguing that a school policy is unfair by subtly questioning the reasoning behind every rule without directly attacking the administration. This approach is best described as:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q14-2" value="a"><span class="choice-letter">A</span> polemical</label>
+      <label class="choice-label"><input type="radio" name="q14-2" value="b"><span class="choice-letter">B</span> subversive</label>
+      <label class="choice-label"><input type="radio" name="q14-2" value="c"><span class="choice-letter">C</span> candid</label>
+      <label class="choice-label"><input type="radio" name="q14-2" value="d"><span class="choice-letter">D</span> deferential</label>
+    </div>
+    <div class="q-feedback" id="fb14-2-mc"></div>
+  </div>
+
+  <div class="q-card" id="q14-3">
+    <div class="q-num">Question 31</div>
+    <div class="q-text">Which pair of words are most nearly opposite in meaning?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q14-3" value="a"><span class="choice-letter">A</span> candid / polemical</label>
+      <label class="choice-label"><input type="radio" name="q14-3" value="b"><span class="choice-letter">B</span> conciliatory / polemical</label>
+      <label class="choice-label"><input type="radio" name="q14-3" value="c"><span class="choice-letter">C</span> sardonic / pedantic</label>
+      <label class="choice-label"><input type="radio" name="q14-3" value="d"><span class="choice-letter">D</span> didactic / laudatory</label>
+    </div>
+    <div class="q-feedback" id="fb14-3-mc"></div>
+  </div>
+
+  <div class="section-actions">
+    <button class="btn-check" onclick="checkWeek(3)">Check Answers</button>
+    <button class="btn-next" id="next-3" onclick="showWeek(4, null)">Next: Writing Prompt →</button>
+    <div class="section-score" id="score-3"></div>
+  </div>
+</div>
+
+<!-- ============ WRITING ============ -->
+<div class="week-section" id="week-4">
+  <div class="week-header">
+    <span class="week-label">Writing Practice</span>
+    <span class="week-theme">Ungraded · Just Practice</span>
+  </div>
+  <div class="week-divider"></div>
+
+  <div class="writing-card">
+    <div class="q-num">Writing Prompt 1</div>
+    <div class="q-text">Choose any <strong style="color:var(--accent3)">two words from Week 11 or 12</strong> and write 2–3 sentences using both correctly. Try to write about a real situation — something from school, sports, news, or your own life.</div>
+    <textarea class="writing-textarea" placeholder="Write your sentences here…"></textarea>
+  </div>
+
+  <div class="writing-card">
+    <div class="q-num">Writing Prompt 2</div>
+    <div class="q-text">Pick a <strong style="color:var(--accent3)">tone word from Week 14</strong> (sardonic, pedantic, candid, etc.) and describe a real person, character, or moment that fits that tone. Don't use the word itself — just describe it.</div>
+    <textarea class="writing-textarea" placeholder="Write your description here…"></textarea>
+  </div>
+
+  <div class="final-section">
+    <h2>All done!</h2>
+    <p>Great work reviewing April's vocabulary. Click below to see your final score.</p>
+    <button class="btn-final" onclick="showResults()">See My Results</button>
+  </div>
+</div>
+
+<!-- ============ RESULTS ============ -->
+<div class="results-panel" id="results">
+  <div class="big-score" id="finalScore">—</div>
+  <div class="score-label" id="finalFraction"></div>
+  <div class="score-msg" id="scoreMsg"></div>
+  <div class="score-breakdown" id="scoreBreakdown"></div>
+  <button class="btn-restart" onclick="restart()">↺ Start Over</button>
+</div>
+
+</div><!-- end .content -->
+
+<script>
+// ============================
+// DATA
+// ============================
+const answers = {
+  // Week 11 MC
+  'q11-1': 'b',
+  'q11-2': 'c',
+  'q11-3': 'a',
+  'q11-4': 'c',
+  'q11-5': 'b',
+  'q11-6': 'b',
+  'q11-7': 'b',
+  'q11-8': 'b',
+};
+
+const feedback = {
+  'q11-1': { correct: 'Correct! As a vocabulary word, "novel" means new or original — not a book.', wrong: 'Not quite. Here "novel" is used as an adjective meaning new or original. Option A uses it as a noun (a book). Option B is correct.' },
+  'q11-2': { correct: 'Correct! To outpace means to surpass in speed or progress.', wrong: 'The answer is C. To outpace means to exceed or go beyond something in speed, growth, or progress.' },
+  'q11-3': { correct: 'Correct! Innocuous means harmless — not likely to cause any trouble.', wrong: 'The answer is A. Innocuous means harmless. Think: "innocent" is in the word.' },
+  'q11-4': { correct: 'Correct! Obsolete means no longer in use — replaced by something newer.', wrong: 'The answer is C. Obsolete means outdated or no longer functional. The others don\'t fit the meaning of "outdated."' },
+  'q11-5': { correct: 'Correct! Prevalent = widespread; ubiquitous = literally everywhere at once.', wrong: 'The answer is B. Prevalent means common or widespread. Ubiquitous is stronger — it means present everywhere simultaneously.' },
+  'q11-6': { correct: 'Correct! Prominent means well-known or standing out noticeably.', wrong: 'The answer is B. Prominent means noticeable and well-known. Think of something "protruding" — it stands out.' },
+  'q11-7': { correct: 'Correct! Auspicious means showing signs of future success — a good omen.', wrong: 'The answer is B. Auspicious means favorable or promising. Options A, C, and D all describe negative or threatening situations.' },
+  'q11-8': { correct: 'Correct! Verisimilitude means the quality of seeming real or believable.', wrong: 'The answer is B. Verisimilitude = "verisimilis" (Latin: likely to be true). It means the appearance of reality, not proven truth.' },
+};
+
+// Matching answers: word → correct definition key
+const match12 = {
+  'ms12-1': 'stir',    // foment
+  'ms12-2': 'shock',   // galvanize
+  'ms12-3': 'calm',    // placate
+  'ms12-4': 'weaken',  // enervate
+  'ms12-5': 'surrender', // capitulate
+};
+const matchDefs12 = {
+  'stir':      'to stir up or provoke trouble or conflict',
+  'shock':     'to shock or stimulate into taking action',
+  'weaken':    'to weaken or drain energy',
+  'surrender': 'to surrender or give in after resistance',
+  'calm':      'to calm or appease someone',
+};
+
+const match14 = {
+  'ms14-1': 'teachlesson',  // didactic
+  'ms14-2': 'mocking',      // sardonic
+  'ms14-3': 'smalldetails', // pedantic
+  'ms14-4': 'praise',       // laudatory
+  'ms14-5': 'challenging',  // subversive
+};
+const matchDefs14 = {
+  'mocking':      'mocking or cynical, often bitter or sarcastic',
+  'teachlesson':  'intended to teach a lesson, often in a preachy way',
+  'challenging':  'quietly challenging or undermining authority',
+  'smalldetails': 'overly focused on small details, missing the bigger point',
+  'praise':       'expressing strong praise or admiration',
+};
+
+// Fill in blank answers (lowercase, trimmed)
+const blanks12 = {
+  'bi12-1': 'capitulate',
+  'bi12-2': 'placate',
+  'bi12-3': 'galvanize',
+  'bi12-4': 'enervate',
+};
+const blanks13 = {
+  'bi13-1': 'attribute',
+  'bi13-2': 'induce',
+  'bi13-3': 'determinant',
+  'bi13-4': 'coincide',
+};
+
+const blankFeedback12 = {
+  'bi12-1': { correct: '✓ Capitulate — to surrender after resistance.', wrong: '✗ The answer is "capitulate" — to give in after resisting.' },
+  'bi12-2': { correct: '✓ Placate — to calm or appease.', wrong: '✗ The answer is "placate" — to calm someone who is angry or upset.' },
+  'bi12-3': { correct: '✓ Galvanize — to shock into action.', wrong: '✗ The answer is "galvanize" — to stimulate people into demanding change.' },
+  'bi12-4': { correct: '✓ Enervate — to drain energy.', wrong: '✗ The answer is "enervate" — to weaken or drain energy, not just tire out.' },
+};
+const blankFeedback13 = {
+  'bi13-1': { correct: '✓ Attribute — to assign a cause.', wrong: '✗ The answer is "attribute" — to assign or link a cause to something.' },
+  'bi13-2': { correct: '✓ Induce — to bring about or cause.', wrong: '✗ The answer is "induce" — to bring something about or cause it to happen.' },
+  'bi13-3': { correct: '✓ Determinant — a factor that decisively affects an outcome.', wrong: '✗ The answer is "determinant" — a factor that decisively shapes a result.' },
+  'bi13-4': { correct: '✓ Coincide — to occur at the same time by chance.', wrong: '✗ The answer is "coincide" — to happen at the same time without a causal link.' },
+};
+
+const mc13 = {
+  'q13-1': 'b',
+  'q13-2': 'b',
+};
+const mc13Feedback = {
+  'q13-1': { correct: 'Correct! A correlation shows a relationship without proving cause.', wrong: 'The answer is B — correlational. The study shows a relationship, but cannot prove that breakfast causes the higher scores.' },
+  'q13-2': { correct: 'Correct! Hot weather is the confound that independently drives both variables.', wrong: 'The answer is B. Hot weather causes both more swimming (higher drowning risk) and more ice cream eating. This is the hidden variable — the confound.' },
+};
+
+const mc14 = {
+  'q14-1': 'c',
+  'q14-2': 'b',
+  'q14-3': 'b',
+};
+const mc14Feedback = {
+  'q14-1': { correct: 'Correct! The critic\'s backhanded "admiration" is classic sardonic wit.', wrong: 'The answer is C — sardonic. The critic appears to praise but is actually mocking the author\'s excessive footnotes.' },
+  'q14-2': { correct: 'Correct! The student undermines authority subtly, without direct confrontation — that\'s subversive.', wrong: 'The answer is B — subversive. The student quietly challenges the system without openly attacking it. Polemical would be an aggressive, direct attack.' },
+  'q14-3': { correct: 'Correct! Conciliatory (seeking peace) and polemical (aggressively argumentative) are near opposites.', wrong: 'The answer is B. Conciliatory means trying to reduce conflict; polemical means aggressively stirring up argument. They are near opposites.' },
+};
+
+// ============================
+// STATE
+// ============================
+let weekScores = [null, null, null, null];
+let weekChecked = [false, false, false, false];
+let currentWeek = 0;
+
+// ============================
+// INIT DROPDOWNS
+// ============================
+function initDropdowns() {
+  // Week 12
+  const defs12 = Object.values(matchDefs12);
+  ['ms12-1','ms12-2','ms12-3','ms12-4','ms12-5'].forEach(id => {
+    const sel = document.getElementById(id);
+    defs12.forEach((def, i) => {
+      const opt = document.createElement('option');
+      opt.value = Object.keys(matchDefs12)[i];
+      opt.textContent = def;
+      sel.appendChild(opt);
+    });
+  });
+
+  // Week 14
+  const defs14 = Object.values(matchDefs14);
+  ['ms14-1','ms14-2','ms14-3','ms14-4','ms14-5'].forEach(id => {
+    const sel = document.getElementById(id);
+    defs14.forEach((def, i) => {
+      const opt = document.createElement('option');
+      opt.value = Object.keys(matchDefs14)[i];
+      opt.textContent = def;
+      sel.appendChild(opt);
+    });
+  });
+}
+
+// ============================
+// WEEK NAVIGATION
+// ============================
+function showWeek(idx, btn) {
+  document.querySelectorAll('.week-section').forEach((s, i) => {
+    s.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.week-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === idx);
+  });
+  currentWeek = idx;
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress() {
+  const checked = weekChecked.filter(Boolean).length;
+  const total = 4;
+  const pct = (checked / total) * 90 + (currentWeek >= 4 ? 10 : 0);
+  document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+}
+
+// ============================
+// CHECK WEEK 0 (Week 11 MC)
+// ============================
+function checkWeek0() {
+  let correct = 0, total = 8;
+  for (let i = 1; i <= 8; i++) {
+    const key = `q11-${i}`;
+    const selected = document.querySelector(`input[name="${key}"]:checked`);
+    const card = document.getElementById(key);
+    const fb = document.getElementById(`fb${key.replace('q','')}`);
+    const correctAns = answers[key];
+
+    document.querySelectorAll(`input[name="${key}"]`).forEach(input => {
+      const lbl = input.closest('.choice-label');
+      lbl.classList.remove('reveal-correct','reveal-wrong');
+      if (input.value === correctAns) lbl.classList.add('reveal-correct');
+      else if (selected && input.value === selected.value && input.value !== correctAns) lbl.classList.add('reveal-wrong');
+    });
+
+    if (selected && selected.value === correctAns) {
+      correct++;
+      fb.className = 'q-feedback correct';
+      fb.textContent = feedback[key].correct;
+    } else {
+      fb.className = 'q-feedback wrong';
+      fb.textContent = feedback[key].wrong;
+    }
+  }
+  return { correct, total };
+}
+
+// ============================
+// CHECK WEEK 1 (Week 12)
+// ============================
+function checkWeek1() {
+  let correct = 0, total = 9;
+
+  // Matching
+  Object.entries(match12).forEach(([selId, correctVal]) => {
+    const sel = document.getElementById(selId);
+    const num = selId.replace('ms12-','');
+    const row = document.getElementById(`mr12-${num}`);
+    const fb = document.getElementById(`fb12-${num}`);
+    row.classList.remove('reveal-correct','reveal-wrong');
+    if (sel.value === correctVal) {
+      correct++;
+      row.classList.add('reveal-correct');
+      fb.className = 'q-feedback correct';
+      fb.textContent = '✓ Correct!';
+    } else {
+      row.classList.add('reveal-wrong');
+      fb.className = 'q-feedback wrong';
+      fb.textContent = `✗ The correct definition: "${matchDefs12[correctVal]}"`;
+    }
+  });
+
+  // Fill in blank
+  let fillCorrect = 0;
+  Object.entries(blanks12).forEach(([id, ans]) => {
+    const inp = document.getElementById(id);
+    const val = inp.value.trim().toLowerCase();
+    inp.classList.remove('reveal-correct','reveal-wrong');
+    const num = id.replace('bi12-','');
+    const fb = document.getElementById(`fb12-fill`);
+    if (val === ans) {
+      fillCorrect++;
+      inp.classList.add('reveal-correct');
+    } else {
+      inp.classList.add('reveal-wrong');
+    }
+  });
+  correct += fillCorrect;
+
+  // Aggregate fill feedback
+  const fillFb = document.getElementById('fb12-fill');
+  if (fillCorrect === 4) {
+    fillFb.className = 'q-feedback correct';
+    fillFb.textContent = '✓ All fill-in-the-blank answers correct!';
+  } else {
+    fillFb.className = 'q-feedback wrong';
+    let msgs = [];
+    Object.entries(blanks12).forEach(([id, ans]) => {
+      const val = document.getElementById(id).value.trim().toLowerCase();
+      if (val !== ans) msgs.push(blankFeedback12[id].wrong);
+    });
+    fillFb.innerHTML = msgs.join('<br>');
+  }
+
+  return { correct, total };
+}
+
+// ============================
+// CHECK WEEK 2 (Week 13)
+// ============================
+function checkWeek2() {
+  let correct = 0, total = 6;
+
+  // MC
+  ['q13-1','q13-2'].forEach(key => {
+    const selected = document.querySelector(`input[name="${key}"]:checked`);
+    const correctAns = mc13[key];
+    const fb = document.getElementById(`fb${key.replace('q','')}`);
+    document.querySelectorAll(`input[name="${key}"]`).forEach(input => {
+      const lbl = input.closest('.choice-label');
+      lbl.classList.remove('reveal-correct','reveal-wrong');
+      if (input.value === correctAns) lbl.classList.add('reveal-correct');
+      else if (selected && input.value === selected.value && input.value !== correctAns) lbl.classList.add('reveal-wrong');
+    });
+    if (selected && selected.value === correctAns) {
+      correct++;
+      fb.className = 'q-feedback correct';
+      fb.textContent = mc13Feedback[key].correct;
+    } else {
+      fb.className = 'q-feedback wrong';
+      fb.textContent = mc13Feedback[key].wrong;
+    }
+  });
+
+  // Fill
+  let fillCorrect = 0;
+  Object.entries(blanks13).forEach(([id, ans]) => {
+    const inp = document.getElementById(id);
+    const val = inp.value.trim().toLowerCase();
+    inp.classList.remove('reveal-correct','reveal-wrong');
+    if (val === ans) { fillCorrect++; inp.classList.add('reveal-correct'); }
+    else inp.classList.add('reveal-wrong');
+  });
+  correct += fillCorrect;
+  const fillFb = document.getElementById('fb13-fill');
+  if (fillCorrect === 4) {
+    fillFb.className = 'q-feedback correct';
+    fillFb.textContent = '✓ All fill-in-the-blank answers correct!';
+  } else {
+    fillFb.className = 'q-feedback wrong';
+    let msgs = [];
+    Object.entries(blanks13).forEach(([id, ans]) => {
+      const val = document.getElementById(id).value.trim().toLowerCase();
+      if (val !== ans) msgs.push(blankFeedback13[id].wrong);
+    });
+    fillFb.innerHTML = msgs.join('<br>');
+  }
+
+  return { correct, total };
+}
+
+// ============================
+// CHECK WEEK 3 (Week 14)
+// ============================
+function checkWeek3() {
+  let correct = 0, total = 8;
+
+  // Matching
+  Object.entries(match14).forEach(([selId, correctVal]) => {
+    const sel = document.getElementById(selId);
+    const num = selId.replace('ms14-','');
+    const row = document.getElementById(`mr14-${num}`);
+    const fb = document.getElementById(`fb14-${num}`);
+    row.classList.remove('reveal-correct','reveal-wrong');
+    if (sel.value === correctVal) {
+      correct++;
+      row.classList.add('reveal-correct');
+      fb.className = 'q-feedback correct';
+      fb.textContent = '✓ Correct!';
+    } else {
+      row.classList.add('reveal-wrong');
+      fb.className = 'q-feedback wrong';
+      fb.textContent = `✗ The correct definition: "${matchDefs14[correctVal]}"`;
+    }
+  });
+
+  // MC
+  ['q14-1','q14-2','q14-3'].forEach(key => {
+    const fbId = key + '-mc';
+    const selected = document.querySelector(`input[name="${key}"]:checked`);
+    const correctAns = mc14[key];
+    const fb = document.getElementById(`fb${fbId.replace('q','')}`);
+    document.querySelectorAll(`input[name="${key}"]`).forEach(input => {
+      const lbl = input.closest('.choice-label');
+      lbl.classList.remove('reveal-correct','reveal-wrong');
+      if (input.value === correctAns) lbl.classList.add('reveal-correct');
+      else if (selected && input.value === selected.value && input.value !== correctAns) lbl.classList.add('reveal-wrong');
+    });
+    const fbKey = key.replace('q','');
+    if (selected && selected.value === correctAns) {
+      correct++;
+      fb.className = 'q-feedback correct';
+      fb.textContent = mc14Feedback[key].correct;
+    } else {
+      fb.className = 'q-feedback wrong';
+      fb.textContent = mc14Feedback[key].wrong;
+    }
+  });
+
+  return { correct, total };
+}
+
+// ============================
+// MAIN CHECK DISPATCHER
+// ============================
+function checkWeek(weekIdx) {
+  let result;
+  if (weekIdx === 0) result = checkWeek0();
+  else if (weekIdx === 1) result = checkWeek1();
+  else if (weekIdx === 2) result = checkWeek2();
+  else if (weekIdx === 3) result = checkWeek3();
+
+  weekScores[weekIdx] = result;
+  weekChecked[weekIdx] = true;
+
+  const scoreEl = document.getElementById(`score-${weekIdx}`);
+  scoreEl.style.display = 'block';
+  scoreEl.innerHTML = `Score: <span>${result.correct}/${result.total}</span>`;
+
+  const nextBtn = document.getElementById(`next-${weekIdx}`);
+  if (nextBtn) nextBtn.style.display = 'inline-block';
+
+  updateProgress();
+
+  // Mark tab done
+  const tabs = document.querySelectorAll('.week-tab');
+  tabs[weekIdx].textContent = tabs[weekIdx].textContent.replace(' ✓','') + ' ✓';
+}
+
+// ============================
+// RESULTS
+// ============================
+function showResults() {
+  document.getElementById('mainContent').querySelectorAll('.week-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('results').classList.add('show');
+  document.getElementById('progressBar').style.width = '100%';
+
+  let totalCorrect = 0, totalQ = 0;
+  const weekNames = ['Week 11', 'Week 12', 'Week 13', 'Week 14'];
+  let breakdownHTML = '';
+
+  weekScores.forEach((s, i) => {
+    if (s) {
+      totalCorrect += s.correct;
+      totalQ += s.total;
+      breakdownHTML += `<div class="score-week"><div class="score-week-num">${weekNames[i]}</div><div class="score-week-val">${s.correct}/${s.total}</div></div>`;
+    } else {
+      totalQ += (i === 0 ? 8 : i === 1 ? 9 : i === 2 ? 6 : 8);
+      breakdownHTML += `<div class="score-week"><div class="score-week-num">${weekNames[i]}</div><div class="score-week-val" style="color:var(--muted)">—</div></div>`;
+    }
+  });
+
+  const pct = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
+  document.getElementById('finalScore').textContent = pct + '%';
+  document.getElementById('finalFraction').textContent = `${totalCorrect} out of ${totalQ} questions correct`;
+  document.getElementById('scoreBreakdown').innerHTML = breakdownHTML;
+
+  let msg = '';
+  if (pct >= 90) msg = 'Excellent work — you\'ve got a strong command of these words. You\'re well prepared for SAT vocabulary questions.';
+  else if (pct >= 75) msg = 'Good job! You\'re solid on most of these. Review the words you missed and you\'ll be in great shape.';
+  else if (pct >= 60) msg = 'Nice effort. A few more review sessions with the tricky words and you\'ll see real improvement on test day.';
+  else msg = 'Keep at it — vocabulary is built over time. Go back through the words you missed and try again.';
+  document.getElementById('scoreMsg').textContent = msg;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================
+// RESTART
+// ============================
+function restart() {
+  location.reload();
+}
+
+// ============================
+// BOOT
+// ============================
+initDropdowns();
+updateProgress();
+</script>
+</body>
+</html>
