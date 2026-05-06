@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expression of Ideas – Transition Questions</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1a2744;
+    --navy-mid: #243159;
+    --blue-accent: #2563eb;
+    --blue-light: #dbeafe;
+    --text: #1a1a2e;
+    --text-muted: #4a5568;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --correct: #16a34a;
+    --correct-bg: #dcfce7;
+    --wrong: #dc2626;
+    --wrong-bg: #fee2e2;
+    --tag-bg: #eef2ff;
+    --tag-color: #3730a3;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--navy);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  header .badge {
+    background: var(--blue-accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+  header .top-row { display: flex; align-items: center; gap: 16px; }
+  header .header-text { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+  header h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  header .subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,.55);
+    font-weight: 400;
+    letter-spacing: .04em;
+  }
+
+  /* ── Tabs ── */
+  .tabs {
+    background: var(--navy-mid);
+    display: flex;
+    padding: 0 40px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.55);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 14px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+    letter-spacing: .01em;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,.85); }
+  .tab-btn.active {
+    color: white;
+    border-bottom-color: #60a5fa;
+  }
+
+  /* ── Main content ── */
+  .tab-panel { display: none; padding: 36px 40px; max-width: 900px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
+
+  /* ── Rules page ── */
+  .rules-intro {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+  }
+  .rules-intro h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .rules-intro p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+
+  .step-box {
+    background: var(--navy);
+    color: white;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .step-box h3 { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #93c5fd; margin-bottom: 10px; }
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .step-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 15px; line-height: 1.5;
+  }
+  .step-num {
+    background: #2563eb; color: white; border-radius: 50%;
+    width: 24px; height: 24px; min-width: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; margin-top: 1px;
+  }
+
+  .pattern-group { margin-bottom: 32px; }
+  .pattern-group-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .pattern-label {
+    background: var(--navy); color: white;
+    font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 4px;
+  }
+  .pattern-group-header h3 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 17px; font-weight: 600; color: var(--navy);
+  }
+
+  .rule-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .rule-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: #f1f5f9;
+  }
+  .rule-card-header .rule-name {
+    font-weight: 600; font-size: 15px; color: var(--navy);
+  }
+  .rule-card-header .rule-tag {
+    background: var(--tag-bg); color: var(--tag-color);
+    font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px;
+  }
+  .rule-card-body { padding: 16px 20px; }
+  .rule-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
+  .signal-words {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+  }
+  .signal-word {
+    background: #eff6ff; color: #1d4ed8;
+    font-size: 12px; font-weight: 500;
+    padding: 3px 10px; border-radius: 20px;
+    border: 1px solid #bfdbfe;
+    font-style: italic;
+  }
+  .example-pair {
+    background: #f8fafc; border-left: 3px solid var(--blue-accent);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+  }
+  .example-pair p { font-size: 14px; line-height: 1.6; color: var(--text); }
+  .example-pair p + p { margin-top: 6px; }
+  .example-pair .transition-word { font-weight: 700; color: var(--blue-accent); }
+
+  /* ── Practice page ── */
+  .practice-header {
+    margin-bottom: 28px;
+  }
+  .practice-header h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 20px; font-weight: 600; color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .practice-header p { color: var(--text-muted); font-size: 14px; }
+
+  .score-bar {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .score-bar span { font-size: 14px; color: var(--text-muted); }
+  .score-display { font-size: 20px; font-weight: 700; color: var(--navy); }
+
+  .question-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .q-id-bar {
+    background: var(--navy);
+    color: white;
+    font-size: 12px; font-weight: 700; letter-spacing: .08em;
+    padding: 8px 20px;
+    display: inline-block;
+  }
+  .q-body { padding: 20px 24px; }
+  .q-passage {
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px; line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .q-passage .blank {
+    display: inline-block;
+    min-width: 52px; height: 2px; background: var(--text);
+    vertical-align: middle; margin: 0 4px;
+  }
+  .q-stem {
+    font-size: 15px; font-weight: 500; color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .choices { display: flex; flex-direction: column; gap: 8px; }
+  .choice-btn {
+    display: flex; align-items: center; gap: 12px;
+    background: none; border: 1.5px solid var(--border);
+    border-radius: 6px; padding: 11px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; color: var(--text);
+    cursor: pointer; text-align: left;
+    transition: border-color .15s, background .15s;
+  }
+  .choice-btn:hover:not(:disabled) { border-color: var(--blue-accent); background: #eff6ff; }
+  .choice-btn:disabled { cursor: default; }
+  .choice-letter {
+    font-weight: 700; font-size: 13px; color: var(--text-muted);
+    min-width: 18px;
+  }
+  .choice-btn.correct { border-color: var(--correct); background: var(--correct-bg); }
+  .choice-btn.correct .choice-letter { color: var(--correct); }
+  .choice-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+  .choice-btn.wrong .choice-letter { color: var(--wrong); }
+
+  .explanation {
+    margin-top: 16px; padding: 14px 16px;
+    background: #f0fdf4; border: 1px solid #86efac;
+    border-radius: 6px; font-size: 14px; line-height: 1.6;
+    color: #14532d; display: none;
+  }
+  .explanation.wrong-exp {
+    background: #fef2f2; border-color: #fca5a5; color: #7f1d1d;
+  }
+  .explanation.show { display: block; }
+  .explanation strong { font-weight: 600; }
+
+  @media (max-width: 600px) {
+    header, .tabs { padding-left: 20px; padding-right: 20px; }
+    .tab-panel { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="top-row">
+    <div class="badge">SAT Writing</div>
+    <h1>Expression of Ideas — Transition Questions</h1>
+  </div>
+  <span class="subtitle">Monica Winkler &nbsp;|&nbsp; Digital SAT English Prep</span>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('rules', this)">📋 Rules & Patterns</button>
+  <button class="tab-btn" onclick="switchTab('practice', this)">✏️ Practice</button>
+</div>
+
+<!-- ════════════════ RULES TAB ════════════════ -->
+<div id="rules" class="tab-panel active">
+
+  <div class="rules-intro">
+    <h2>How to Answer Transition Questions</h2>
+    <p>These questions ask you to choose the transition word or phrase that best connects two sentences. Use the two-step process below, then match the relationship to one of the four patterns.</p>
+  </div>
+
+  <div class="step-box">
+    <h3>Two-Step Process</h3>
+    <ul class="step-list">
+      <li><span class="step-num">1</span><span>Ask: <strong>How is sentence 2 related to sentence 1?</strong> Read both sentences carefully before looking at the choices.</span></li>
+      <li><span class="step-num">2</span><span>Identify the relationship — <strong>Direction</strong> (continue or contrast) · <strong>Information</strong> (example / clarify / emphasize) · <strong>Logic</strong> (cause or comparison) · <strong>Time</strong> (sequence)</span></li>
+    </ul>
+  </div>
+
+  <!-- Pattern 1 -->
+  <div class="pattern-group">
+    <div class="pattern-group-header">
+      <span class="pattern-label">Pattern 1</span>
+      <h3>Direction of Ideas</h3>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-name">Continues</span>
+        <span class="rule-tag">Same Direction</span>
+      </div>
+      <div class="rule-card-body">
+        <p class="rule-desc">Both sentences point the same way — like two bullet points in the same list. Ask: could I write "Reason 1 / Reason 2" before each? If yes → continues.</p>
+        <div class="signal-words">
+          <span class="signal-word">furthermore</span>
+          <span class="signal-word">moreover</span>
+          <span class="signal-word">in addition</span>
+        </div>
+        <div class="example-pair">
+          <p>The museum expanded its hours to attract more visitors.</p>
+          <p><span class="transition-word">Furthermore,</span> it reduced ticket prices on weekdays.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-name">Contrast</span>
+        <span class="rule-tag">Change Direction</span>
+      </div>
+      <div class="rule-card-body">
+        <p class="rule-desc">Sentence 2 weakens, limits, or qualifies sentence 1. If it surprises you → contrast.</p>
+        <div class="signal-words">
+          <span class="signal-word">however</span>
+          <span class="signal-word">nevertheless</span>
+          <span class="signal-word">although</span>
+          <span class="signal-word">on the other hand</span>
+          <span class="signal-word">instead</span>
+        </div>
+        <div class="example-pair">
+          <p>The treatment showed promising results in early trials.</p>
+          <p><span class="transition-word">However,</span> later studies failed to replicate the findings.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-name">Concession</span>
+        <span class="rule-tag">Admit Then Shift</span>
+      </div>
+      <div class="rule-card-body">
+        <p class="rule-desc">The author briefly admits a point before shifting away from it. The concession doesn't cancel the main argument — it just acknowledges it.</p>
+        <div class="signal-words">
+          <span class="signal-word">granted</span>
+          <span class="signal-word">admittedly</span>
+          <span class="signal-word">of course</span>
+        </div>
+        <div class="example-pair">
+          <p>The hike is challenging for beginners.</p>
+          <p><span class="transition-word">Granted,</span> most visitors still complete it without difficulty.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pattern 2 -->
+  <div class="pattern-group">
+    <div class="pattern-group-header">
+      <span class="pattern-label">Pattern 2</span>
+      <h3>Adding Information</h3>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-name">Example</span>
+        <span class="rule-tag">General → Specific</span>
+      </div>
+      <div class="rule-card-body">
+        <p class="rule-desc">Sentence 1 makes a general claim; sentence 2 provides a specific instance of it.</p>
+        <div class="signal-words">
+          <span class="signal-word">for example</span>
+          <span class="signal-word">for instance</span>
+          <span class="signal-word">specifically</span>
+          <span class="signal-word">to demonstrate</span>
+        </div>
+        <div class="example-pair">
+          <p>Many animals adapt to extreme environments.</p>
+          <p><span class="transition-word">For example,</span> Arctic foxes grow thicker fur during winter.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-name">Strengthen / Emphasize</span>
+        <span class="rule-tag">More Extreme</span>
+      </div>
+      <div class="rule-card-body">
+        <p class="rule-desc">Sentence 2 does NOT add a new idea — it makes sentence 1 more extreme or precise.</p>
+        <div class="signal-words">
+          <span class="signal-word">in fact</span>
+          <span class="signal-word">indeed</span>
+          <span class="signal-word">actually</span>
+          <span class="signal-word">even</span>
+        </div>
+        <div class="example-pair">
+          <p>The novel challenges traditional ideas about heroism.</p>
+          <p><span class="transition-word">In fact,</span> its protagonist refuses to solve the conflict at all.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-name">Clarify</span>
+        <span class="rule-tag">Restate Simpler</span>
+      </div>
+      <div class="rule-card-body">
+        <p class="rule-desc">Sentence 2 says the same idea again in clearer or simpler terms.</p>
+        <div class="signal-words">
+          <span class="signal-word">in other words</span>
+          <span class="signal-word">that is</span>
+        </div>
+        <div class="example-pair">
+          <p>The desert receives minimal precipitation each year.</p>
+          <p><span class="transition-word">In other words,</span> rainfall there is extremely rare.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pattern 3 -->
+  <div class="pattern-group">
+    <div class="pattern-group-header">
+      <span class="pattern-label">Pattern 3</span>
+      <h3>Logical Relationships</h3>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-name">Cause &amp; Effect</span>
+        <span class="rule-tag">Result</span>
+      </div>
+      <div class="rule-card-body">
+        <p class="rule-desc">Sentence 2 shows what happens <em>because of</em> sentence 1.</p>
+        <div class="signal-words">
+          <span class="signal-word">therefore</span>
+          <span class="signal-word">thus</span>
+          <span class="signal-word">so</span>
+          <span class="signal-word">consequently</span>
+        </div>
+        <div class="example-pair">
+          <p>The road was covered in ice overnight.</p>
+          <p><span class="transition-word">Therefore,</span> schools were closed the next morning.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-name">Comparison</span>
+        <span class="rule-tag">Relative Evaluation</span>
+      </div>
+      <div class="rule-card-body">
+        <p class="rule-desc">Sentence 2 evaluates one thing <em>relative to</em> another — showing similarity or difference, but without disagreement or surprise.</p>
+        <div class="signal-words">
+          <span class="signal-word">by comparison</span>
+          <span class="signal-word">similarly</span>
+          <span class="signal-word">likewise</span>
+          <span class="signal-word">in contrast</span>
+        </div>
+        <div class="example-pair">
+          <p>The 2001 solar cycle produced about 180 sunspots.</p>
+          <p><span class="transition-word">By comparison,</span> the 2008 cycle produced only two.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pattern 4 -->
+  <div class="pattern-group">
+    <div class="pattern-group-header">
+      <span class="pattern-label">Pattern 4</span>
+      <h3>Time Relationships</h3>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-name">Sequence of Events</span>
+        <span class="rule-tag">Time Passes</span>
+      </div>
+      <div class="rule-card-body">
+        <p class="rule-desc">Only use time transitions when real time passes or you notice steps in a process. Don't confuse sequence with cause-and-effect.</p>
+        <div class="signal-words">
+          <span class="signal-word">then</span>
+          <span class="signal-word">later</span>
+          <span class="signal-word">finally</span>
+          <span class="signal-word">subsequently</span>
+          <span class="signal-word">ultimately</span>
+          <span class="signal-word">previously</span>
+          <span class="signal-word">prior to</span>
+          <span class="signal-word">before</span>
+        </div>
+        <div class="example-pair">
+          <p>The researchers collected the samples from the field.</p>
+          <p><span class="transition-word">Then,</span> they analyzed them in the laboratory.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /rules -->
+
+<!-- ════════════════ PRACTICE TAB ════════════════ -->
+<div id="practice" class="tab-panel">
+
+  <div class="practice-header">
+    <h2>Practice Questions</h2>
+    <p>Select the transition word or phrase that best completes each passage.</p>
+  </div>
+
+  <div class="score-bar">
+    <span>Score</span>
+    <span class="score-display" id="score-display">0 / 6</span>
+  </div>
+
+  <!-- Q1 -->
+  <div class="question-card" id="q1">
+    <div class="q-id-bar">Question 1</div>
+    <div class="q-body">
+      <p class="q-passage">Marine biologist Sylvia Earle has spent decades advocating for the protection of ocean ecosystems. <span class="blank"></span> she has led more than a hundred deep-sea expeditions and set multiple records for solo diving depth.</p>
+      <p class="q-stem">Which choice completes the text with the most logical transition?</p>
+      <div class="choices">
+        <button class="choice-btn" onclick="answer('q1','A','C')" data-choice="A"><span class="choice-letter">A</span> However,</button>
+        <button class="choice-btn" onclick="answer('q1','B','C')" data-choice="B"><span class="choice-letter">B</span> Therefore,</button>
+        <button class="choice-btn" onclick="answer('q1','C','C')" data-choice="C"><span class="choice-letter">C</span> Indeed,</button>
+        <button class="choice-btn" onclick="answer('q1','D','C')" data-choice="D"><span class="choice-letter">D</span> In contrast,</button>
+      </div>
+      <div class="explanation" id="q1-exp">
+        <strong>C – Indeed</strong> is correct. The second sentence doesn't introduce a new idea — it <em>strengthens and supports</em> the first by giving concrete evidence of Earle's commitment (expeditions, diving records). This is a Pattern 2 <em>strengthen/emphasize</em> relationship. "However" and "In contrast" signal contradiction that isn't present; "Therefore" would imply her expeditions were caused by her advocacy, which distorts the logic.
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card" id="q2">
+    <div class="q-id-bar">Question 2</div>
+    <div class="q-body">
+      <p class="q-passage">The city of Pompeii was buried under several meters of volcanic ash when Mount Vesuvius erupted in 79 CE. <span class="blank"></span> the disaster preserved the city so thoroughly that archaeologists have been able to reconstruct daily Roman life in remarkable detail.</p>
+      <p class="q-stem">Which choice completes the text with the most logical transition?</p>
+      <div class="choices">
+        <button class="choice-btn" onclick="answer('q2','A','D')" data-choice="A"><span class="choice-letter">A</span> Similarly,</button>
+        <button class="choice-btn" onclick="answer('q2','B','D')" data-choice="B"><span class="choice-letter">B</span> Therefore,</button>
+        <button class="choice-btn" onclick="answer('q2','C','D')" data-choice="C"><span class="choice-letter">C</span> Subsequently,</button>
+        <button class="choice-btn" onclick="answer('q2','D','D')" data-choice="D"><span class="choice-letter">D</span> Nevertheless,</button>
+      </div>
+      <div class="explanation" id="q2-exp">
+        <strong>D – Nevertheless</strong> is correct. The eruption destroyed Pompeii, yet that same event preserved it for archaeologists — an outcome that <em>contradicts</em> what you'd expect from the first sentence. "Nevertheless" signals that the second sentence holds true <em>in spite of</em> the first, which captures that surprise. "Similarly" and "Subsequently" don't signal contrast; "Therefore" would make the preservation a straightforward result of the eruption, missing the unexpected nature of the outcome.
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card" id="q3">
+    <div class="q-id-bar">Question 3</div>
+    <div class="q-body">
+      <p class="q-passage">Researchers studying ancient trade routes have long focused on the Silk Road connecting China to the Mediterranean. <span class="blank"></span> recent archaeological finds suggest that equally significant maritime networks linked East Africa, the Arabian Peninsula, and South Asia centuries earlier than previously thought.</p>
+      <p class="q-stem">Which choice completes the text with the most logical transition?</p>
+      <div class="choices">
+        <button class="choice-btn" onclick="answer('q3','A','C')" data-choice="A"><span class="choice-letter">A</span> Therefore,</button>
+        <button class="choice-btn" onclick="answer('q3','B','C')" data-choice="B"><span class="choice-letter">B</span> For instance,</button>
+        <button class="choice-btn" onclick="answer('q3','C','C')" data-choice="C"><span class="choice-letter">C</span> However,</button>
+        <button class="choice-btn" onclick="answer('q3','D','C')" data-choice="D"><span class="choice-letter">D</span> Moreover,</button>
+      </div>
+      <div class="explanation" id="q3-exp">
+        <strong>C – However</strong> is correct. The first sentence describes what researchers have focused on; the second challenges that focus by pointing to a different, overlooked network. Sentence 2 <em>redirects and limits</em> the first — a classic contrast (Pattern 1). "Therefore" implies a result; "For instance" would make sentence 2 a specific example of Silk Road research; "Moreover" would add to the first claim rather than push back on it.
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card" id="q4">
+    <div class="q-id-bar">Question 4</div>
+    <div class="q-body">
+      <p class="q-passage">Composer Hildegard von Bingen wrote some of the most complex sacred music of the twelfth century, including elaborate chants for her convent's liturgies. <span class="blank"></span> she produced theological texts, poetry, and detailed writings on natural medicine — an output remarkable for any scholar of the era, let alone a cloistered nun.</p>
+      <p class="q-stem">Which choice completes the text with the most logical transition?</p>
+      <div class="choices">
+        <button class="choice-btn" onclick="answer('q4','A','C')" data-choice="A"><span class="choice-letter">A</span> However,</button>
+        <button class="choice-btn" onclick="answer('q4','B','C')" data-choice="B"><span class="choice-letter">B</span> Therefore,</button>
+        <button class="choice-btn" onclick="answer('q4','C','C')" data-choice="C"><span class="choice-letter">C</span> Moreover,</button>
+        <button class="choice-btn" onclick="answer('q4','D','C')" data-choice="D"><span class="choice-letter">D</span> For instance,</button>
+      </div>
+      <div class="explanation" id="q4-exp">
+        <strong>C – Moreover</strong> is correct. The second sentence adds <em>more evidence</em> of von Bingen's extraordinary output — theology, poetry, medicine — on top of the music already mentioned. This is a "continues / same direction" relationship (Pattern 1). "However" would introduce a contrast that isn't there; "Therefore" implies her writing was caused by her music; "For instance" would mean the second sentence is a specific example of the first, which it isn't.
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question-card" id="q5">
+    <div class="q-id-bar">Question 5</div>
+    <div class="q-body">
+      <p class="q-passage">Early astronomers believed that the Sun revolved around the Earth, a model known as the geocentric view. <span class="blank"></span> this perspective seemed to align perfectly with everyday observation — after all, the Sun appears to rise and set each day.</p>
+      <p class="q-stem">Which choice completes the text with the most logical transition?</p>
+      <div class="choices">
+        <button class="choice-btn" onclick="answer('q5','A','D')" data-choice="A"><span class="choice-letter">A</span> Nevertheless,</button>
+        <button class="choice-btn" onclick="answer('q5','B','D')" data-choice="B"><span class="choice-letter">B</span> Subsequently,</button>
+        <button class="choice-btn" onclick="answer('q5','C','D')" data-choice="C"><span class="choice-letter">C</span> By comparison,</button>
+        <button class="choice-btn" onclick="answer('q5','D','D')" data-choice="D"><span class="choice-letter">D</span> Admittedly,</button>
+      </div>
+      <div class="explanation" id="q5-exp">
+        <strong>D – Admittedly</strong> is correct. The passage acknowledges that the geocentric view had a reasonable basis — it matched what people could see. This is a <em>concession</em> (Pattern 1): the author briefly admits a point (the model seemed logical) before the larger argument moves on. "Nevertheless" would signal a contrast coming after; "Subsequently" implies time passing; "By comparison" requires a second thing being measured against something else.
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="question-card" id="q6">
+    <div class="q-id-bar">Question 6</div>
+    <div class="q-body">
+      <p class="q-passage">Engineers first designed the prototype in a small workshop with minimal equipment. <span class="blank"></span> the team transferred the project to a full-scale facility, where they ran extensive stress tests over the following months.</p>
+      <p class="q-stem">Which choice completes the text with the most logical transition?</p>
+      <div class="choices">
+        <button class="choice-btn" onclick="answer('q6','A','B')" data-choice="A"><span class="choice-letter">A</span> In other words,</button>
+        <button class="choice-btn" onclick="answer('q6','B','B')" data-choice="B"><span class="choice-letter">B</span> Subsequently,</button>
+        <button class="choice-btn" onclick="answer('q6','C','B')" data-choice="C"><span class="choice-letter">C</span> For example,</button>
+        <button class="choice-btn" onclick="answer('q6','D','B')" data-choice="D"><span class="choice-letter">D</span> Likewise,</button>
+      </div>
+      <div class="explanation" id="q6-exp">
+        <strong>B – Subsequently</strong> is correct. Two events happen in clear chronological order: first the prototype stage, then the move to a full-scale facility. Real time passes between steps, and the passage describes a process — this is a <em>time / sequence</em> relationship (Pattern 4). "In other words" would mean the second sentence restates the first; "For example" would make the second a specific instance of the first; "Likewise" signals similarity, not sequence.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /practice -->
+
+<script>
+  let answered = {};
+  let correctCount = 0;
+
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function answer(qId, chosen, correct) {
+    if (answered[qId]) return;
+    answered[qId] = true;
+
+    const card = document.getElementById(qId);
+    const btns = card.querySelectorAll('.choice-btn');
+    const exp = document.getElementById(qId + '-exp');
+
+    btns.forEach(btn => {
+      btn.disabled = true;
+      const c = btn.getAttribute('data-choice');
+      if (c === correct) btn.classList.add('correct');
+      else if (c === chosen) btn.classList.add('wrong');
+    });
+
+    if (chosen === correct) {
+      correctCount++;
+      exp.classList.remove('wrong-exp');
+    } else {
+      exp.classList.add('wrong-exp');
+    }
+    exp.classList.add('show');
+
+    document.getElementById('score-display').textContent = correctCount + ' / 6';
+  }
+</script>
+</body>
+</html>
