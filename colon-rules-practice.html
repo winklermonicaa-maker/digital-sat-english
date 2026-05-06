@@ -1,579 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Colon Rules & Practice — Monica Winkler</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colon Rules & Practice — Monica Winkler</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --accent: #59a5e4;
-      --accent-light: #e8f3fc;
-      --accent-dark: #2a7abf;
-      --bg: #ffffff;
-      --bg-secondary: #f7f7f5;
-      --bg-tertiary: #f0eff9b;
-      --text-primary: #1a1a18;
-      --text-secondary: #5f5e5a;
-      --text-tertiary: #888780;
-      --border: rgba(0,0,0,0.1);
-      --border-med: rgba(0,0,0,0.18);
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --success-bg: #eaf3de;
-      --success-text: #3b6d11;
-      --success-border: rgba(59,109,17,0.25);
-      --danger-bg: #fcebeb;
-      --danger-text: #a32d2d;
-      --danger-border: rgba(163,45,45,0.25);
-      --font: system-ui, -apple-system, sans-serif;
-    }
+  :root {
+    --navy: #1a2744;
+    --navy-mid: #243159;
+    --blue-accent: #2563eb;
+    --text: #1a1a2e;
+    --text-muted: #4a5568;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --correct: #16a34a;
+    --correct-bg: #dcfce7;
+    --wrong: #dc2626;
+    --wrong-bg: #fee2e2;
+    --tag-bg: #eef2ff;
+    --tag-color: #3730a3;
+  }
 
-    body {
-      font-family: var(--font);
-      background: #f2f4f7;
-      color: var(--text-primary);
-      min-height: 100vh;
-    }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
 
-    /* Banner */
-    .banner {
-      background: var(--bg);
-      border-bottom: 3px solid var(--accent);
-      padding: 0;
-    }
+  /* ── Header ── */
+  header {
+    background: var(--navy);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+  header .top-row { display: flex; align-items: center; gap: 16px; }
+  header .badge {
+    background: var(--blue-accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  header h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  header .subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,.55);
+    font-weight: 400;
+    letter-spacing: .04em;
+  }
 
-    .banner-inner {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 28px 24px 24px;
-      display: flex;
-      align-items: flex-end;
-      gap: 20px;
-    }
+  /* ── Tabs ── */
+  .tabs {
+    background: var(--navy-mid);
+    display: flex;
+    padding: 0 40px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.55);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 14px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+    letter-spacing: .01em;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,.85); }
+  .tab-btn.active { color: white; border-bottom-color: #60a5fa; }
 
-    .banner-icon {
-      width: 48px;
-      height: 48px;
-      background: var(--accent);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+  /* ── Panels ── */
+  .tab-panel { display: none; padding: 36px 40px; max-width: 900px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
 
-    .banner-icon svg {
-      width: 26px;
-      height: 26px;
-      fill: white;
-    }
+  /* ── Rules intro ── */
+  .rules-intro {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+  }
+  .rules-intro h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px; font-weight: 600;
+    margin-bottom: 10px; color: var(--navy);
+  }
+  .rules-intro p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
 
-    .banner-text h1 {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-      margin-bottom: 3px;
-    }
+  /* ── Rule cards ── */
+  .rule-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .rule-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: #f1f5f9;
+  }
+  .rule-card-header .rule-name { font-weight: 600; font-size: 15px; color: var(--navy); }
+  .rule-card-header .rule-tag {
+    background: var(--tag-bg); color: var(--tag-color);
+    font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px;
+  }
+  .rule-card-body { padding: 16px 20px; }
+  .rule-label {
+    font-size: 11px; font-weight: 700; color: var(--blue-accent);
+    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px;
+  }
+  .rule-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
 
-    .banner-text p {
-      font-size: 13px;
-      color: var(--text-tertiary);
-      letter-spacing: 0.01em;
-    }
+  .example-box {
+    background: #f8fafc; border-radius: 6px; padding: 12px 16px;
+  }
+  .ex-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: #94a3b8; margin-bottom: 4px;
+  }
+  .ex-correct { font-size: 14px; color: var(--correct); line-height: 1.6; }
+  .ex-wrong { font-size: 14px; color: var(--wrong); text-decoration: line-through; line-height: 1.6; }
+  .ex-divider { margin: 10px 0; border: none; border-top: 1px solid var(--border); }
 
-    .banner-text p span {
-      color: var(--accent);
-      font-weight: 500;
-    }
+  /* ── Practice ── */
+  .score-bar {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .score-bar span { font-size: 14px; color: var(--text-muted); }
+  .score-display { font-size: 20px; font-weight: 700; color: var(--navy); }
 
-    /* Main layout */
-    .main {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 28px 24px 48px;
-    }
+  .question-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .q-id-bar {
+    background: var(--navy);
+    color: white;
+    font-size: 12px; font-weight: 700; letter-spacing: .08em;
+    padding: 8px 20px; display: inline-block;
+  }
+  .q-body { padding: 20px 24px; }
+  .q-passage {
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px; line-height: 1.75;
+    color: var(--text); margin-bottom: 20px;
+  }
+  .q-stem { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 16px; }
+  .choices { display: flex; flex-direction: column; gap: 8px; }
+  .choice-btn {
+    display: flex; align-items: center; gap: 12px;
+    background: none; border: 1.5px solid var(--border);
+    border-radius: 6px; padding: 11px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; color: var(--text);
+    cursor: pointer; text-align: left;
+    transition: border-color .15s, background .15s;
+  }
+  .choice-btn:hover:not(:disabled) { border-color: var(--blue-accent); background: #eff6ff; }
+  .choice-btn:disabled { cursor: default; }
+  .choice-letter { font-weight: 700; font-size: 13px; color: var(--text-muted); min-width: 18px; }
+  .choice-btn.correct { border-color: var(--correct); background: var(--correct-bg); }
+  .choice-btn.correct .choice-letter { color: var(--correct); }
+  .choice-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+  .choice-btn.wrong .choice-letter { color: var(--wrong); }
+  .choice-btn.reveal { border-color: var(--correct); background: var(--correct-bg); }
+  .choice-btn.reveal .choice-letter { color: var(--correct); }
 
-    /* Tabs */
-    .tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 20px;
-      border-bottom: 0.5px solid var(--border);
-      padding-bottom: 0;
-    }
+  .explanation {
+    margin-top: 16px; padding: 14px 16px;
+    background: #f0fdf4; border: 1px solid #86efac;
+    border-radius: 6px; font-size: 14px; line-height: 1.6;
+    color: #14532d; display: none;
+  }
+  .explanation.wrong-exp { background: #fef2f2; border-color: #fca5a5; color: #7f1d1d; }
+  .explanation.show { display: block; }
+  .explanation strong { font-weight: 600; }
 
-    .tab-btn {
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      padding: 10px 18px;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.15s;
-      font-family: var(--font);
-      margin-bottom: -0.5px;
-    }
+  .finish-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; padding: 48px 24px;
+    text-align: center;
+  }
+  .finish-score { font-size: 56px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .finish-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
+  .restart-btn {
+    background: var(--blue-accent); color: white;
+    border: none; border-radius: 6px;
+    padding: 10px 24px; font-size: 14px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif; cursor: pointer;
+    transition: background .15s;
+  }
+  .restart-btn:hover { background: #1d4ed8; }
 
-    .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-      font-weight: 500;
-    }
-
-    .tab-btn:hover:not(.active) { color: var(--text-primary); }
-
-    /* Rule cards */
-    .rule-card {
-      background: var(--bg);
-      border: 0.5px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
-      margin-bottom: 12px;
-    }
-
-    .rule-label {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 5px;
-    }
-
-    .rule-title {
-      font-size: 15px;
-      font-weight: 500;
-      margin-bottom: 6px;
-      color: var(--text-primary);
-    }
-
-    .rule-desc {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 12px;
-    }
-
-    .example-box {
-      background: var(--bg-secondary);
-      border-radius: var(--radius-md);
-      padding: 10px 14px;
-      font-size: 13px;
-    }
-
-    .ex-label {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-tertiary);
-      margin-bottom: 4px;
-    }
-
-    .ex-correct { color: var(--success-text); line-height: 1.6; margin-bottom: 2px; }
-    .ex-wrong { color: var(--danger-text); text-decoration: line-through; line-height: 1.6; }
-
-    /* Practice */
-    .score-bar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .score-stat {
-      background: var(--bg);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 10px 16px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      flex: 1;
-      text-align: center;
-    }
-
-    .score-stat span {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--accent);
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .q-card {
-      background: var(--bg);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      margin-bottom: 12px;
-    }
-
-    .q-num {
-      font-size: 11px;
-      color: var(--text-tertiary);
-      margin-bottom: 8px;
-    }
-
-    .q-text {
-      font-size: 15px;
-      color: var(--text-primary);
-      line-height: 1.7;
-      margin-bottom: 16px;
-      font-weight: 500;
-    }
-
-    .q-options { display: flex; flex-direction: column; gap: 8px; }
-
-    .opt-btn {
-      background: var(--bg-secondary);
-      border: 0.5px solid var(--border-med);
-      border-radius: var(--radius-md);
-      padding: 10px 14px;
-      font-size: 14px;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.1s;
-      color: var(--text-primary);
-      font-family: var(--font);
-      line-height: 1.5;
-    }
-
-    .opt-btn:hover:not(:disabled) {
-      background: var(--accent-light);
-      border-color: var(--accent);
-    }
-
-    .opt-btn.correct {
-      background: var(--success-bg);
-      border-color: var(--success-border);
-      color: var(--success-text);
-    }
-
-    .opt-btn.wrong {
-      background: var(--danger-bg);
-      border-color: var(--danger-border);
-      color: var(--danger-text);
-      text-decoration: line-through;
-    }
-
-    .opt-btn.reveal-correct {
-      background: var(--success-bg);
-      border-color: var(--success-border);
-      color: var(--success-text);
-    }
-
-    .feedback {
-      font-size: 13px;
-      margin-top: 12px;
-      padding: 10px 14px;
-      border-radius: var(--radius-md);
-      line-height: 1.6;
-    }
-
-    .feedback.correct { background: var(--success-bg); color: var(--success-text); }
-    .feedback.wrong { background: var(--danger-bg); color: var(--danger-text); }
-
-    .next-btn {
-      margin-top: 14px;
-      padding: 9px 22px;
-      font-size: 14px;
-      font-weight: 500;
-      border-radius: var(--radius-md);
-      background: var(--accent);
-      border: none;
-      cursor: pointer;
-      color: white;
-      font-family: var(--font);
-      transition: background 0.15s;
-    }
-
-    .next-btn:hover { background: var(--accent-dark); }
-
-    .finish-card {
-      text-align: center;
-      padding: 3rem 1rem;
-    }
-
-    .finish-score {
-      font-size: 56px;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .finish-sub {
-      font-size: 15px;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 12px;
-      color: var(--text-tertiary);
-    }
-  </style>
+  @media (max-width: 600px) {
+    header, .tabs { padding-left: 20px; padding-right: 20px; }
+    .tab-panel { padding: 24px 20px; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="banner">
-    <div class="banner-inner">
-      <div class="banner-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="7" r="2.5" fill="white"/>
-          <circle cx="12" cy="17" r="2.5" fill="white"/>
-        </svg>
-      </div>
-      <div class="banner-text">
-        <h1>Colon Rules &amp; Practice</h1>
-        <p><span>Monica Winkler</span> &nbsp;|&nbsp; Digital SAT English Prep</p>
+<header>
+  <div class="top-row">
+    <div class="badge">SAT Writing</div>
+    <h1>Colon Rules &amp; Practice</h1>
+  </div>
+  <span class="subtitle">Monica Winkler &nbsp;|&nbsp; Digital SAT English Prep</span>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('rules', this)">📋 Rules</button>
+  <button class="tab-btn" onclick="switchTab('practice', this)">✏️ Practice</button>
+</div>
+
+<!-- ════════ RULES ════════ -->
+<div id="rules" class="tab-panel active">
+
+  <div class="rules-intro">
+    <h2>When to Use a Colon</h2>
+    <p>A colon can only follow a <strong>complete independent clause</strong>. Never place a colon after a verb, preposition, or phrases like "such as" or "including."</p>
+  </div>
+
+  <div class="rule-card">
+    <div class="rule-card-header">
+      <span class="rule-name">Introducing a List</span>
+      <span class="rule-tag">Rule 1</span>
+    </div>
+    <div class="rule-card-body">
+      <div class="rule-desc">Use a colon after a complete sentence that introduces a list. The clause before the colon must be able to stand alone.</div>
+      <div class="example-box">
+        <div class="ex-label">Correct</div>
+        <div class="ex-correct">She packed three things: a map, a compass, and a flashlight.</div>
+        <hr class="ex-divider">
+        <div class="ex-label">Incorrect</div>
+        <div class="ex-wrong">She packed: a map, a compass, and a flashlight.</div>
       </div>
     </div>
   </div>
 
-  <div class="main">
-    <div class="tabs">
-      <button class="tab-btn active" onclick="showTab('rules', this)">Rules</button>
-      <button class="tab-btn" onclick="showTab('practice', this)">Practice</button>
+  <div class="rule-card">
+    <div class="rule-card-header">
+      <span class="rule-name">Introducing an Explanation or Elaboration</span>
+      <span class="rule-tag">Rule 2</span>
     </div>
-
-    <div id="tab-rules">
-      <div class="rule-card">
-        <div class="rule-label">Rule 1</div>
-        <div class="rule-title">Introducing a list</div>
-        <div class="rule-desc">Use a colon after a complete sentence that introduces a list. The clause before the colon must be able to stand alone.</div>
-        <div class="example-box">
-          <div class="ex-label">Correct</div>
-          <div class="ex-correct">She packed three things: a map, a compass, and a flashlight.</div>
-          <div style="margin-top: 8px;" class="ex-label">Incorrect</div>
-          <div class="ex-wrong">She packed: a map, a compass, and a flashlight.</div>
-        </div>
+    <div class="rule-card-body">
+      <div class="rule-desc">Use a colon after a complete clause to signal that what follows explains or expands on the idea just stated.</div>
+      <div class="example-box">
+        <div class="ex-label">Correct</div>
+        <div class="ex-correct">The meeting was a success: every team agreed on the new deadline.</div>
+        <hr class="ex-divider">
+        <div class="ex-label">Incorrect</div>
+        <div class="ex-wrong">The reason was: they were tired.</div>
       </div>
-
-      <div class="rule-card">
-        <div class="rule-label">Rule 2</div>
-        <div class="rule-title">Introducing an explanation or elaboration</div>
-        <div class="rule-desc">Use a colon after a complete clause to signal that what follows explains or expands on the idea just stated.</div>
-        <div class="example-box">
-          <div class="ex-label">Correct</div>
-          <div class="ex-correct">The meeting was a success: every team agreed on the new deadline.</div>
-          <div style="margin-top: 8px;" class="ex-label">Incorrect</div>
-          <div class="ex-wrong">The reason was: they were tired.</div>
-        </div>
-      </div>
-
-      <div class="rule-card">
-        <div class="rule-label">Rule 3</div>
-        <div class="rule-title">Introducing a quotation</div>
-        <div class="rule-desc">A colon can introduce a formal or long quotation, especially when the lead-in is a complete sentence.</div>
-        <div class="example-box">
-          <div class="ex-label">Correct</div>
-          <div class="ex-correct">Lincoln's words still resonate: "Four score and seven years ago…"</div>
-        </div>
-      </div>
-
-      <div class="rule-card">
-        <div class="rule-label">Rule 4</div>
-        <div class="rule-title">Between independent clauses</div>
-        <div class="rule-desc">A colon can join two independent clauses when the second one directly explains or illustrates the first.</div>
-        <div class="example-box">
-          <div class="ex-label">Correct</div>
-          <div class="ex-correct">I know why she left: the job never challenged her.</div>
-        </div>
-      </div>
-
-      <div class="rule-card">
-        <div class="rule-label">Rule 5</div>
-        <div class="rule-title">Capitalization after a colon</div>
-        <div class="rule-desc">If what follows the colon is a complete sentence, you may capitalize the first word (both styles are accepted). If it's a phrase or list, keep it lowercase.</div>
-        <div class="example-box">
-          <div class="ex-label">Both accepted</div>
-          <div class="ex-correct">She had one goal: Win the championship. <span style="color:#aaa; font-size:12px;">or</span> win the championship.</div>
-          <div style="margin-top: 8px;" class="ex-label">Lowercase for phrases</div>
-          <div class="ex-correct">She brought two things: her notebook and her pen.</div>
-        </div>
-      </div>
-
-      <div class="rule-card">
-        <div class="rule-label">Rule 6</div>
-        <div class="rule-title">Do NOT use a colon after a verb or preposition</div>
-        <div class="rule-desc">Never place a colon directly after a verb, preposition, or "such as" / "including," as the sentence is not yet complete at that point.</div>
-        <div class="example-box">
-          <div class="ex-label">Correct</div>
-          <div class="ex-correct">The countries include France, Italy, and Spain.</div>
-          <div style="margin-top: 8px;" class="ex-label">Incorrect</div>
-          <div class="ex-wrong">The countries include: France, Italy, and Spain.</div>
-        </div>
-      </div>
-    </div>
-
-    <div id="tab-practice" style="display:none;">
-      <div class="score-bar">
-        <div class="score-stat"><span id="score-correct">0</span>Correct</div>
-        <div class="score-stat"><span id="score-total">0</span>Answered</div>
-        <div class="score-stat"><span id="score-pct">—</span>Score</div>
-      </div>
-      <div id="q-container"></div>
-      <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display:none;">Next question →</button>
     </div>
   </div>
 
-  <footer>Monica Winkler &nbsp;|&nbsp; Digital SAT English Prep</footer>
+  <div class="rule-card">
+    <div class="rule-card-header">
+      <span class="rule-name">Introducing a Quotation</span>
+      <span class="rule-tag">Rule 3</span>
+    </div>
+    <div class="rule-card-body">
+      <div class="rule-desc">A colon can introduce a formal or long quotation, especially when the lead-in is a complete sentence.</div>
+      <div class="example-box">
+        <div class="ex-label">Correct</div>
+        <div class="ex-correct">Lincoln's words still resonate: "Four score and seven years ago…"</div>
+      </div>
+    </div>
+  </div>
 
-  <script>
-    const questions = [
-      {
-        prompt: "In her 2019 study on urban noise pollution, acoustician Priya Mehta identified a striking pattern _____ residents living within 500 meters of a highway reported significantly higher rates of sleep disruption than those living farther away, even when overall noise levels were similar.",
-        options: [
-          "pattern: residents",
-          "pattern, residents",
-          "pattern residents",
-          "pattern; residents"
-        ],
-        answer: 0,
-        explanation: "'Mehta identified a striking pattern' is a complete independent clause. The colon is correct because what follows is the content of that pattern. No punctuation (C) creates a run-on, and a comma (B) cannot join two independent clauses on its own."
-      },
-      {
-        prompt: "The volunteer program requires applicants to submit three documents including _____ a personal statement, two letters of recommendation, and a completed skills assessment form.",
-        options: [
-          "including: a personal statement",
-          "including, a personal statement",
-          "including a personal statement",
-          "including; a personal statement"
-        ],
-        answer: 2,
-        explanation: "'Including' is a preposition, so the sentence is not yet complete at that point. No punctuation is correct. A colon (A) is a common trap here — it can only follow a complete independent clause, not a preposition."
-      },
-      {
-        prompt: "Ornithologist James Elwood catalogued the migratory behavior of over 40 warbler species; he noticed one consistent finding across all of them _____ birds that wintered in fragmented habitats arrived at their breeding grounds an average of four days later than those wintering in continuous forest.",
-        options: [
-          "them, birds",
-          "them: birds",
-          "them birds",
-          "them; birds"
-        ],
-        answer: 1,
-        explanation: "'He noticed one consistent finding across all of them' is a complete clause. The colon is correct because what follows is the content of that finding. On the SAT, when a noun like 'finding' precedes the blank and the next clause defines it, the colon is the intended answer."
-      },
-      {
-        prompt: "Researchers studying migratory songbirds have long assumed that birds navigate primarily by the stars; a new study by ecologist Taryn Boudreaux complicates that picture _____ birds raised indoors without star exposure navigated just as accurately as those raised under open skies.",
-        options: [
-          "picture, birds",
-          "picture birds",
-          "picture: birds",
-          "picture; birds"
-        ],
-        answer: 2,
-        explanation: "'A new study complicates that picture' is a complete clause. The colon introduces exactly what the complication is. No punctuation (B) creates a run-on, and a comma (A) cannot join two independent clauses on its own."
-      },
-      {
-        prompt: "The foundation funds projects in three areas _____ environmental conservation, early childhood education, and community health initiatives.",
-        options: [
-          "areas: environmental conservation",
-          "areas, environmental conservation",
-          "areas environmental conservation",
-          "areas including: environmental conservation"
-        ],
-        answer: 0,
-        explanation: "'The foundation funds projects in three areas' is a complete clause that introduces a list. The colon is correct. Option D is a common trap, as the sentence is not yet complete after 'including,' so a colon cannot follow it."
-      },
-      {
-        prompt: "In his landmark 1962 essay, cultural critic Raymond Williams argued that the word 'culture' encompasses meanings _____ artistic achievement, lived social experience, and the broader process by which societies develop shared values and ways of life.",
-        options: [
-          "meanings of:",
-          "meanings of,",
-          "meanings of",
-          "meanings of;"
-        ],
-        answer: 2,
-        explanation: "'Culture encompasses meanings of' is incomplete — 'of' is a preposition and the sentence is not yet finished. No punctuation is correct. A colon (A) cannot follow a preposition, and a comma or semicolon after 'of' would also be wrong for the same reason."
-      }
-    ];
+  <div class="rule-card">
+    <div class="rule-card-header">
+      <span class="rule-name">Between Two Independent Clauses</span>
+      <span class="rule-tag">Rule 4</span>
+    </div>
+    <div class="rule-card-body">
+      <div class="rule-desc">A colon can join two independent clauses when the second one directly explains or illustrates the first.</div>
+      <div class="example-box">
+        <div class="ex-label">Correct</div>
+        <div class="ex-correct">I know why she left: the job never challenged her.</div>
+      </div>
+    </div>
+  </div>
 
-    let current = 0, answered = 0, correct = 0, qOrder = [];
+  <div class="rule-card">
+    <div class="rule-card-header">
+      <span class="rule-name">Capitalization After a Colon</span>
+      <span class="rule-tag">Rule 5</span>
+    </div>
+    <div class="rule-card-body">
+      <div class="rule-desc">If what follows the colon is a complete sentence, you may capitalize the first word (both styles are accepted). If it's a phrase or list, keep it lowercase.</div>
+      <div class="example-box">
+        <div class="ex-label">Both accepted</div>
+        <div class="ex-correct">She had one goal: Win the championship. &nbsp;<span style="color:#94a3b8;font-size:12px;">or</span>&nbsp; win the championship.</div>
+        <hr class="ex-divider">
+        <div class="ex-label">Lowercase for phrases</div>
+        <div class="ex-correct">She brought two things: her notebook and her pen.</div>
+      </div>
+    </div>
+  </div>
 
-    function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
+  <div class="rule-card">
+    <div class="rule-card-header">
+      <span class="rule-name">Do NOT Use a Colon After a Verb or Preposition</span>
+      <span class="rule-tag">Rule 6</span>
+    </div>
+    <div class="rule-card-body">
+      <div class="rule-desc">Never place a colon directly after a verb, preposition, or "such as" / "including" — the sentence is not yet complete at that point.</div>
+      <div class="example-box">
+        <div class="ex-label">Correct</div>
+        <div class="ex-correct">The countries include France, Italy, and Spain.</div>
+        <hr class="ex-divider">
+        <div class="ex-label">Incorrect</div>
+        <div class="ex-wrong">The countries include: France, Italy, and Spain.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════ PRACTICE ════════ -->
+<div id="practice" class="tab-panel">
+
+  <div style="margin-bottom:28px;">
+    <h2 style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:var(--navy);margin-bottom:6px;">Practice Questions</h2>
+    <p style="color:var(--text-muted);font-size:14px;">Select the option that correctly uses (or avoids) a colon.</p>
+  </div>
+
+  <div class="score-bar">
+    <span>Score</span>
+    <span class="score-display" id="score-display">0 / 6</span>
+  </div>
+
+  <div id="q-container"></div>
+
+</div>
+
+<script>
+  const questions = [
+    {
+      passage: "In her 2019 study on urban noise pollution, acoustician Priya Mehta identified a striking pattern _____ residents living within 500 meters of a highway reported significantly higher rates of sleep disruption than those living farther away, even when overall noise levels were similar.",
+      stem: "Which choice correctly completes the punctuation in the sentence?",
+      choices: ["pattern: residents", "pattern, residents", "pattern residents", "pattern; residents"],
+      answer: 0,
+      explanation: "<strong>A</strong> is correct. \"Mehta identified a striking pattern\" is a complete independent clause. The colon is correct because what follows is the content of that pattern — exactly what the colon signals. A comma (B) cannot join two independent clauses on its own; no punctuation (C) creates a run-on."
+    },
+    {
+      passage: "The volunteer program requires applicants to submit three documents including _____ a personal statement, two letters of recommendation, and a completed skills assessment form.",
+      stem: "Which choice correctly completes the punctuation in the sentence?",
+      choices: ["including: a personal statement", "including, a personal statement", "including a personal statement", "including; a personal statement"],
+      answer: 2,
+      explanation: "<strong>C</strong> is correct. \"Including\" is a preposition — the sentence is not yet complete at that point. No punctuation is the right call. A colon (A) is a classic trap here: it can only follow a complete independent clause, never a preposition."
+    },
+    {
+      passage: "Ornithologist James Elwood catalogued the migratory behavior of over 40 warbler species; he noticed one consistent finding across all of them _____ birds that wintered in fragmented habitats arrived at their breeding grounds an average of four days later than those wintering in continuous forest.",
+      stem: "Which choice correctly completes the punctuation in the sentence?",
+      choices: ["them, birds", "them: birds", "them birds", "them; birds"],
+      answer: 1,
+      explanation: "<strong>B</strong> is correct. \"He noticed one consistent finding across all of them\" is a complete clause. The colon introduces exactly what that finding is. On the SAT, when a noun like \"finding\" or \"pattern\" precedes the blank and the next clause defines it, the colon is the intended answer."
+    },
+    {
+      passage: "Researchers studying migratory songbirds have long assumed that birds navigate primarily by the stars; a new study by ecologist Taryn Boudreaux complicates that picture _____ birds raised indoors without star exposure navigated just as accurately as those raised under open skies.",
+      stem: "Which choice correctly completes the punctuation in the sentence?",
+      choices: ["picture, birds", "picture birds", "picture: birds", "picture; birds"],
+      answer: 2,
+      explanation: "<strong>C</strong> is correct. \"A new study complicates that picture\" is a complete clause. The colon introduces exactly what the complication is — the finding that follows. No punctuation (B) creates a run-on, and a comma (A) cannot join two independent clauses on its own."
+    },
+    {
+      passage: "The foundation funds projects in three areas _____ environmental conservation, early childhood education, and community health initiatives.",
+      stem: "Which choice correctly completes the punctuation in the sentence?",
+      choices: ["areas: environmental conservation", "areas, environmental conservation", "areas environmental conservation", "areas including: environmental conservation"],
+      answer: 0,
+      explanation: "<strong>A</strong> is correct. \"The foundation funds projects in three areas\" is a complete clause that introduces a list — a textbook colon use. Option D is a trap: \"including\" is a preposition, so the sentence is not yet complete after it, and a colon cannot follow."
+    },
+    {
+      passage: "In his landmark 1962 essay, cultural critic Raymond Williams argued that the word \"culture\" encompasses meanings _____ artistic achievement, lived social experience, and the broader process by which societies develop shared values.",
+      stem: "Which choice correctly completes the punctuation in the sentence?",
+      choices: ["meanings of:", "meanings of,", "meanings of", "meanings of;"],
+      answer: 2,
+      explanation: "<strong>C</strong> is correct. \"Encompasses meanings of\" is incomplete — \"of\" is a preposition and the sentence is not finished yet. No punctuation is correct. A colon (A) cannot follow a preposition, and a comma or semicolon after \"of\" would also be wrong for the same reason."
     }
+  ];
 
-    function updateScore() {
-      document.getElementById('score-correct').textContent = correct;
-      document.getElementById('score-total').textContent = answered;
-      document.getElementById('score-pct').textContent = answered > 0 ? Math.round((correct / answered) * 100) + '%' : '—';
-    }
+  let answered = {}, correctCount = 0;
 
-    function renderQuestion() {
-      if (current >= qOrder.length) {
-        document.getElementById('q-container').innerHTML = `
-          <div class="q-card finish-card">
-            <div class="finish-score">${Math.round((correct / answered) * 100)}%</div>
-            <div class="finish-sub">You got ${correct} of ${answered} correct.</div>
-            <button class="next-btn" onclick="restartQuiz()">Try again</button>
-          </div>`;
-        document.getElementById('next-btn').style.display = 'none';
-        return;
-      }
-      const q = questions[qOrder[current]];
-      document.getElementById('q-container').innerHTML = `
-        <div class="q-card">
-          <div class="q-num">Question ${current + 1} of ${qOrder.length}</div>
-          <div class="q-text">${q.prompt}</div>
-          <div class="q-options">
-            ${q.options.map((o, i) => `<button class="opt-btn" onclick="selectAnswer(${i})">${o}</button>`).join('')}
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function buildQuestions() {
+    const container = document.getElementById('q-container');
+    container.innerHTML = '';
+    questions.forEach((q, i) => {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = 'q' + i;
+      card.innerHTML = `
+        <div class="q-id-bar">Question ${i + 1}</div>
+        <div class="q-body">
+          <p class="q-passage">${q.passage.replace('_____', '<span style="display:inline-block;min-width:52px;height:2px;background:var(--text);vertical-align:middle;margin:0 4px;"></span>')}</p>
+          <p class="q-stem">${q.stem}</p>
+          <div class="choices">
+            ${q.choices.map((c, ci) => `
+              <button class="choice-btn" onclick="answer(${i},${ci})" data-choice="${ci}">
+                <span class="choice-letter">${['A','B','C','D'][ci]}</span> ${c}
+              </button>`).join('')}
           </div>
-          <div id="feedback"></div>
+          <div class="explanation" id="exp${i}"></div>
         </div>`;
-      document.getElementById('next-btn').style.display = 'none';
-    }
+      container.appendChild(card);
+    });
+  }
 
-    function selectAnswer(idx) {
-      const q = questions[qOrder[current]];
-      const btns = document.querySelectorAll('.opt-btn');
-      btns.forEach(b => b.disabled = true);
-      answered++;
-      if (idx === q.answer) {
-        btns[idx].classList.add('correct');
-        document.getElementById('feedback').innerHTML = `<div class="feedback correct">Correct! ${q.explanation}</div>`;
-        correct++;
-      } else {
-        btns[idx].classList.add('wrong');
-        btns[q.answer].classList.add('reveal-correct');
-        document.getElementById('feedback').innerHTML = `<div class="feedback wrong">Not quite. ${q.explanation}</div>`;
-      }
-      updateScore();
-      document.getElementById('next-btn').style.display = 'inline-block';
-    }
+  function answer(qIdx, chosen) {
+    if (answered[qIdx] !== undefined) return;
+    answered[qIdx] = chosen;
 
-    function nextQuestion() { current++; renderQuestion(); }
+    const q = questions[qIdx];
+    const card = document.getElementById('q' + qIdx);
+    const btns = card.querySelectorAll('.choice-btn');
+    const exp = document.getElementById('exp' + qIdx);
+    const isCorrect = chosen === q.answer;
 
-    function restartQuiz() {
-      current = 0; answered = 0; correct = 0;
-      qOrder = shuffle([...Array(questions.length).keys()]);
-      updateScore();
-      renderQuestion();
-    }
+    btns.forEach(btn => { btn.disabled = true; });
+    btns[q.answer].classList.add(isCorrect ? 'correct' : 'reveal');
+    if (!isCorrect) btns[chosen].classList.add('wrong');
 
-    function showTab(tab, btn) {
-      document.getElementById('tab-rules').style.display = tab === 'rules' ? 'block' : 'none';
-      document.getElementById('tab-practice').style.display = tab === 'practice' ? 'block' : 'none';
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      if (tab === 'practice' && answered === 0 && current === 0) {
-        qOrder = shuffle([...Array(questions.length).keys()]);
-        renderQuestion();
-        updateScore();
-      }
-    }
-  </script>
+    if (isCorrect) correctCount++;
+    exp.innerHTML = q.explanation;
+    exp.classList.add('show');
+    if (!isCorrect) exp.classList.add('wrong-exp');
+
+    document.getElementById('score-display').textContent = correctCount + ' / 6';
+  }
+
+  buildQuestions();
+</script>
 </body>
 </html>
