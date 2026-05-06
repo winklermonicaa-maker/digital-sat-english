@@ -278,9 +278,45 @@
   .explanation.show { display: block; }
   .explanation strong { font-weight: 600; }
 
+  /* ── Quizlet card ── */
+  .quizlet-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 32px;
+  }
+  .quizlet-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    background: #f1f5f9;
+    border-bottom: 1px solid var(--border);
+  }
+  .quizlet-card-header .ql-title {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 600; font-size: 15px; color: var(--navy);
+  }
+  .ql-logo {
+    background: #4255ff; color: white;
+    font-size: 11px; font-weight: 800; letter-spacing: .02em;
+    padding: 3px 8px; border-radius: 4px;
+  }
+  .ql-open-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #4255ff; color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 600;
+    padding: 7px 14px; border-radius: 6px;
+    text-decoration: none;
+    transition: background .15s;
+  }
+  .ql-open-btn:hover { background: #3344dd; }
+  .quizlet-embed { display: block; width: 100%; border: none; height: 410px; }
+
   @media (max-width: 600px) {
     header, .tabs { padding-left: 20px; padding-right: 20px; }
     .tab-panel { padding: 24px 20px; }
+    .quizlet-embed { height: 340px; }
   }
 </style>
 </head>
@@ -526,6 +562,23 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Quizlet -->
+  <div class="quizlet-card">
+    <div class="quizlet-card-header">
+      <div class="ql-title">
+        <span class="ql-logo">Q</span>
+        Digital SAT Transition Words — Flashcards
+      </div>
+      <a class="ql-open-btn" href="https://quizlet.com/ar/1177365051/digital-sat-transition-words-flash-cards/?i=2kxcy1&x=1jqt" target="_blank">
+        Open in Quizlet ↗
+      </a>
+    </div>
+    <iframe class="quizlet-embed"
+      src="https://quizlet.com/ar/1177365051/flashcards/embed?i=2kxcy1&x=1jqt"
+      allowfullscreen>
+    </iframe>
   </div>
 
 </div><!-- /rules -->
