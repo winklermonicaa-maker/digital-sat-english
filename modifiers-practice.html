@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modifiers: Digital SAT English Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#59a5e4;
+  --accent-dark:#3a86c8;
+  --accent-bg:#eef6fd;
+  --bg:#F7F4EE;
+  --surface:#fff;
+  --border:#E0DBD0;
+  --text:#1C1A17;
+  --muted:#6B6458;
+  --light:#9A9189;
+  --green:#2D6A4F;--green-bg:#EDFAF3;--green-border:#A8D5BE;
+  --red:#9B2335;--red-bg:#FCEEF0;--red-border:#F0B8C0;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;}
+
+/* ── HEADER ── */
+.site-header{
+  background:#1a2332;
+  color:#fff;
+  padding:1.5rem 1.25rem 1.2rem;
+  text-align:center;
+}
+.site-header h1{
+  font-family:'Lora',serif;
+  font-size:1.55rem;
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+.site-header .tagline{
+  font-size:.78rem;
+  color:#59a5e4;
+  margin-top:.3rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+/* ── MODE TABS ── */
+.mode-bar{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:center;
+  gap:0;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.mode-btn{
+  padding:.7rem 2rem;
+  font-family:'DM Sans',sans-serif;
+  font-size:.8rem;
+  font-weight:500;
+  border:none;
+  border-bottom:3px solid transparent;
+  background:none;
+  cursor:pointer;
+  color:var(--muted);
+  transition:.15s;
+  letter-spacing:.02em;
+}
+.mode-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ── LAYOUT ── */
+.container{max-width:720px;margin:0 auto;padding:1.75rem 1.25rem 3rem;}
+
+/* ── RULE CARDS ── */
+.rule-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:4px solid var(--accent);
+  border-radius:10px;
+  padding:1.25rem 1.4rem;
+  margin-bottom:1.1rem;
+}
+.rule-card h2{
+  font-family:'Lora',serif;
+  font-size:1.05rem;
+  font-weight:600;
+  margin-bottom:.25rem;
+}
+.rule-card .subtitle{
+  font-size:.78rem;
+  color:var(--muted);
+  margin-bottom:.85rem;
+  font-style:italic;
+}
+.rule-card p,.rule-card .body{
+  font-size:.88rem;
+  line-height:1.65;
+  color:var(--text);
+}
+.rule-card .body em{font-style:italic;}
+.rule-card .body strong{font-weight:600;}
+
+.example-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.6rem;
+  margin-top:.9rem;
+}
+@media(max-width:520px){.example-row{grid-template-columns:1fr;}}
+
+.ex-box{
+  border-radius:8px;
+  padding:.7rem .9rem;
+  font-size:.82rem;
+  line-height:1.5;
+}
+.ex-box.wrong{background:var(--red-bg);border:1px solid var(--red-border);}
+.ex-box.right{background:var(--green-bg);border:1px solid var(--green-border);}
+.ex-box .label{
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  margin-bottom:.3rem;
+}
+.ex-box.wrong .label{color:var(--red);}
+.ex-box.right .label{color:var(--green);}
+
+.tip-box{
+  background:var(--accent-bg);
+  border-radius:8px;
+  padding:.65rem .9rem;
+  margin-top:.75rem;
+  font-size:.82rem;
+  color:#1a2332;
+  line-height:1.5;
+}
+.tip-box strong{color:var(--accent-dark);}
+
+/* ── WHAT / SAT SAYS ── */
+.intro-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.2rem 1.4rem;
+  margin-bottom:1.4rem;
+  font-size:.88rem;
+  line-height:1.65;
+}
+.intro-box h2{
+  font-family:'Lora',serif;
+  font-size:1rem;
+  font-weight:600;
+  margin-bottom:.5rem;
+}
+.intro-box ul{
+  padding-left:1.2rem;
+  margin-top:.4rem;
+}
+.intro-box li{margin-bottom:.25rem;}
+
+/* ── DRILL ── */
+.drill-q{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.25rem 1.4rem;
+  margin-bottom:1rem;
+}
+.q-number{
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:.5rem;
+}
+.q-sentence{
+  font-family:'Lora',serif;
+  font-size:1rem;
+  line-height:1.6;
+  margin-bottom:.15rem;
+  font-style:italic;
+}
+.q-blank{
+  display:inline-block;
+  min-width:120px;
+  border-bottom:2px solid var(--accent);
+  padding:0 4px;
+  font-style:normal;
+  font-weight:600;
+  color:var(--accent-dark);
+  white-space:pre;
+}
+.q-prompt{
+  font-size:.82rem;
+  color:var(--muted);
+  margin-bottom:.9rem;
+}
+.choices{list-style:none;display:flex;flex-direction:column;gap:.4rem;}
+.choice-btn{
+  width:100%;
+  text-align:left;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:.6rem .9rem;
+  font-family:'DM Sans',sans-serif;
+  font-size:.85rem;
+  cursor:pointer;
+  transition:.12s;
+  line-height:1.4;
+}
+.choice-btn:hover:not(:disabled){background:#e8f2fb;border-color:var(--accent);}
+.choice-btn.correct{background:var(--green-bg);border-color:var(--green-border);color:var(--green);font-weight:500;}
+.choice-btn.wrong{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
+.choice-btn:disabled{cursor:default;}
+
+.feedback-box{
+  margin-top:.75rem;
+  border-radius:8px;
+  padding:.75rem 1rem;
+  font-size:.83rem;
+  line-height:1.55;
+  display:none;
+}
+.feedback-box.show{display:block;}
+.feedback-box.correct-fb{background:var(--green-bg);border:1px solid var(--green-border);color:#1a3d2b;}
+.feedback-box.wrong-fb{background:var(--red-bg);border:1px solid var(--red-border);color:#5a1020;}
+.feedback-box strong{font-weight:600;}
+
+/* score bar */
+.score-bar{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1rem 1.4rem;
+  margin-bottom:1.2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+.score-bar .score-num{
+  font-family:'Lora',serif;
+  font-size:1.4rem;
+  font-weight:600;
+  color:var(--accent-dark);
+}
+.score-bar .score-label{font-size:.8rem;color:var(--muted);}
+.reset-btn{
+  padding:.5rem 1rem;
+  border-radius:99px;
+  border:1px solid var(--border);
+  background:var(--bg);
+  font-family:'DM Sans',sans-serif;
+  font-size:.78rem;
+  cursor:pointer;
+  color:var(--muted);
+}
+.reset-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* hide/show views */
+.view{display:none;}
+.view.active{display:block;}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Modifiers</h1>
+  <div class="tagline">Monica Winkler &nbsp;|&nbsp; Digital SAT English Prep</div>
+</header>
+
+<nav class="mode-bar">
+  <button class="mode-btn active" onclick="switchMode('review')">Review</button>
+  <button class="mode-btn" onclick="switchMode('drill')">Practice</button>
+</nav>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════════════
+       REVIEW VIEW
+  ════════════════════════════════════════════════════ -->
+  <div id="view-review" class="view active">
+
+    <div class="intro-box">
+      <h2>What is a modifier?</h2>
+      <p>A <strong>modifier</strong> is an extra word, phrase, or clause that gives us more information about something else in the sentence.</p>
+      <p style="margin-top:.6rem">The SAT tests one key idea: <strong>a modifier must be placed next to the word it modifies.</strong></p>
+      <p style="margin-top:.6rem">Your two jobs on every question:</p>
+      <ul>
+        <li>Identify and <strong>label</strong> the modifier.</li>
+        <li>Identify <strong>what it is modifying</strong> (or supposed to be modifying).</li>
+      </ul>
+    </div>
+
+    <!-- RULE 1: What a modifier looks like -->
+    <div class="rule-card">
+      <h2>What does a modifier look like?</h2>
+      <div class="subtitle">Modifiers can be single words, prepositional phrases, participial phrases, or clauses</div>
+      <div class="body">
+        <p>Consider: <em>The cats in the cat café were so cute!</em></p>
+        <p style="margin-top:.6rem">Here, <strong>"in the cat café"</strong> is a modifier: it tells us more about <em>the cats.</em> Because it starts with the preposition <em>in</em>, it's called a <strong>prepositional phrase</strong>.</p>
+        <p style="margin-top:.6rem">Common modifier types the SAT uses:</p>
+        <ul style="padding-left:1.2rem;margin-top:.4rem;font-size:.88rem;line-height:1.75">
+          <li><strong>Prepositional phrases:</strong> <em>in the lab, after the meeting, with great care</em></li>
+          <li><strong>Participial phrases:</strong> <em>running across the field, having studied all night, exhausted by the climb</em></li>
+          <li><strong>Infinitive phrases:</strong> <em>to finish the report, to earn her degree</em></li>
+        </ul>
+      </div>
+      <div class="tip-box">
+        <strong>SAT tip:</strong> On the test, the modifier always appears <em>before</em> the blank. Your job is to make sure the subject that fills the blank is the one performing the action in that opening phrase.
+      </div>
+    </div>
+
+    <!-- RULE 2: Dangling modifiers -->
+    <div class="rule-card">
+      <h2>Dangling Modifiers</h2>
+      <div class="subtitle">The implied subject of the opening phrase must match the grammatical subject of the sentence</div>
+      <div class="body">
+        <p>A <strong>dangling modifier</strong> is an opening phrase whose implied subject doesn't match the actual subject of the main clause. The phrase is "dangling", as it has nothing to properly attach to.</p>
+        <p style="margin-top:.7rem">The SAT's most common dangling modifier structure:</p>
+        <p style="margin-top:.4rem;padding:.5rem .8rem;background:#f7f4ee;border-radius:6px;font-style:italic;">Opening participial phrase, ________.</p>
+        <p style="margin-top:.6rem">The blank must be filled so that the <strong>subject of the main clause is the one performing the action in the opening phrase.</strong></p>
+      </div>
+      <div class="example-row">
+        <div class="ex-box wrong">
+          <div class="label">✗ Dangling</div>
+          After actively working on her thesis for years, <em>relief was the main thing Mary felt.</em>
+        </div>
+        <div class="ex-box right">
+          <div class="label">✓ Fixed</div>
+          After actively working on her thesis for years, <em>Mary was relieved to finally be finished.</em>
+        </div>
+      </div>
+      <div class="tip-box">
+        <strong>SAT tip:</strong> As soon as you see a sentence that opens with a comma-framed phrase, ask: <em>Who is doing the action in this phrase?</em> That person (or thing) must be the subject right after the comma. If it isn't, it's a dangling modifier.
+      </div>
+    </div>
+
+    <!-- RULE 3: Misplaced modifiers -->
+    <div class="rule-card">
+      <h2>Misplaced Modifiers</h2>
+      <div class="subtitle">A modifier placed too far from what it describes creates ambiguity or absurdity</div>
+      <div class="body">
+        <p>A <strong>misplaced modifier</strong> is one that has technically attached to something, but to the wrong thing, because it's in the wrong spot. The result is often unintentionally funny or confusing.</p>
+      </div>
+      <div class="example-row">
+        <div class="ex-box wrong">
+          <div class="label">✗ Misplaced</div>
+          Flying over the mountains, <em>the village below looked picturesque.</em>
+          <br><br><span style="font-size:.78rem;color:var(--red)">The village isn't flying, but grammatically, it is.</span>
+        </div>
+        <div class="ex-box right">
+          <div class="label">✓ Fixed</div>
+          Flying over the mountains, <em>the passengers looked at the picturesque village below.</em>
+        </div>
+      </div>
+      <div class="tip-box">
+        <strong>Quick test for dangling vs. misplaced:</strong> If the phrase has nothing grammatically correct to attach to → <strong>dangling</strong>. If it has attached to the wrong thing → <strong>misplaced</strong>. Both are fixed by restructuring so the modifier sits next to what it describes.
+      </div>
+    </div>
+
+  </div><!-- /review -->
+
+
+  <!-- ══════════════════════════════════════════════════
+       DRILL VIEW
+  ════════════════════════════════════════════════════ -->
+  <div id="view-drill" class="view">
+
+    <div class="score-bar">
+      <div>
+        <div class="score-num" id="score-display">0 / 0</div>
+        <div class="score-label">correct so far</div>
+      </div>
+      <button class="reset-btn" onclick="resetDrill()">Start over</button>
+    </div>
+
+    <div id="questions-container"></div>
+
+  </div><!-- /drill -->
+
+</div><!-- /container -->
+
+<script>
+// ─── QUESTIONS ────────────────────────────────────────────────────────────────
+// Q1 & Q2 are the official slide examples (Mary / village).
+// Q3–Q7 are original practice questions modeled on SAT format.
+const questions = [
+  {
+    id: 1,
+    sentence: 'After actively working on her thesis for years, ________.',
+    prompt: 'Which choice correctly completes the sentence without creating a dangling modifier?',
+    choices: [
+      'Mary was relieved to finally be finished.',
+      'relief was the main thing that Mary felt.',
+      'Mary\'s relief was palpable.',
+      'it was a relief for Mary to be done.'
+    ],
+    correct: 0,
+    feedback: '<strong>Choice A is correct.</strong> The opening phrase implies that <em>Mary</em> was the one working on the thesis. The subject right after the comma must be Mary, and she must be the grammatical subject, not a possessive or the word "it." Only A places Mary as the subject performing the main action.'
+  },
+  {
+    id: 2,
+    sentence: 'Flying over the mountains, ________.',
+    prompt: 'Which choice correctly completes the sentence without creating a dangling modifier?',
+    choices: [
+      'the village below looked picturesque.',
+      'the village they saw below looked picturesque.',
+      'the passengers looked at the village below.'
+    ],
+    correct: 2,
+    feedback: '<strong>Choice C is correct.</strong> The opening phrase implies that someone is flying. The subject right after the comma must be the one doing the flying: that\'s the passengers, not the village. Choices A and B both make the village the subject, which creates a dangling modifier (the village is not flying).'
+  },
+  {
+    id: 3,
+    sentence: 'Exhausted after the long expedition, ________.',
+    prompt: 'Which choice correctly completes the sentence without creating a dangling modifier?',
+    choices: [
+      'the campsite was finally reached by the hikers.',
+      'the hikers finally reached the campsite.',
+      'reaching the campsite was the hikers\' priority.',
+      'it was a relief when the hikers reached camp.'
+    ],
+    correct: 1,
+    feedback: '<strong>Choice B is correct.</strong> The opening phrase implies that the <em>hikers</em> are exhausted. The subject right after the comma must be the hikers, and they must be the grammatical subject taking a direct action. In A, the hikers are buried in a passive construction. In C and D, "reaching" and "it" displace the hikers from the subject position.'
+  },
+  {
+    id: 4,
+    sentence: 'To earn a spot on the varsity team, ________.',
+    prompt: 'Which choice correctly completes the sentence without creating a dangling modifier?',
+    choices: [
+      'countless hours of practice were logged by the athletes.',
+      'the athletes logged countless hours of practice.',
+      'practice was required of each athlete.',
+      'dedication and practice were necessary.'
+    ],
+    correct: 1,
+    feedback: '<strong>Choice B is correct.</strong> The infinitive phrase "To earn a spot" implies that the <em>athletes</em> want to earn something, so the athletes must be the subject of the main clause. Choices A, C, and D all avoid naming the athletes as the active subject, which leaves the modifier dangling.'
+  },
+  {
+    id: 6,
+    sentence: 'Having rehearsed the speech dozens of times, ________.',
+    prompt: 'Which choice correctly completes the sentence without creating a dangling modifier?',
+    choices: [
+      'the auditorium filled with nervous energy as Dara approached the podium.',
+      'Dara\'s nerves disappeared as she approached the podium.',
+      'Dara felt confident as she approached the podium.',
+      'confidence could be felt as Dara took the stage.'
+    ],
+    correct: 2,
+    feedback: '<strong>Choice C is correct.</strong> The opening phrase implies that <em>Dara</em> did the rehearsing. She must be the grammatical subject of the main clause. In A, "the auditorium" is the subject, and the auditorium didn\'t rehearse. In B, "Dara\'s nerves" is the subject, and a possessive can\'t be the subject that does the action. In D, "confidence" is the subject. Only C names Dara as the active subject.'
+  },
+  {
+    id: 7,
+    sentence: 'Revised extensively after peer review, ________.',
+    prompt: 'Which choice correctly completes the sentence without creating a dangling modifier?',
+    choices: [
+      'the researchers published the article in a leading journal.',
+      'the article was published by the researchers in a leading journal.',
+      'a leading journal accepted the article for publication.',
+      'the article\'s publication came after significant revision.'
+    ],
+    correct: 1,
+    feedback: '<strong>Choice B is correct.</strong> The opening phrase "Revised extensively after peer review" is a past participial phrase; it describes something that was revised. The subject right after the comma must be the thing that was revised: the article. In B, "the article" is the subject of a passive construction, which works here because the article is what was revised. In A, "the researchers" (who did the revising) become the subject, which creates a dangling modifier. C makes "a leading journal" the subject, and D uses a possessive.'
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let answered = {};    // { qIndex: true/false }
+let correctCount = 0;
+let answeredCount = 0;
+
+// ─── RENDER DRILL ─────────────────────────────────────────────────────────────
+function renderDrill() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const div = document.createElement('div');
+    div.className = 'drill-q';
+    div.id = 'q-' + idx;
+
+    // Sentence with blank if present
+    const sentenceHTML = q.sentence.includes('________')
+      ? q.sentence.replace('________.', '<span class="q-blank">          </span>.')
+        .replace('________.', '<span class="q-blank">          </span>.')
+      : q.sentence;
+
+    div.innerHTML = `
+      <div class="q-number">Practice Question ${idx + 1}</div>
+      <div class="q-sentence">${sentenceHTML}</div>
+      <div class="q-prompt">${q.prompt}</div>
+      <ul class="choices">
+        ${q.choices.map((c, ci) => `
+          <li><button class="choice-btn" onclick="answer(${idx},${ci})">${c}</button></li>
+        `).join('')}
+      </ul>
+      <div class="feedback-box" id="fb-${idx}"></div>
+    `;
+    container.appendChild(div);
+  });
+  updateScore();
+}
+
+function answer(qIdx, choiceIdx) {
+  if (answered[qIdx] !== undefined) return;  // already answered
+
+  const q = questions[qIdx];
+  const isCorrect = choiceIdx === q.correct;
+  answered[qIdx] = isCorrect;
+  if (isCorrect) correctCount++;
+  answeredCount++;
+
+  // Style buttons
+  const qEl = document.getElementById('q-' + qIdx);
+  const btns = qEl.querySelectorAll('.choice-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correct) btn.classList.add('correct');
+    else if (i === choiceIdx && !isCorrect) btn.classList.add('wrong');
+  });
+
+  // Feedback
+  const fb = document.getElementById('fb-' + qIdx);
+  fb.innerHTML = q.feedback;
+  fb.className = 'feedback-box show ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById('score-display').textContent = correctCount + ' / ' + answeredCount;
+}
+
+function resetDrill() {
+  answered = {};
+  correctCount = 0;
+  answeredCount = 0;
+  renderDrill();
+}
+
+// ─── MODE TOGGLE ──────────────────────────────────────────────────────────────
+function switchMode(mode) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + mode).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderDrill();
+</script>
+</body>
+</html>
