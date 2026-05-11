@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central Ideas + Details — Digital SAT English Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#59a5e4;
+  --accent-dark:#3a86c8;
+  --accent-bg:#eef6fd;
+  --bg:#F7F4EE;
+  --surface:#fff;
+  --border:#E0DBD0;
+  --text:#1C1A17;
+  --muted:#6B6458;
+  --green:#2D6A4F;--green-bg:#EDFAF3;--green-border:#A8D5BE;
+  --red:#9B2335;--red-bg:#FCEEF0;--red-border:#F0B8C0;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;}
+
+.site-header{background:#1a2332;color:#fff;padding:1.5rem 1.25rem 1.2rem;text-align:center;}
+.site-header h1{font-family:'Lora',serif;font-size:1.55rem;font-weight:600;letter-spacing:-.01em;}
+.site-header .tagline{font-size:.78rem;color:#59a5e4;margin-top:.3rem;letter-spacing:.04em;text-transform:uppercase;}
+
+.mode-bar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:0;z-index:100;}
+.mode-btn{padding:.7rem 2rem;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;color:var(--muted);transition:.15s;letter-spacing:.02em;}
+.mode-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+.container{max-width:720px;margin:0 auto;padding:1.75rem 1.25rem 3rem;}
+.view{display:none;}
+.view.active{display:block;}
+
+.section-label{font-family:'Lora',serif;font-size:1.15rem;font-weight:600;margin:2rem 0 .9rem;padding-bottom:.45rem;border-bottom:2px solid var(--accent);}
+.section-label:first-of-type{margin-top:0;}
+
+.card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:1rem;font-size:.88rem;line-height:1.65;}
+.card h3{font-family:'Lora',serif;font-size:.98rem;font-weight:600;margin-bottom:.55rem;}
+.card p{margin-bottom:.5rem;}
+.card p:last-child{margin-bottom:0;}
+.card em{font-style:italic;}
+.card strong{font-weight:600;}
+
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.steps-list li{display:flex;align-items:baseline;gap:.75rem;font-size:.88rem;line-height:1.5;}
+.step-num{flex-shrink:0;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--accent);color:#fff;font-size:.72rem;font-weight:600;display:flex;align-items:center;justify-content:center;}
+
+.keyword-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;}
+.chip{background:var(--accent-bg);border:1px solid var(--accent);color:var(--accent-dark);border-radius:99px;padding:.25rem .75rem;font-size:.78rem;font-weight:500;}
+
+.trap-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-top:.2rem;}
+.trap-item{display:flex;gap:.75rem;align-items:flex-start;font-size:.87rem;line-height:1.55;}
+.trap-tag{flex-shrink:0;background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);border-radius:6px;padding:.18rem .55rem;font-size:.72rem;font-weight:600;letter-spacing:.02em;margin-top:.1rem;}
+
+.tip-box{background:var(--accent-bg);border-radius:8px;padding:.65rem .9rem;margin-top:.75rem;font-size:.82rem;color:#1a2332;line-height:1.55;}
+.tip-box strong{color:var(--accent-dark);}
+
+/* PRACTICE */
+.passage-block{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.3rem 1.4rem;margin-bottom:1.25rem;}
+.passage-meta{font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+.q-type-badge{display:inline-block;background:var(--accent-bg);color:var(--accent-dark);border:1px solid var(--accent);border-radius:99px;font-size:.68rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:.15rem .6rem;margin-bottom:.7rem;}
+.passage-intro{font-size:.8rem;color:var(--muted);margin-bottom:.65rem;line-height:1.5;}
+.passage-intro em{font-style:italic;}
+.passage-text{font-family:'Lora',serif;font-size:.93rem;line-height:1.8;color:var(--text);background:#faf8f4;border-radius:8px;padding:1rem 1.1rem;margin-bottom:.85rem;border-left:3px solid var(--border);}
+.passage-source{font-size:.73rem;color:var(--muted);margin-top:.6rem;font-style:italic;}
+.question-text{font-size:.9rem;font-weight:500;margin-bottom:.7rem;line-height:1.5;}
+
+.prediction-area{width:100%;border:1px solid var(--border);border-radius:8px;padding:.65rem .85rem;font-family:'DM Sans',sans-serif;font-size:.85rem;line-height:1.5;resize:vertical;min-height:72px;background:var(--bg);color:var(--text);transition:.15s;}
+.prediction-area:focus{outline:none;border-color:var(--accent);background:#fff;}
+
+.reveal-btn{margin-top:.6rem;padding:.48rem 1.1rem;border-radius:99px;border:1px solid var(--accent);background:var(--accent-bg);color:var(--accent-dark);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:.15s;}
+.reveal-btn:hover:not(:disabled){background:var(--accent);color:#fff;}
+
+.answer-box{display:none;margin-top:.75rem;border-radius:8px;padding:.85rem 1rem;background:var(--green-bg);border:1px solid var(--green-border);font-size:.85rem;line-height:1.65;color:#1a3d2b;}
+.answer-box.show{display:block;}
+.answer-box strong{font-weight:600;display:block;margin-bottom:.3rem;}
+.answer-section{margin-bottom:.65rem;}
+.answer-section:last-child{margin-bottom:0;}
+.self-check-label{font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--green);margin-bottom:.2rem;}
+
+.ka-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.4rem;margin-top:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.ka-text{font-size:.87rem;line-height:1.5;color:var(--muted);}
+.ka-text strong{color:var(--text);}
+.ka-link{flex-shrink:0;background:var(--accent);color:#fff;border-radius:99px;padding:.5rem 1.15rem;font-size:.8rem;font-weight:500;text-decoration:none;transition:.15s;}
+.ka-link:hover{background:var(--accent-dark);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Central Ideas + Details</h1>
+  <div class="tagline">Monica Winkler &nbsp;|&nbsp; Digital SAT English Prep</div>
+</header>
+
+<nav class="mode-bar">
+  <button class="mode-btn active" onclick="switchMode('review', this)">Review</button>
+  <button class="mode-btn" onclick="switchMode('practice', this)">Practice</button>
+</nav>
+
+<div class="container">
+
+  <!-- REVIEW -->
+  <div id="view-review" class="view active">
+
+    <div class="section-label">Five Steps to Answering Reading Questions</div>
+    <div class="card">
+      <ul class="steps-list">
+        <li><span class="step-num">1</span> Read the question.</li>
+        <li><span class="step-num">2</span> Identify the question type.</li>
+        <li><span class="step-num">3</span> Read the passage actively, looking for the answer.</li>
+        <li><span class="step-num">4</span> Underline the answer (or the evidence).</li>
+        <li><span class="step-num">5</span> Use process of elimination.</li>
+      </ul>
+    </div>
+
+    <div class="section-label">Detail Questions</div>
+
+    <div class="card">
+      <h3>What are they testing?</h3>
+      <p>Detail questions test your ability to understand what the question is asking and to find the answer in the text quickly. There is no need to interpret anything: the answer is always directly in the passage.</p>
+      <div class="keyword-row">
+        <span class="chip">According to the text</span>
+        <span class="chip">Based on the text</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Tips</h3>
+      <p>Make sure you understand the question, then go straight to process of elimination.</p>
+      <p>Stick to the passage. The answer is there: no need to interpret anything beyond what is written.</p>
+      <p>Feel 100% confident before committing to an answer. Underline it in the passage first.</p>
+    </div>
+
+    <div class="card">
+      <h3>Process of Elimination: What to Watch Out For</h3>
+      <ul class="trap-list">
+        <li class="trap-item"><span class="trap-tag">Opposite</span><span>The answer choice says the exact opposite of what the passage says.</span></li>
+        <li class="trap-item"><span class="trap-tag">Not mentioned</span><span>The answer choice introduces something the passage never brought up.</span></li>
+        <li class="trap-item"><span class="trap-tag">Could be true</span><span>The choice might make sense in the real world, but there is no evidence for it in the passage. Only what is in the passage world counts.</span></li>
+        <li class="trap-item"><span class="trap-tag">Exact words</span><span>The choice lifts words directly from the passage, which feels familiar, but those words are not answering the question. The correct answer is usually paraphrased.</span></li>
+        <li class="trap-item"><span class="trap-tag">Always / Never</span><span>Every word in a choice must be supported by the text. Absolute language like <em>always, never,</em> and <em>completely</em> is almost never fully supported.</span></li>
+      </ul>
+    </div>
+
+    <div class="section-label">Central Idea Questions</div>
+
+    <div class="card">
+      <h3>What are they testing?</h3>
+      <p>Central idea questions test your ability to identify the key message the author is getting across and to differentiate the main idea from the supporting details.</p>
+      <div class="keyword-row">
+        <span class="chip">Main idea</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Tips</h3>
+      <p>Read the passage actively, noticing which topics keep coming up.</p>
+      <p>The main idea is often stated directly in the passage, usually in the first or last sentence. Ask yourself: which sentence do all the others relate to?</p>
+      <p><strong>For fiction:</strong> when you finish reading, ask yourself, "what was that about?"</p>
+      <p><strong>For non-fiction:</strong> the topic is what the passage is about. The main idea is what the author is <em>saying</em> about that topic. Those are not the same thing.</p>
+      <div class="tip-box">
+        <strong>Key distinction:</strong> If the passage is about octopuses, "octopuses" is the topic. The main idea is the specific claim the author is making about them.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Process of Elimination: What to Watch Out For</h3>
+      <ul class="trap-list">
+        <li class="trap-item"><span class="trap-tag">Opposite</span><span>The choice states the exact opposite of what the passage says.</span></li>
+        <li class="trap-item"><span class="trap-tag">Not mentioned</span><span>The passage does not mention what is in the answer choice.</span></li>
+        <li class="trap-item"><span class="trap-tag">Half-true</span><span>Half of the choice makes sense, but the other half does not. The whole answer needs to be correct.</span></li>
+        <li class="trap-item"><span class="trap-tag">Right answer, wrong question</span><span>The choice sounds smart and is supported by the passage, but it describes a detail, not the main idea.</span></li>
+        <li class="trap-item"><span class="trap-tag">Exact words</span><span>The choice uses words from the passage, which feels familiar, but those words are not answering the question. The correct answer is usually paraphrased.</span></li>
+      </ul>
+    </div>
+
+  </div><!-- /review -->
+
+
+  <!-- PRACTICE -->
+  <div id="view-practice" class="view">
+
+    <!-- PASSAGE 1 -->
+    <div class="passage-block">
+      <div class="passage-meta">Passage 1 of 3</div>
+      <div class="q-type-badge">Detail Question</div>
+      <p class="passage-intro">The following text is adapted from Kate Chopin's 1899 novel <em>The Awakening.</em> Edna Pontellier is staying with her husband at a resort in Louisiana.</p>
+      <div class="passage-text">
+        It was eleven o'clock that night when Mr. Pontellier returned from Klein's hotel. He was in an excellent humor, in high spirits, and very talkative. His entrance awoke his wife, who was in bed and fast asleep when he came in. He talked to her while he undressed, telling her anecdotes and bits of news and gossip that he had gathered during the day. She was overcome with sleep, and answered him with little half utterances. He thought it very discouraging that his wife, who was the sole object of his existence, evinced so little interest in things which concerned him, and valued so little his conversation.
+        <div class="passage-source">Kate Chopin, <em>The Awakening</em> (1899)</div>
+      </div>
+      <div class="question-text">According to the text, why does Mr. Pontellier find his wife's behavior discouraging?</div>
+      <textarea class="prediction-area" placeholder="Write your answer in your own words before revealing..."></textarea>
+      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
+      <div class="answer-box">
+        <div class="answer-section">
+          <strong>Answer</strong>
+          Mr. Pontellier finds it discouraging that his wife shows little interest in what concerns him and does not value his conversation.
+        </div>
+        <div class="answer-section">
+          <strong>Where it is in the passage</strong>
+          The final sentence states it directly: he felt discouraged because she "evinced so little interest in things which concerned him, and valued so little his conversation."
+        </div>
+        <div class="answer-section">
+          <div class="self-check-label">Self-check</div>
+          Did your answer focus on her lack of interest in his conversation? If so, you are on track. A common trap here: she was asleep when he arrived, but that is not the reason for the discouragement. The issue is her response to him, not the timing of her sleep.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSAGE 2 -->
+    <div class="passage-block">
+      <div class="passage-meta">Passage 2 of 3</div>
+      <div class="q-type-badge">Main Idea Question</div>
+      <p class="passage-intro">The following text is adapted from Charles Darwin's <em>The Voyage of the Beagle</em> (1839).</p>
+      <div class="passage-text">
+        I was much interested, on several occasions, by watching the habits of an Octopus, or cuttle-fish. Although common in the pools of water left by the retiring tide, these animals were not easily caught. By means of their long arms and suckers, they could drag their bodies into very narrow crevices; and when thus fixed, it required great force to remove them. At other times they darted tail first, with the rapidity of an arrow, from one side of the pool to the other, at the same instant discolouring the water with a dark chestnut-brown ink. These animals also escape detection by a very extraordinary, chameleon-like power of changing their colour. They appear to vary their tints according to the nature of the ground over which they pass: when in deep water, their general shade was brownish purple, but when placed on the land, or in shallow water, this dark tint changed into one of a yellowish green.
+        <div class="passage-source">Charles Darwin, <em>The Voyage of the Beagle</em> (1839)</div>
+      </div>
+      <div class="question-text">What is the main idea of this passage? Write it in one sentence.</div>
+      <textarea class="prediction-area" placeholder="Write the main idea in one sentence before revealing..."></textarea>
+      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
+      <div class="answer-box">
+        <div class="answer-section">
+          <strong>Answer</strong>
+          Octopuses use several behaviors, including hiding in crevices, releasing ink, and changing color, to avoid being caught or detected.
+        </div>
+        <div class="answer-section">
+          <strong>What ties it together</strong>
+          Every detail in the passage describes a different method the octopus uses to escape capture or detection. The topic is octopuses; the main idea is what Darwin is saying about them: that they have multiple effective defenses.
+        </div>
+        <div class="answer-section">
+          <div class="self-check-label">Self-check</div>
+          Did your sentence capture multiple defenses or survival behaviors, not just one? A common "Right answer, wrong question" trap would be writing that the main idea is about color-changing: that is accurate but only covers one detail from the passage.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSAGE 3 -->
+    <div class="passage-block">
+      <div class="passage-meta">Passage 3 of 3</div>
+      <div class="q-type-badge">Detail Question</div>
+      <p class="passage-intro">The following text is adapted from Charles Darwin's <em>On the Origin of Species</em> (1859).</p>
+      <div class="passage-text">
+        When on board H.M.S. Beagle as naturalist, I was much struck with certain facts in the distribution of the organic beings inhabiting South America, and in the geological relations of the present to the past inhabitants of that continent. On my return home, it occurred to me, in 1837, that something might perhaps be made out on this question by patiently accumulating and reflecting on all sorts of facts which could possibly have any bearing on it. After five years' work I allowed myself to speculate on the subject, and drew up some short notes; these I enlarged in 1844 into a sketch of the conclusions which then seemed to me probable.
+        <div class="passage-source">Charles Darwin, <em>On the Origin of Species</em> (1859)</div>
+      </div>
+      <div class="question-text">According to the text, what prompted Darwin to begin investigating the origin of species?</div>
+      <textarea class="prediction-area" placeholder="Write your answer in your own words before revealing..."></textarea>
+      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
+      <div class="answer-box">
+        <div class="answer-section">
+          <strong>Answer</strong>
+          Darwin was prompted by observations he made during his voyage on the Beagle: specifically, facts about the distribution of living things in South America and their relationship to past inhabitants of the continent.
+        </div>
+        <div class="answer-section">
+          <strong>Where it is in the passage</strong>
+          The first sentence says he "was much struck with certain facts" observed on the Beagle. The second sentence explains that these observations led him to begin investigating after his return.
+        </div>
+        <div class="answer-section">
+          <div class="self-check-label">Self-check</div>
+          The key word is "prompted": your answer must come from the passage, not from what you already know about Darwin. Watch out for this trap: the passage says the observations were made <em>during</em> the voyage, not after returning home. An answer that says he "discovered new evidence after returning" misreads the sequence.
+        </div>
+      </div>
+    </div>
+
+    <div class="ka-box">
+      <div class="ka-text"><strong>Ready for the real thing?</strong><br>Khan Academy has free, official SAT reading questions with detailed answer explanations.</div>
+      <a class="ka-link" href="https://www.khanacademy.org/test-prep/sat-reading-and-writing/x0d47bcec73eb6c4b:foundations-information-and-ideas/x0d47bcec73eb6c4b:central-ideas-and-details/a/central-ideas-and-details-lesson" target="_blank" rel="noopener">Practice on Khan Academy</a>
+    </div>
+
+  </div><!-- /practice -->
+
+</div>
+
+<script>
+function switchMode(mode, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + mode).classList.add('active');
+  btn.classList.add('active');
+}
+
+function reveal(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.add('show');
+  btn.disabled = true;
+  btn.style.opacity = '.45';
+  btn.textContent = 'Answer revealed';
+}
+</script>
+</body>
+</html>
