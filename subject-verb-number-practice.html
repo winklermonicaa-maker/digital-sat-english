@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subject-Verb Agreement — Digital SAT English Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#59a5e4;
+  --accent-dark:#3a86c8;
+  --accent-bg:#eef6fd;
+  --bg:#F7F4EE;
+  --surface:#fff;
+  --border:#E0DBD0;
+  --text:#1C1A17;
+  --muted:#6B6458;
+  --light:#9A9189;
+  --green:#2D6A4F;--green-bg:#EDFAF3;--green-border:#A8D5BE;
+  --red:#9B2335;--red-bg:#FCEEF0;--red-border:#F0B8C0;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;}
+
+.site-header{background:#1a2332;color:#fff;padding:1.5rem 1.25rem 1.2rem;text-align:center;}
+.site-header h1{font-family:'Lora',serif;font-size:1.55rem;font-weight:600;letter-spacing:-.01em;}
+.site-header .tagline{font-size:.78rem;color:#59a5e4;margin-top:.3rem;letter-spacing:.04em;text-transform:uppercase;}
+
+.mode-bar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:0;z-index:100;}
+.mode-btn{padding:.7rem 2rem;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;color:var(--muted);transition:.15s;letter-spacing:.02em;}
+.mode-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+.container{max-width:720px;margin:0 auto;padding:1.75rem 1.25rem 3rem;}
+.view{display:none;}
+.view.active{display:block;}
+
+.section-label{font-family:'Lora',serif;font-size:1.15rem;font-weight:600;margin:2rem 0 .9rem;padding-bottom:.45rem;border-bottom:2px solid var(--accent);}
+.section-label:first-of-type{margin-top:0;}
+
+.card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:1rem;font-size:.88rem;line-height:1.65;}
+.card h3{font-family:'Lora',serif;font-size:.98rem;font-weight:600;margin-bottom:.55rem;}
+.card p{margin-bottom:.5rem;}
+.card p:last-child{margin-bottom:0;}
+.card em{font-style:italic;}
+.card strong{font-weight:600;}
+.card ul{padding-left:1.2rem;margin-top:.35rem;}
+.card li{margin-bottom:.25rem;}
+
+.tip-box{background:var(--accent-bg);border-radius:8px;padding:.65rem .9rem;margin-top:.75rem;font-size:.82rem;color:#1a2332;line-height:1.55;}
+.tip-box strong{color:var(--accent-dark);}
+
+/* STEPS */
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.steps-list li{display:flex;align-items:baseline;gap:.75rem;font-size:.88rem;line-height:1.5;}
+.step-num{flex-shrink:0;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--accent);color:#fff;font-size:.72rem;font-weight:600;display:flex;align-items:center;justify-content:center;}
+
+/* DISTRACTOR TAG */
+.distractor-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem;}
+.dtag{display:flex;align-items:center;gap:.4rem;background:var(--red-bg);border:1px solid var(--red-border);border-radius:8px;padding:.35rem .75rem;font-size:.8rem;color:var(--red);}
+.dtag .icon{font-size:.9rem;}
+
+/* IT / THEY GRID */
+.sv-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.6rem;}
+.sv-cell{border-radius:8px;padding:.65rem .85rem;font-size:.85rem;line-height:1.5;text-align:center;}
+.sv-cell.singular{background:var(--accent-bg);border:1px solid var(--accent);color:var(--accent-dark);}
+.sv-cell.plural{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);}
+.sv-cell .sv-label{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:.2rem;}
+
+/* PRACTICE */
+.drill-q{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.4rem;margin-bottom:1rem;}
+.q-number{font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;}
+.q-sentence{font-family:'Lora',serif;font-size:1rem;line-height:1.7;margin-bottom:.2rem;}
+.q-prompt{font-size:.82rem;color:var(--muted);margin-bottom:.9rem;}
+.choices{list-style:none;display:flex;flex-direction:column;gap:.4rem;}
+.choice-btn{width:100%;text-align:left;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.6rem .9rem;font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:pointer;transition:.12s;line-height:1.4;}
+.choice-btn:hover:not(:disabled){background:#e8f2fb;border-color:var(--accent);}
+.choice-btn.correct{background:var(--green-bg);border-color:var(--green-border);color:var(--green);font-weight:500;}
+.choice-btn.wrong{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
+.choice-btn:disabled{cursor:default;}
+
+.feedback-box{margin-top:.75rem;border-radius:8px;padding:.75rem 1rem;font-size:.83rem;line-height:1.6;display:none;}
+.feedback-box.show{display:block;}
+.feedback-box.correct-fb{background:var(--green-bg);border:1px solid var(--green-border);color:#1a3d2b;}
+.feedback-box.wrong-fb{background:var(--red-bg);border:1px solid var(--red-border);color:#5a1020;}
+.feedback-box strong{font-weight:600;}
+
+.score-bar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.4rem;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.score-num{font-family:'Lora',serif;font-size:1.4rem;font-weight:600;color:var(--accent-dark);}
+.score-label{font-size:.8rem;color:var(--muted);}
+.reset-btn{padding:.5rem 1rem;border-radius:99px;border:1px solid var(--border);background:var(--bg);font-family:'DM Sans',sans-serif;font-size:.78rem;cursor:pointer;color:var(--muted);}
+.reset-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* sentence annotation helpers */
+.strike{text-decoration:line-through;color:var(--light);font-style:italic;}
+.subj{color:var(--accent-dark);font-weight:600;}
+.verb{color:var(--green);font-weight:600;}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Subject-Verb Agreement: Number</h1>
+  <div class="tagline">Monica Winkler &nbsp;|&nbsp; Digital SAT English Prep</div>
+</header>
+
+<nav class="mode-bar">
+  <button class="mode-btn active" onclick="switchMode('review', this)">Review</button>
+  <button class="mode-btn" onclick="switchMode('practice', this)">Practice</button>
+</nav>
+
+<div class="container">
+
+  <!-- REVIEW -->
+  <div id="view-review" class="view active">
+
+    <div class="section-label">Step 1: Label the Subject and Main Verb</div>
+
+    <div class="card">
+      <h3>What is a subject?</h3>
+      <p>The subject is the who or what the sentence is about: the main noun.</p>
+      <h3 style="margin-top:.8rem">What is a main verb?</h3>
+      <p>The main verb is either an action (e.g., <em>talk, walk, baked</em>) or a linking element (e.g., <em>is, are, was, were</em>).</p>
+      <div class="tip-box">
+        <strong>Find the subject by asking:</strong> Who or what is doing the action (or being described)?<br><br>
+        <em>Yesterday my really nice and lovely grandma baked me some cookies.</em><br>
+        Who baked? <strong>Grandma.</strong> Subject: <em>grandma.</em> Main verb: <em>baked.</em>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>How to spot a subject-verb agreement question</h3>
+      <p>Look at the answer choices. They will all be the same verb, but some are singular and some are plural. Label each choice with <em>it</em> (singular) or <em>they</em> (plural):</p>
+      <div style="margin:.65rem 0 .5rem;display:flex;flex-direction:column;gap:.3rem;font-size:.88rem;">
+        <div style="display:flex;gap:.6rem;align-items:center;"><span style="font-weight:600;color:var(--muted);width:1.4rem">A.</span><span><em>runs</em></span><span style="margin-left:.4rem;font-size:.75rem;color:var(--accent-dark);background:var(--accent-bg);border:1px solid var(--accent);border-radius:99px;padding:.1rem .5rem;">it</span></div>
+        <div style="display:flex;gap:.6rem;align-items:center;"><span style="font-weight:600;color:var(--muted);width:1.4rem">B.</span><span><em>run</em></span><span style="margin-left:.4rem;font-size:.75rem;color:var(--green);background:var(--green-bg);border:1px solid var(--green-border);border-radius:99px;padding:.1rem .5rem;">they</span></div>
+        <div style="display:flex;gap:.6rem;align-items:center;"><span style="font-weight:600;color:var(--muted);width:1.4rem">C.</span><span><em>is running</em></span><span style="margin-left:.4rem;font-size:.75rem;color:var(--accent-dark);background:var(--accent-bg);border:1px solid var(--accent);border-radius:99px;padding:.1rem .5rem;">it</span></div>
+        <div style="display:flex;gap:.6rem;align-items:center;"><span style="font-weight:600;color:var(--muted);width:1.4rem">D.</span><span><em>have run</em></span><span style="margin-left:.4rem;font-size:.75rem;color:var(--accent-dark);background:var(--accent-bg);border:1px solid var(--accent);border-radius:99px;padding:.1rem .5rem;">it</span></div>
+      </div>
+      <p>Three choices are singular (it) and one is plural (they). When you see this pattern, the question is testing subject-verb agreement.</p>
+      <div class="sv-grid" style="margin-top:.75rem">
+        <div class="sv-cell singular">
+          <div class="sv-label">Singular (it)</div>
+          runs, walks, is, was, has, bakes
+        </div>
+        <div class="sv-cell plural">
+          <div class="sv-label">Plural (they)</div>
+          run, walk, are, were, have, bake
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top:.75rem">
+        <strong>The rule:</strong> A singular subject takes a singular verb. A plural subject takes a plural verb. If you can replace the subject with <em>it</em>, use the singular form. If you can replace it with <em>they</em>, use the plural form.
+      </div>
+    </div>
+
+    <div class="section-label">Step 2: Learn to Ignore the Distractors</div>
+
+    <div class="card">
+      <h3>Prepositional phrases are extra information: cross them out</h3>
+      <p>A prepositional phrase begins with a preposition (words like <em>of, in, from, at, by, about, with, between</em>) and does not contain the main subject. The SAT places these phrases between the subject and the verb to make you lose track of the subject. Cross them out.</p>
+      <div class="distractor-row">
+        <span class="dtag"><span class="icon">✕</span> from down the street</span>
+        <span class="dtag"><span class="icon">✕</span> in downtown</span>
+        <span class="dtag"><span class="icon">✕</span> with all its dog friends</span>
+        <span class="dtag"><span class="icon">✕</span> about the dog</span>
+      </div>
+      <div class="tip-box" style="margin-top:.8rem">
+        <strong>Example:</strong><br>
+        <em>The book <span style="color:var(--red)">about</span> the dog <span style="color:var(--red)">with</span> all its dog friends came out.</em><br>
+        <em>About</em> and <em>with</em> are both prepositions. Cross out both phrases they introduce:<br><br>
+        <em>The book <span style="text-decoration:line-through;color:var(--light)">about the dog</span> <span style="text-decoration:line-through;color:var(--light)">with all its dog friends</span> came out.</em><br><br>
+        Subject: <em>book</em> (singular). Verb: <em>came</em> (singular). Correct.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Information between commas or dashes: cross it out too</h3>
+      <p>When extra information is sandwiched between two commas or between two dashes, remove the whole chunk. What remains is the core sentence.</p>
+      <div class="tip-box">
+        <strong>Commas:</strong><br>
+        <em>Mary, who I met last week, is so nice.</em><br>
+        Cross it out: <em>Mary<span style="text-decoration:line-through;color:var(--light)">, who I met last week,</span> is so nice.</em><br>
+        Subject: <em>Mary</em> (singular). Verb: <em>is</em>. Correct.<br><br>
+        <strong>Dashes:</strong><br>
+        <em>The terribly seasoned chicken, the one I told you about, tastes so bad.</em><br>
+        Cross it out: <em>The terribly seasoned chicken<span style="text-decoration:line-through;color:var(--light)">, the one I told you about,</span> tastes so bad.</em><br>
+        Subject: <em>chicken</em> (singular). Verb: <em>tastes</em>. Correct.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>"That" starts a dependent clause with its own subject</h3>
+      <p>When you see the word <em>that</em>, it introduces a dependent clause with its own subject and verb. If the blank is inside the dependent clause, its subject is the noun inside that clause, not the noun that comes before <em>that.</em></p>
+      <div class="tip-box">
+        <strong>Example:</strong><br><br>
+        <em>The scientist proposed the idea <strong>that</strong> the techniques researchers _____ the results.</em><br><br>
+        The word <em>that</em> introduces a dependent clause: <em>that the techniques researchers _____ the results.</em> The blank is the verb of this clause. Its subject is <em>techniques</em> (plural), which is inside the clause, right after <em>that.</em><br><br>
+        The noun before <em>that</em> is <em>idea</em> (singular), but that is the subject of the main verb (<em>proposed</em>), not of the blank.<br><br>
+        Correct verb for the blank: <em>shape</em> (plural, to match <em>techniques</em>).
+      </div>
+      <div class="tip-box" style="margin-top:.5rem">
+        <strong>The rule:</strong> When the blank is inside a "that" clause, find the subject of that clause. It will be the noun right after <em>that,</em> not the noun before it.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>The odd one out trick</h3>
+      <p>Once you have labeled each choice with <em>it</em> or <em>they</em>, one choice will always be the odd one out: three choices will share the same pronoun and one will be different. That odd one out is always the answer.</p>
+      <div style="margin:.75rem 0 .5rem;display:flex;flex-direction:column;gap:.3rem;font-size:.88rem;">
+        <div style="display:flex;gap:.6rem;align-items:center;"><span style="font-weight:600;color:var(--muted);width:1.4rem">A.</span><span><em>runs</em></span><span style="margin-left:.4rem;font-size:.75rem;color:var(--accent-dark);background:var(--accent-bg);border:1px solid var(--accent);border-radius:99px;padding:.1rem .5rem;">it</span></div>
+        <div style="display:flex;gap:.6rem;align-items:center;"><span style="font-weight:600;color:var(--muted);width:1.4rem">B.</span><span style="font-weight:600"><em>run</em></span><span style="margin-left:.4rem;font-size:.75rem;color:var(--green);background:var(--green-bg);border:1px solid var(--green-border);border-radius:99px;padding:.1rem .5rem;">they ← odd one out</span></div>
+        <div style="display:flex;gap:.6rem;align-items:center;"><span style="font-weight:600;color:var(--muted);width:1.4rem">C.</span><span><em>is running</em></span><span style="margin-left:.4rem;font-size:.75rem;color:var(--accent-dark);background:var(--accent-bg);border:1px solid var(--accent);border-radius:99px;padding:.1rem .5rem;">it</span></div>
+        <div style="display:flex;gap:.6rem;align-items:center;"><span style="font-weight:600;color:var(--muted);width:1.4rem">D.</span><span><em>has run</em></span><span style="margin-left:.4rem;font-size:.75rem;color:var(--accent-dark);background:var(--accent-bg);border:1px solid var(--accent);border-radius:99px;padding:.1rem .5rem;">it</span></div>
+      </div>
+      <p>B is the only plural choice. It is the odd one out, so the subject must be plural. You do not even need to check: B is the answer.</p>
+      <div class="tip-box" style="margin-top:.75rem">
+        <strong>Why this works:</strong> The SAT always uses three choices of one type and one of the other. So the moment you label all four, the answer reveals itself. Use this as a shortcut to confirm your work once you have identified the subject.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Put it all together: the strategy</h3>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span> Notice the answer choices are all the same verb in singular or plural form.</li>
+        <li><span class="step-num">2</span> Find the blank and look left for the subject.</li>
+        <li><span class="step-num">3</span> Cross out any prepositional phrases, comma-sandwiched chunks, or dash-sandwiched chunks between the subject and the blank.</li>
+        <li><span class="step-num">4</span> If you see <em>that</em>, find the subject of the clause that follows it.</li>
+        <li><span class="step-num">5</span> Ask: can I replace the subject with <em>it</em> or <em>they</em>? Choose the matching verb form.</li>
+        <li><span class="step-num">6</span> Label all four choices with <em>it</em> or <em>they</em>. The odd one out is the answer.</li>
+      </ul>
+    </div>
+
+  </div><!-- /review -->
+
+
+  <!-- PRACTICE -->
+  <div id="view-practice" class="view">
+
+    <div class="score-bar">
+      <div>
+        <div class="score-num" id="score-display">0 / 0</div>
+        <div class="score-label">correct so far</div>
+      </div>
+      <button class="reset-btn" onclick="resetDrill()">Start over</button>
+    </div>
+
+    <div id="questions-container"></div>
+
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    id: 1,
+    sentence: 'The collection of essays by the poet, essays that her students had long admired, _____ finally been compiled into a single volume.',
+    prompt: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    choices: ['have', 'has', 'are having', 'were having'],
+    correct: 1,
+    feedback: '<strong>Choice B, "has," is correct.</strong> The subject is <em>collection</em> (singular), not <em>essays</em> or <em>students.</em> Two distractors are at work here: the phrase "of essays by the poet" sits between the subject and the clause, and the dependent clause "that her students had long admired" has its own subject (<em>students</em>) that belongs to that clause only. Cross both out: <em>The collection _____ finally been compiled into a single volume.</em> Collection = it = singular. Use <em>has.</em>'
+  },
+  {
+    id: 2,
+    sentence: 'The findings of the study, which was conducted over a decade across twelve countries, _____ challenged long-held assumptions about sleep.',
+    prompt: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    choices: ['has', 'have', 'is having', 'was having'],
+    correct: 1,
+    feedback: '<strong>Choice B, "have," is correct.</strong> The subject is <em>findings</em> (plural), not <em>study</em> or <em>countries.</em> The chunk "which was conducted over a decade across twelve countries" is sandwiched between commas: cross it out entirely. <em>The findings _____ challenged long-held assumptions.</em> Findings = they = plural. Use <em>have.</em>'
+  },
+  {
+    id: 3,
+    sentence: 'The philosopher argued in her landmark essay that the various ethical principles a society has adopted over centuries _____ the way individuals within that society make moral decisions.',
+    prompt: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    choices: ['shapes', 'is shaping', 'shape', 'has shaped'],
+    correct: 2,
+    feedback: '<strong>Choice C, "shape," is correct.</strong> The blank is the verb of the dependent clause introduced by <em>that.</em> The subject of that clause is <em>principles</em> (plural), which comes right after <em>that.</em> The noun before <em>that</em> is <em>essay</em> (singular), but that belongs to the main clause only. Additionally, the prepositional phrase "over centuries" sits between <em>principles</em> and the blank: cross it out. Principles = they = plural. Use <em>shape.</em>'
+  },
+  {
+    id: 4,
+    sentence: 'The journalist\'s account of the protests, an account that eyewitnesses from three separate neighborhoods had verified, _____ the most widely cited source in subsequent legal proceedings.',
+    prompt: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    choices: ['was', 'has been', 'is', 'were'],
+    correct: 0,
+    feedback: '<strong>Choice A, "was," is correct.</strong> The subject is <em>account</em> (singular). Two layers of distraction here: the prepositional phrase "of the protests" follows the subject, and then the entire chunk "an account that eyewitnesses from three separate neighborhoods had verified" is sandwiched between commas. Cross both out: <em>The account _____ the most widely cited source.</em> Also notice that <em>that eyewitnesses...had verified</em> is a dependent clause with its own subject (<em>eyewitnesses</em>). Account = it = singular. Use <em>was.</em> Notice the odd one out: A, B, and C are all singular (it) and D alone is plural (they), so D can be eliminated immediately.'
+  },
+  {
+    id: 5,
+    sentence: 'The theory of linguistic relativity, which holds that the language a person speaks shapes the concepts that person _____ able to perceive, remains a topic of debate among cognitive scientists.',
+    prompt: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    choices: ['are', 'were', 'is', 'have been'],
+    correct: 2,
+    feedback: '<strong>Choice C, "is," is correct.</strong> This one has multiple layers. The main sentence subject is <em>theory</em>, but the blank does not fill the main verb: the main verb is <em>remains.</em> The blank fills the verb inside the dependent clause "that person _____ able to perceive." The subject of that clause is <em>person</em> (singular). Cross out everything inside the outer commas to see the main clause, then inside that chunk focus on "the concepts that person _____ able to perceive." Person = it = singular. Use <em>is.</em> Notice the odd one out: A, B, and D are all plural (they) and C alone is singular (it), so the answer is C.'
+  }
+];
+
+let answered = {};
+let correctCount = 0;
+let answeredCount = 0;
+
+function renderDrill() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const div = document.createElement('div');
+    div.className = 'drill-q';
+    div.id = 'q-' + idx;
+    div.innerHTML = `
+      <div class="q-number">Practice Question ${idx + 1}</div>
+      <div class="q-sentence">${q.sentence}</div>
+      <div class="q-prompt">${q.prompt}</div>
+      <ul class="choices">
+        ${q.choices.map((c, ci) => `<li><button class="choice-btn" onclick="answer(${idx},${ci})">
+          ${String.fromCharCode(65 + ci)}. ${c}
+        </button></li>`).join('')}
+      </ul>
+      <div class="feedback-box" id="fb-${idx}"></div>
+    `;
+    container.appendChild(div);
+  });
+  updateScore();
+}
+
+function answer(qIdx, choiceIdx) {
+  if (answered[qIdx] !== undefined) return;
+  const q = questions[qIdx];
+  const isCorrect = choiceIdx === q.correct;
+  answered[qIdx] = isCorrect;
+  if (isCorrect) correctCount++;
+  answeredCount++;
+
+  const qEl = document.getElementById('q-' + qIdx);
+  qEl.querySelectorAll('.choice-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correct) btn.classList.add('correct');
+    else if (i === choiceIdx && !isCorrect) btn.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('fb-' + qIdx);
+  fb.innerHTML = q.feedback;
+  fb.className = 'feedback-box show ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById('score-display').textContent = correctCount + ' / ' + answeredCount;
+}
+
+function resetDrill() {
+  answered = {};
+  correctCount = 0;
+  answeredCount = 0;
+  renderDrill();
+}
+
+function switchMode(mode, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + mode).classList.add('active');
+  btn.classList.add('active');
+}
+
+renderDrill();
+</script>
+</body>
+</html>
