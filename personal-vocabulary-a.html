@@ -1,1093 +1,1238 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vocabulary Lesson: 13 Words</title>
+<title>Vocabulary Lesson: 20 Words</title>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg: #fafaf8;
-  --bg-card: #ffffff;
-  --bg-secondary: #f3f2ee;
-  --text-primary: #1a1a18;
-  --text-secondary: #5a5a56;
-  --text-tertiary: #9a9a94;
-  --border: rgba(0,0,0,0.1);
-  --border-hover: rgba(0,0,0,0.2);
-  --radius-md: 8px;
-  --radius-lg: 14px;
-  --font: Georgia, 'Times New Roman', serif;
-  --font-sans: system-ui, -apple-system, sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1a1a18;
-    --bg-card: #222220;
-    --bg-secondary: #2a2a28;
-    --text-primary: #f0efe8;
-    --text-secondary: #a8a8a0;
-    --text-tertiary: #686860;
-    --border: rgba(255,255,255,0.1);
-    --border-hover: rgba(255,255,255,0.2);
+    --bg: #faf9f7;
+    --surface: #ffffff;
+    --surface2: #f3f1ee;
+    --border: #e2ddd8;
+    --text: #1a1a1a;
+    --text2: #555;
+    --text3: #888;
+    --accent: #2a4b8c;
+    --accent2: #c0392b;
+    --accent3: #27ae60;
+    --accent4: #8e44ad;
+    --accent5: #d35400;
+    --tag-bg: #edf2fb;
+    --tag-text: #2a4b8c;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
   }
-  .root-purple { background: #26215C !important; color: #AFA9EC !important; }
-  .root-coral  { background: #4A1B0C !important; color: #F0997B !important; }
-  .root-teal   { background: #04342C !important; color: #5DCAA5 !important; }
-  .root-amber  { background: #412402 !important; color: #EF9F27 !important; }
-  .root-blue   { background: #042C53 !important; color: #85B7EB !important; }
-  .root-pink   { background: #4B1528 !important; color: #ED93B1 !important; }
-  .root-green  { background: #173404 !important; color: #97C459 !important; }
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 17px;
+  }
+  a { color: var(--accent); }
 
-body {
-  background: var(--bg);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  min-height: 100vh;
-  padding: 2rem 1rem 4rem;
-}
+  /* NAV */
+  .top-nav {
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 24px;
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    letter-spacing: .03em;
+  }
+  .top-nav a { color: #c8d8f5; text-decoration: none; }
+  .top-nav a:hover { color: #fff; }
 
-.page { max-width: 700px; margin: 0 auto; }
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a2f5e 0%, #2a4b8c 60%, #3d6abf 100%);
+    color: #fff;
+    padding: 52px 32px 44px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 2.1rem; font-weight: normal; letter-spacing: .01em; margin-bottom: 10px; }
+  .hero p { font-size: 1.05rem; color: #c8d8f5; max-width: 560px; margin: 0 auto 28px; }
 
-.page-header {
-  margin-bottom: 2.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
+  /* JUMP LINKS */
+  .jump-links {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  }
+  .jump-links a {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 13px;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .jump-links a:hover { background: rgba(255,255,255,0.28); }
 
-.eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
-  margin-bottom: 0.5rem;
-}
+  /* MAIN */
+  main { max-width: 780px; margin: 0 auto; padding: 40px 20px 80px; }
 
-h1 {
-  font-family: var(--font);
-  font-size: clamp(22px, 5vw, 32px);
-  font-weight: normal;
-  line-height: 1.25;
-  margin-bottom: 0.75rem;
-}
+  /* GROUP SECTION */
+  .group-section {
+    margin-bottom: 64px;
+  }
+  .group-label {
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+  .group-section h2 {
+    font-size: 1.55rem;
+    font-weight: normal;
+    color: var(--accent);
+    margin-bottom: 6px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .group-intro {
+    font-size: 15px;
+    color: var(--text2);
+    margin: 10px 0 28px;
+    font-style: italic;
+  }
 
-.subtitle {
-  font-size: 15px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
+  /* PAIR LABEL */
+  .pair-label {
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin: 28px 0 14px;
+  }
+  .pair-label span { font-style: italic; font-weight: normal; text-transform: none; letter-spacing: 0; }
 
-.nav-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 2rem;
-}
+  /* WORD CARD */
+  .word-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px 18px;
+    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+  }
+  .word-header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .word-title { font-size: 1.4rem; font-weight: bold; color: var(--text); }
+  .word-pos {
+    font-size: 12px;
+    color: var(--text3);
+    font-style: italic;
+    background: var(--surface2);
+    border-radius: 4px;
+    padding: 2px 8px;
+  }
+  .word-root {
+    font-size: 12px;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-family: monospace;
+  }
+  .word-def {
+    font-size: 1rem;
+    color: var(--text);
+    margin: 6px 0 12px;
+  }
 
-.nav-pill {
-  font-size: 12px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  color: var(--text-secondary);
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color 0.15s, color 0.15s;
-}
+  /* EXPANDABLE */
+  .expand-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 0;
+  }
+  .expand-btn::after { content: ' ▾'; }
+  .expand-btn.open::after { content: ' ▴'; }
 
-.nav-pill:hover { border-color: var(--border-hover); color: var(--text-primary); }
+  .expandable {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .expandable.open { display: block; }
 
-.group-block { margin-bottom: 3rem; }
+  .detail-block { margin-bottom: 14px; }
+  .detail-block h4 {
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 5px;
+  }
+  .detail-block p { font-size: 14px; color: var(--text2); }
+  .detail-block .root-breakdown strong { color: var(--accent); }
+  .word-family { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .word-family span {
+    background: var(--surface2);
+    border-radius: 4px;
+    padding: 2px 9px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .example-sentence {
+    font-style: italic;
+    color: var(--text2);
+    font-size: 14px;
+    border-left: 3px solid var(--border);
+    padding-left: 12px;
+  }
+  .memory-trick {
+    background: #fffbf0;
+    border: 1px solid #f0e6c0;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #6b5a2a;
+  }
+  .confusion-note {
+    background: #fff5f5;
+    border: 1px solid #f5c6c6;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #7a2a2a;
+  }
 
-.group-header {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
-}
+  /* VS DIVIDER */
+  .vs-divider {
+    text-align: center;
+    color: var(--text3);
+    font-size: 13px;
+    letter-spacing: .1em;
+    margin: 6px 0;
+  }
 
-.group-num {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
-  margin-bottom: 0.4rem;
-}
+  /* ROOT CALLOUT */
+  .root-callout {
+    background: var(--surface2);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 20px;
+    margin: 20px 0 28px;
+  }
+  .root-callout h4 {
+    font-size: 13px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .root-callout ul {
+    list-style: none;
+    font-size: 14px;
+    color: var(--text2);
+    display: flex; flex-wrap: wrap; gap: 6px 24px;
+  }
+  .root-callout ul li::before { content: "→ "; color: var(--accent); }
 
-.group-title {
-  font-family: var(--font);
-  font-size: 22px;
-  font-weight: normal;
-  margin-bottom: 0.4rem;
-}
+  /* SELF CHECK */
+  .self-check {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-top: 28px;
+    box-shadow: var(--shadow);
+  }
+  .self-check h3 {
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .quiz-item { margin-bottom: 20px; }
+  .quiz-item p { font-size: 14px; color: var(--text); margin-bottom: 8px; }
+  .quiz-q-label {
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+  .reveal-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    border-radius: 6px;
+    padding: 5px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background .2s;
+  }
+  .reveal-btn:hover { background: var(--border); }
+  .answer-text {
+    display: none;
+    margin-top: 8px;
+    background: #f0f4f0;
+    border-left: 3px solid var(--accent3);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #1a4a2a;
+  }
+  .answer-text.open { display: block; }
 
-.group-desc {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
+  /* FINAL QUIZ */
+  .final-quiz {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 48px;
+  }
+  .final-quiz h2 {
+    font-size: 1.3rem;
+    font-weight: normal;
+    color: var(--accent);
+    margin-bottom: 6px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .word-bank {
+    display: flex; flex-wrap: wrap; gap: 7px;
+    margin: 16px 0 24px;
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .word-bank span {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .final-quiz .quiz-item { margin-bottom: 24px; }
 
-.pair-label {
-  font-size: 13px;
-  color: var(--text-tertiary);
-  margin-bottom: 0.75rem;
-  font-style: italic;
-}
+  /* FOOTER */
+  footer {
+    background: var(--accent);
+    color: #c8d8f5;
+    text-align: center;
+    padding: 24px;
+    font-size: 13px;
+    letter-spacing: .04em;
+  }
+  footer .word-list-footer {
+    margin-top: 6px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+  }
 
-.pair-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: start;
-  gap: 10px;
-  margin-bottom: 1.25rem;
-}
-
-@media (max-width: 520px) {
-  .pair-row { grid-template-columns: 1fr; }
-  .pair-connector { display: none; }
-}
-
-.word-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1rem 1.25rem;
-  cursor: pointer;
-  transition: border-color 0.15s;
-  user-select: none;
-}
-
-.word-card:hover { border-color: var(--border-hover); }
-.word-card.purple-accent { border-left: 3px solid #7F77DD; border-radius: 0 14px 14px 0; }
-.word-card.coral-accent  { border-left: 3px solid #D85A30; border-radius: 0 14px 14px 0; }
-.word-card.teal-accent   { border-left: 3px solid #1D9E75; border-radius: 0 14px 14px 0; }
-.word-card.amber-accent  { border-left: 3px solid #BA7517; border-radius: 0 14px 14px 0; }
-.word-card.blue-accent   { border-left: 3px solid #378ADD; border-radius: 0 14px 14px 0; }
-.word-card.pink-accent   { border-left: 3px solid #D4537E; border-radius: 0 14px 14px 0; }
-.word-card.green-accent  { border-left: 3px solid #639922; border-radius: 0 14px 14px 0; }
-
-.word-title {
-  font-size: 18px;
-  font-weight: 600;
-  font-family: var(--font);
-  margin-bottom: 3px;
-}
-
-.word-pos {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 8px;
-}
-
-.root-badge {
-  display: inline-block;
-  font-size: 12px;
-  padding: 3px 9px;
-  border-radius: 4px;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
-
-.root-purple { background: #EEEDFE; color: #3C3489; }
-.root-coral  { background: #FAECE7; color: #993C1D; }
-.root-teal   { background: #E1F5EE; color: #0F6E56; }
-.root-amber  { background: #FAEEDA; color: #854F0B; }
-.root-blue   { background: #E6F1FB; color: #185FA5; }
-.root-pink   { background: #FBEAF0; color: #993556; }
-.root-green  { background: #EAF3DE; color: #3B6D11; }
-
-.word-def {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.55;
-  margin-bottom: 6px;
-}
-
-.expand-hint {
-  font-size: 12px;
-  color: var(--text-tertiary);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.expand-hint .arrow { transition: transform 0.2s; display: inline-block; }
-.word-card.open .expand-hint .arrow { transform: rotate(180deg); }
-
-.detail-box {
-  display: none;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-}
-
-.detail-box.open { display: block; }
-
-.detail-label {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 4px;
-  margin-top: 10px;
-}
-
-.detail-label:first-child { margin-top: 0; }
-
-.detail-text {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.siblings {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 4px;
-}
-
-.sibling-tag {
-  font-size: 12px;
-  padding: 2px 8px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text-secondary);
-}
-
-.scenario-box {
-  background: var(--bg-secondary);
-  border-radius: var(--radius-md);
-  padding: 10px 12px;
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  font-style: italic;
-  margin-top: 6px;
-}
-
-.pair-connector {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 1.5rem;
-}
-
-.vs-badge {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 5px 10px;
-}
-
-.standalone-row { margin-bottom: 1.25rem; }
-
-.root-summary {
-  background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem 1.5rem;
-  margin-top: 1rem;
-}
-
-.root-summary-label {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
-}
-
-.root-summary p {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.65;
-  margin-bottom: 0.75rem;
-}
-
-.quiz-section {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  margin-top: 1.5rem;
-  background: var(--bg-card);
-}
-
-.quiz-section h3 {
-  font-family: var(--font);
-  font-size: 18px;
-  font-weight: normal;
-  margin-bottom: 0.4rem;
-}
-
-.quiz-section .quiz-intro {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 1.25rem;
-  line-height: 1.6;
-}
-
-.quiz-q { margin-bottom: 1.25rem; }
-
-.q-num {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 4px;
-}
-
-.q-text {
-  font-size: 14px;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  line-height: 1.5;
-}
-
-.answer-area {
-  width: 100%;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 10px 12px;
-  font-size: 14px;
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  resize: vertical;
-  min-height: 56px;
-  outline: none;
-  transition: border-color 0.15s;
-}
-
-.answer-area:focus { border-color: var(--border-hover); }
-
-.reveal-btn {
-  font-size: 12px;
-  color: var(--text-tertiary);
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 4px 10px;
-  cursor: pointer;
-  margin-top: 6px;
-  font-family: var(--font-sans);
-  transition: border-color 0.15s;
-}
-
-.reveal-btn:hover { border-color: var(--border-hover); color: var(--text-secondary); }
-
-.answer-reveal {
-  display: none;
-  margin-top: 8px;
-  font-size: 13px;
-  color: var(--text-secondary);
-  background: var(--bg-secondary);
-  border-radius: var(--radius-md);
-  padding: 8px 12px;
-  line-height: 1.5;
-}
-
-.answer-reveal.open { display: block; }
-
-.divider { height: 1px; background: var(--border); margin: 2rem 0; }
-
-.final-quiz-section {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  margin-top: 2rem;
-}
-
-.final-quiz-section h2 {
-  font-family: var(--font);
-  font-size: 24px;
-  font-weight: normal;
-  margin-bottom: 0.5rem;
-}
-
-.final-quiz-section .fq-intro {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.word-bank {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 1.5rem;
-}
-
-.bank-word {
-  font-size: 13px;
-  padding: 4px 10px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.footer {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-  font-size: 12px;
-  color: var(--text-tertiary);
-  text-align: center;
-  line-height: 1.8;
-}
+  @media (max-width: 560px) {
+    .hero h1 { font-size: 1.5rem; }
+    .word-title { font-size: 1.2rem; }
+    main { padding: 24px 14px 60px; }
+  }
 </style>
 </head>
 <body>
-<div class="page">
 
-<header class="page-header">
-  <p class="eyebrow">Vocabulary Review</p>
-  <h1>13 Words to Know</h1>
-  <p class="subtitle">Four groups, organized by meaning. Tap any card to reveal roots, word families, and examples. A self-check quiz follows each group, and a full 13-word quiz is at the end.</p>
-</header>
-
-<nav class="nav-pills" aria-label="Jump to section">
-  <a class="nav-pill" href="#group1">1. Taking a position</a>
-  <a class="nav-pill" href="#group2">2. Changing things</a>
-  <a class="nav-pill" href="#group3">3. Language and information</a>
-  <a class="nav-pill" href="#group4">4. Conscription</a>
-  <a class="nav-pill" href="#finalquiz">Final quiz</a>
-</nav>
-
-<!-- ======== GROUP 1 ======== -->
-<section class="group-block" id="group1">
-  <div class="group-header">
-    <p class="group-num">Group 1 of 4</p>
-    <h2 class="group-title">Taking a Position</h2>
-    <p class="group-desc">These words describe how someone stands in relation to a belief, opinion, or outcome. Do they commit, dodge, shout, or stay calm?</p>
-  </div>
-
-  <p class="pair-label">Pair 1 — do you commit, or dodge?</p>
-  <div class="pair-row">
-    <div class="word-card purple-accent" onclick="toggle(this)">
-      <div class="word-title">Endorse</div>
-      <div class="word-pos">verb</div>
-      <span class="root-badge root-purple">in + dorsum</span>
-      <div class="word-def">To publicly declare support for something or someone.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>in</strong> (on) + <strong>dorsum</strong> (back, Latin). To put your name on the back of something. Banks stamped the backs of checks to approve them.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">dorsal fin (on the back)</span>
-          <span class="sibling-tag">endorsement</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"The senator endorsed the climate bill, saying it had her full support."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">A dolphin's dorsal fin is on its back. When you endorse something, you carry it on your back — publicly.</div>
-      </div>
-    </div>
-    <div class="pair-connector"><div class="vs-badge">vs.</div></div>
-    <div class="word-card coral-accent" onclick="toggle(this)">
-      <div class="word-title">Equivocate</div>
-      <div class="word-pos">verb</div>
-      <span class="root-badge root-coral">aequi + vox</span>
-      <div class="word-def">To speak ambiguously to avoid committing to a position.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>aequi</strong> (equal) + <strong>vox/vocis</strong> (voice, Latin). Two equal voices, both canceling each other out. You say everything and nothing at once.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">equivocal</span>
-          <span class="sibling-tag">vocal</span>
-          <span class="sibling-tag">voice</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"When asked if he liked the plan, he equivocated: 'Well, there are certainly aspects worth considering...'"</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">Politicians equivocate when they don't want to lose any voters. Both sides hear what they want.</div>
-      </div>
-    </div>
-  </div>
-
-  <p class="pair-label" style="margin-top:1rem">Pair 2 — confident, but loud or calm?</p>
-  <div class="pair-row">
-    <div class="word-card teal-accent" onclick="toggle(this)">
-      <div class="word-title">Vociferous</div>
-      <div class="word-pos">adjective</div>
-      <span class="root-badge root-teal">vox + ferre</span>
-      <div class="word-def">Expressing opinions loudly and forcefully; hard to ignore.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>vox/vocis</strong> (voice) + <strong>ferre</strong> (to carry, Latin). Carrying your voice everywhere, at full volume. Same <em>vox</em> root as equivocate — but no ambiguity here.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">vocal</span>
-          <span class="sibling-tag">advocate</span>
-          <span class="sibling-tag">provoke</span>
-          <span class="sibling-tag">revoke</span>
-          <span class="sibling-tag">vocation</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"The crowd was vociferous in its opposition, chanting and shouting throughout the speech."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">Vociferous people are like megaphones. They do not equivocate — you cannot miss them.</div>
-      </div>
-    </div>
-    <div class="pair-connector"><div class="vs-badge">vs.</div></div>
-    <div class="word-card amber-accent" onclick="toggle(this)">
-      <div class="word-title">Sanguine</div>
-      <div class="word-pos">adjective</div>
-      <span class="root-badge root-amber">sanguis</span>
-      <div class="word-def">Confidently optimistic, especially in a difficult situation.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>sanguis</strong> (blood, Latin). From medieval medicine: people with warm, blood-rich temperaments were considered naturally cheerful and optimistic.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">sanguinary (bloody)</span>
-          <span class="sibling-tag">consanguine (related by blood)</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"Despite the setbacks, she remained sanguine, confident the project would succeed in the end."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">Unlike vociferous people who shout, sanguine people smile quietly and say "it'll work out."</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="root-summary">
-    <p class="root-summary-label">Shared root: vox (voice)</p>
-    <p>Three of these four words share the Latin root <strong>vox/vocis</strong>. Recognizing it helps you decode unfamiliar words for life.</p>
-    <div class="siblings">
-      <span class="sibling-tag">equivocate — two equal voices</span>
-      <span class="sibling-tag">vociferous — carrying the voice</span>
-      <span class="sibling-tag">advocate — speaking for</span>
-      <span class="sibling-tag">provoke — calling out</span>
-      <span class="sibling-tag">revoke — calling back</span>
-    </div>
-  </div>
-
-  <div class="quiz-section" style="margin-top:1.25rem">
-    <h3>Group 1 self-check</h3>
-    <p class="quiz-intro">Write your answer, then reveal to compare.</p>
-    <div class="quiz-q">
-      <div class="q-num">Q1</div>
-      <div class="q-text">A coach stays calm and optimistic even though the team is losing badly. Which word fits?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">Sanguine. The coach is quietly confident despite difficulty, not panicked or loud.</div>
-    </div>
-    <div class="quiz-q">
-      <div class="q-num">Q2</div>
-      <div class="q-text">A politician is asked "Do you support the new tax?" and replies: "There are many perspectives to consider, and I think it's important to look at all sides carefully." What are they doing?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">Equivocating. Deliberately vague to avoid committing to yes or no.</div>
-    </div>
-    <div class="quiz-q">
-      <div class="q-num">Q3</div>
-      <div class="q-text">Vociferous and sanguine both describe someone with a strong position. What is the key difference?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">Volume and tone. Vociferous = loud, forceful, impossible to ignore. Sanguine = calm, quietly optimistic. Both believe in their position; they express it very differently.</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ======== GROUP 2 ======== -->
-<section class="group-block" id="group2">
-  <div class="group-header">
-    <p class="group-num">Group 2 of 4</p>
-    <h2 class="group-title">Changing or Affecting Things</h2>
-    <p class="group-desc">These four words are all about actions that alter a situation: softening it, replacing it, adding to it, or taking away from it.</p>
-  </div>
-
-  <p class="pair-label">Pair 1 — softening vs. replacing</p>
-  <div class="pair-row">
-    <div class="word-card teal-accent" onclick="toggle(this)">
-      <div class="word-title">Mitigate</div>
-      <div class="word-pos">verb</div>
-      <span class="root-badge root-teal">mitis + agere</span>
-      <div class="word-def">To make something less severe, harmful, or painful.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>mitis</strong> (mild, gentle) + <strong>agere</strong> (to do/act, Latin). To act to make something milder. You don't eliminate the problem — you reduce it.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">mitigation</span>
-          <span class="sibling-tag">mitigating circumstances</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"Wearing sunscreen mitigates the risk of sunburn on long hikes."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">Think "make it mild." Mitigate doesn't remove the danger — it turns it down.</div>
-      </div>
-    </div>
-    <div class="pair-connector"><div class="vs-badge">vs.</div></div>
-    <div class="word-card blue-accent" onclick="toggle(this)">
-      <div class="word-title">Supersede</div>
-      <div class="word-pos">verb</div>
-      <span class="root-badge root-blue">super + sedere</span>
-      <div class="word-def">To take the place of something, making it outdated or no longer in use.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>super</strong> (above) + <strong>sedere</strong> (to sit, Latin). To sit above something — and push it out. Note the spelling: <em>supersede</em>, not "supercede." One of the most commonly misspelled words in English.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">preside (sit before)</span>
-          <span class="sibling-tag">reside (sit back)</span>
-          <span class="sibling-tag">sedentary (sitting still)</span>
-          <span class="sibling-tag">session</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"Streaming services have largely superseded DVD rentals."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">Super (above) + sit. The new thing sits above the old thing and replaces it entirely. Mitigate softens; supersede replaces.</div>
-      </div>
-    </div>
-  </div>
-
-  <p class="pair-label" style="margin-top:1rem">Pair 2 — creating something vs. taking something away</p>
-  <div class="pair-row">
-    <div class="word-card purple-accent" onclick="toggle(this)">
-      <div class="word-title">Engender</div>
-      <div class="word-pos">verb</div>
-      <span class="root-badge root-purple">en + genus</span>
-      <div class="word-def">To cause or give rise to a feeling, situation, or condition.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>en</strong> (cause to be) + <strong>genus/generare</strong> (to beget, produce, Latin). To bring something into being. Often used for abstract things: trust, conflict, fear.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">generate</span>
-          <span class="sibling-tag">gender (originally: kind/type)</span>
-          <span class="sibling-tag">genre</span>
-          <span class="sibling-tag">general</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"The principal's open-door policy engendered trust among students."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">Engender = generate. You are producing something new in the world — usually a feeling or situation.</div>
-      </div>
-    </div>
-    <div class="pair-connector"><div class="vs-badge">vs.</div></div>
-    <div class="word-card coral-accent" onclick="toggle(this)">
-      <div class="word-title">Detract</div>
-      <div class="word-pos">verb</div>
-      <span class="root-badge root-coral">de + trahere</span>
-      <div class="word-def">To reduce the quality, value, or importance of something.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>de</strong> (away) + <strong>trahere</strong> (to pull, Latin). To pull value away from something. You don't destroy it — you diminish it.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">distract (pull attention away)</span>
-          <span class="sibling-tag">extract (pull out)</span>
-          <span class="sibling-tag">attract (pull toward)</span>
-          <span class="sibling-tag">tractor</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"The spelling errors detracted from an otherwise strong essay."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">The <em>tract</em> root means pull. De-tract = pull away. Engender adds; detract subtracts.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="root-summary">
-    <p class="root-summary-label">Shared root: trahere (to pull)</p>
-    <p>Detract shares the <strong>tract</strong> root with several common words. Once you see it, you'll spot it everywhere.</p>
-    <div class="siblings">
-      <span class="sibling-tag">detract — pull away</span>
-      <span class="sibling-tag">distract — pull attention away</span>
-      <span class="sibling-tag">attract — pull toward</span>
-      <span class="sibling-tag">extract — pull out</span>
-      <span class="sibling-tag">contract — pull together</span>
-      <span class="sibling-tag">retract — pull back</span>
-    </div>
-  </div>
-
-  <div class="quiz-section" style="margin-top:1.25rem">
-    <h3>Group 2 self-check</h3>
-    <p class="quiz-intro">Write your answer, then reveal to compare.</p>
-    <div class="quiz-q">
-      <div class="q-num">Q1</div>
-      <div class="q-text">New safety regulations have replaced the old ones and made them no longer valid. Which word fits?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">Supersede. The new regulations sit above and replace the old ones entirely.</div>
-    </div>
-    <div class="quiz-q">
-      <div class="q-num">Q2</div>
-      <div class="q-text">A loud argument at a dinner party ruins the warm atmosphere that had been building all evening. What did the argument do to the atmosphere, and what did the evening do before that?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">The warm evening engendered a good atmosphere (created/gave rise to it). The argument detracted from it (pulled away its value).</div>
-    </div>
-    <div class="quiz-q">
-      <div class="q-num">Q3</div>
-      <div class="q-text">What is the difference between mitigating a problem and superseding it?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">Mitigate = reduce the harm, but the problem still exists. Supersede = the old thing is replaced entirely by something new. One softens; the other replaces.</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ======== GROUP 3 ======== -->
-<section class="group-block" id="group3">
-  <div class="group-header">
-    <p class="group-num">Group 3 of 4</p>
-    <h2 class="group-title">Language and Information</h2>
-    <p class="group-desc">These four words all relate to how we handle information: what a word points to, how we compress it, how we judge it, and how we organize it.</p>
-  </div>
-
-  <p class="pair-label">Pair 1 — what a word means vs. a summary of what something means</p>
-  <div class="pair-row">
-    <div class="word-card blue-accent" onclick="toggle(this)">
-      <div class="word-title">Denote</div>
-      <div class="word-pos">verb</div>
-      <span class="root-badge root-blue">de + notare</span>
-      <div class="word-def">To be a sign of something; to indicate or represent directly.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>de</strong> (down, fully) + <strong>notare</strong> (to mark, Latin). To mark something down clearly. Denote is the literal, direct meaning of a word or symbol, as opposed to its emotional associations.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">note</span>
-          <span class="sibling-tag">notation</span>
-          <span class="sibling-tag">annotate</span>
-          <span class="sibling-tag">connote (implied meaning)</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"The red traffic light denotes 'stop' in most countries."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">De-note = mark it down directly. The dictionary definition of a word is what it denotes. What it makes you feel is what it connotes.</div>
-      </div>
-    </div>
-    <div class="pair-connector"><div class="vs-badge">vs.</div></div>
-    <div class="word-card green-accent" onclick="toggle(this)">
-      <div class="word-title">Synopsis</div>
-      <div class="word-pos">noun</div>
-      <span class="root-badge root-green">syn + opsis</span>
-      <div class="word-def">A brief summary or overview of a longer work or set of events.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>syn</strong> (together) + <strong>opsis</strong> (seeing, Greek). To see everything together at once — the whole story compressed into a single view.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">optic (eye)</span>
-          <span class="sibling-tag">optical</span>
-          <span class="sibling-tag">synopsis — synoptic</span>
-          <span class="sibling-tag">synchronize (syn = together)</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"The back cover of the novel gave a synopsis of the plot without revealing the ending."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">Think of a camera pulling back to see the whole picture at once. A synopsis = the bird's eye view.</div>
-      </div>
-    </div>
-  </div>
-
-  <p class="pair-label" style="margin-top:1rem">Pair 2 — evaluating vs. organizing</p>
-  <div class="pair-row">
-    <div class="word-card amber-accent" onclick="toggle(this)">
-      <div class="word-title">Appraising</div>
-      <div class="word-pos">verb (present participle)</div>
-      <span class="root-badge root-amber">ad + pretium</span>
-      <div class="word-def">Assessing the value, quality, or nature of something; evaluating carefully.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>ad</strong> (to) + <strong>pretium</strong> (price/value, Latin). To assign a price or value to something. Originally used for valuing property; now used for any kind of careful evaluation.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">appraise</span>
-          <span class="sibling-tag">appraisal</span>
-          <span class="sibling-tag">appreciate (recognize the value)</span>
-          <span class="sibling-tag">precious (of high price)</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"She stood appraising the painting for a long time before making an offer."</div>
-        <div class="detail-label">Common confusion</div>
-        <div class="detail-text"><em>Appraise</em> (evaluate) vs. <em>apprise</em> (inform). "I appraised the car's value" vs. "I apprised him of the situation."</div>
-      </div>
-    </div>
-    <div class="pair-connector"><div class="vs-badge">vs.</div></div>
-    <div class="word-card pink-accent" onclick="toggle(this)">
-      <div class="word-title">Collate</div>
-      <div class="word-pos">verb</div>
-      <span class="root-badge root-pink">com + latus</span>
-      <div class="word-def">To gather, arrange, and compare information or documents in an organized way.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>com</strong> (together) + <strong>latus</strong> (brought, Latin, from <em>ferre</em>). To bring things together for comparison. A printer "collates" pages — assembles them in the right order.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">collation</span>
-          <span class="sibling-tag">collect (bring together)</span>
-          <span class="sibling-tag">correlate (bring together + relate)</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"The researcher collated data from 40 different studies before drawing any conclusions."</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">Appraising = judging what something is worth. Collating = gathering and sorting the material so you can judge it. Collating comes first.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="quiz-section" style="margin-top:1.25rem">
-    <h3>Group 3 self-check</h3>
-    <p class="quiz-intro">Write your answer, then reveal to compare.</p>
-    <div class="quiz-q">
-      <div class="q-num">Q1</div>
-      <div class="q-text">A real estate agent visits a house and carefully evaluates it before setting a price. Which word fits?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">Appraising. The agent is assessing value — literally the origin of the word.</div>
-    </div>
-    <div class="quiz-q">
-      <div class="q-num">Q2</div>
-      <div class="q-text">A student gathers notes from six different sources and organizes them before writing an essay. What are they doing to the notes?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">Collating. Bringing together and organizing material from multiple sources.</div>
-    </div>
-    <div class="quiz-q">
-      <div class="q-num">Q3</div>
-      <div class="q-text">What does the word "synopsis" literally mean, based on its roots?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">Seeing everything together at once (syn = together, opsis = seeing). A synopsis compresses a whole work into one view.</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ======== GROUP 4 ======== -->
-<section class="group-block" id="group4">
-  <div class="group-header">
-    <p class="group-num">Group 4 of 4</p>
-    <h2 class="group-title">Conscription</h2>
-    <p class="group-desc">This word stands on its own. It has a rich root and a precise meaning worth knowing well.</p>
-  </div>
-
-  <div class="standalone-row">
-    <div class="word-card teal-accent" onclick="toggle(this)" style="max-width:340px">
-      <div class="word-title">Conscription</div>
-      <div class="word-pos">noun</div>
-      <span class="root-badge root-teal">com + scribere</span>
-      <div class="word-def">The mandatory enrollment of people into a national military service; the draft.</div>
-      <div class="expand-hint">tap for roots and examples <span class="arrow">▾</span></div>
-      <div class="detail-box">
-        <div class="detail-label">Root breakdown</div>
-        <div class="detail-text"><strong>com</strong> (together) + <strong>scribere</strong> (to write, Latin). Originally: to write names together on a list for military service. The state writes your name down — and you have no choice.</div>
-        <div class="detail-label">Word family</div>
-        <div class="siblings">
-          <span class="sibling-tag">script (written)</span>
-          <span class="sibling-tag">describe (write down)</span>
-          <span class="sibling-tag">prescribe</span>
-          <span class="sibling-tag">inscription</span>
-          <span class="sibling-tag">manuscript (written by hand)</span>
-          <span class="sibling-tag">subscribe (write under)</span>
-        </div>
-        <div class="detail-label">Example</div>
-        <div class="scenario-box">"During the war, conscription was introduced because not enough soldiers had volunteered."</div>
-        <div class="detail-label">Key contrast</div>
-        <div class="detail-text">Conscription is the opposite of voluntary enlistment. If you volunteer, you choose. If you are conscripted, the government chooses for you.</div>
-        <div class="detail-label">Memory trick</div>
-        <div class="detail-text">The <em>script</em> root = writing. Con-scription = co-writing your name onto a list you didn't sign yourself.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="root-summary">
-    <p class="root-summary-label">Shared root: scribere (to write)</p>
-    <p>The <strong>scrib/script</strong> root is one of the most productive in English. Once you see it, you'll find it in dozens of words.</p>
-    <div class="siblings">
-      <span class="sibling-tag">conscription — writing names onto a list</span>
-      <span class="sibling-tag">describe — write down</span>
-      <span class="sibling-tag">prescribe — write before (a rule)</span>
-      <span class="sibling-tag">subscribe — write under (agree to)</span>
-      <span class="sibling-tag">transcribe — write across (copy)</span>
-      <span class="sibling-tag">manuscript — hand-written</span>
-      <span class="sibling-tag">inscription — written into</span>
-    </div>
-  </div>
-
-  <div class="quiz-section" style="margin-top:1.25rem">
-    <h3>Group 4 self-check</h3>
-    <p class="quiz-intro">Write your answer, then reveal to compare.</p>
-    <div class="quiz-q">
-      <div class="q-num">Q1</div>
-      <div class="q-text">What is the key difference between conscription and voluntary enlistment?</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">Conscription is mandatory — the state requires you to serve. Voluntary enlistment is a personal choice. Conscription removes the choice.</div>
-    </div>
-    <div class="quiz-q">
-      <div class="q-num">Q2</div>
-      <div class="q-text">Based on its root (scribere = to write), explain in your own words why "conscription" makes sense as a word for forced military service.</div>
-      <textarea class="answer-area" placeholder="Your answer..."></textarea>
-      <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-      <div class="answer-reveal">The government "writes your name together" with others on a military list. You didn't sign it yourself — it was written for you. The root captures the idea of being registered or recorded without consent.</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ======== FINAL QUIZ ======== -->
-<section class="final-quiz-section" id="finalquiz">
-  <h2>Final Quiz: All 13 Words</h2>
-  <p class="fq-intro">Use this to test yourself on everything. Write answers in the boxes, then reveal to check. No score — just honest self-assessment.</p>
-
-  <p class="root-summary-label" style="margin-bottom:0.5rem">Word bank</p>
-  <div class="word-bank" style="margin-bottom:1.5rem">
-    <span class="bank-word">Endorse</span>
-    <span class="bank-word">Equivocate</span>
-    <span class="bank-word">Mitigate</span>
-    <span class="bank-word">Denote</span>
-    <span class="bank-word">Engender</span>
-    <span class="bank-word">Supersede</span>
-    <span class="bank-word">Synopsis</span>
-    <span class="bank-word">Vociferous</span>
-    <span class="bank-word">Appraising</span>
-    <span class="bank-word">Sanguine</span>
-    <span class="bank-word">Detract</span>
-    <span class="bank-word">Collate</span>
-    <span class="bank-word">Conscription</span>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q1 — Definition match</div>
-    <div class="q-text">Which word means "to make something less severe without eliminating it"?</div>
-    <textarea class="answer-area" placeholder="Your answer..."></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-    <div class="answer-reveal">Mitigate.</div>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q2 — Scenario</div>
-    <div class="q-text">A famous chef gives a glowing public recommendation for a new kitchen appliance. Which word fits?</div>
-    <textarea class="answer-area" placeholder="Your answer..."></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-    <div class="answer-reveal">Endorse. The chef is publicly backing the product.</div>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q3 — Roots</div>
-    <div class="q-text">Three words in this list share the Latin root vox (voice). Name them.</div>
-    <textarea class="answer-area" placeholder="Your answer..."></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-    <div class="answer-reveal">Equivocate, vociferous, and (as a cousin) advocate. Core two: equivocate and vociferous.</div>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q4 — Contrast</div>
-    <div class="q-text">What is the difference between engender and detract? Use a single example situation to show both.</div>
-    <textarea class="answer-area" placeholder="Your answer..." style="min-height:80px"></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-    <div class="answer-reveal">Engender = bring something into existence. Detract = reduce or take away from something. Example: a kind teacher engenders confidence in students; harsh criticism detracts from their motivation.</div>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q5 — Sentence writing</div>
-    <div class="q-text">Write a sentence using "supersede" correctly.</div>
-    <textarea class="answer-area" placeholder="Your sentence..."></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal example</button>
-    <div class="answer-reveal">Example: "The updated guidelines superseded the 2019 version, making it officially outdated." Key: something old is replaced entirely by something new.</div>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q6 — Scenario</div>
-    <div class="q-text">A librarian is gathering articles from 12 journals, putting them in date order, and grouping them by topic. Which word describes what she is doing?</div>
-    <textarea class="answer-area" placeholder="Your answer..."></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-    <div class="answer-reveal">Collating. She is organizing and bringing together material from multiple sources.</div>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q7 — Precision</div>
-    <div class="q-text">What does "denote" mean, and how is it different from "connote"? (Hint: connote was not on the list, but it shares the same root.)</div>
-    <textarea class="answer-area" placeholder="Your answer..."></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-    <div class="answer-reveal">Denote = the direct, literal meaning. Connote = the implied or emotional meaning. "Snake" denotes a reptile. It connotes danger or deception. Same root (notare = to mark), different prefix.</div>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q8 — Scenario</div>
-    <div class="q-text">A country passes a law requiring all 18-year-olds to serve one year in the military. What is this policy called?</div>
-    <textarea class="answer-area" placeholder="Your answer..."></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-    <div class="answer-reveal">Conscription (or a conscription policy). It is mandatory, not voluntary.</div>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q9 — Contrast</div>
-    <div class="q-text">How are "appraising" and "synopsis" related? How are they different?</div>
-    <textarea class="answer-area" placeholder="Your answer..."></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal answer</button>
-    <div class="answer-reveal">Both involve making sense of information. A synopsis compresses content into a summary view. Appraising goes further — it assigns value or judgment. You might write a synopsis of a book, then appraise whether it is worth reading.</div>
-  </div>
-
-  <div class="quiz-q">
-    <div class="q-num">Q10 — Final challenge</div>
-    <div class="q-text">Use any four words from the list in a short paragraph (4 to 6 sentences) about a topic of your choice. Underline the vocabulary words.</div>
-    <textarea class="answer-area" placeholder="Your paragraph..." style="min-height:120px"></textarea>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal a model example</button>
-    <div class="answer-reveal">Model: "The school board remained sanguine despite growing opposition to the new attendance policy. Parents were vociferous at the meeting, demanding that the board endorse a more flexible approach. Critics argued that the rigid rules would engender anxiety in students rather than discipline. A revised policy was eventually released that mitigated the strictest requirements while preserving the core goals." — Words used: sanguine, vociferous, endorse, engender, mitigate.</div>
-  </div>
-</section>
-
-<footer class="footer">
-  Vocabulary Review: 13 Words<br>
-  Endorse · Equivocate · Mitigate · Denote · Engender · Supersede · Synopsis · Vociferous · Appraising · Sanguine · Detract · Collate · Conscription
-</footer>
-
+<div class="top-nav">
+  <a href="#">← Digital SAT English</a>
 </div>
 
-<script>
-function toggle(card) {
-  const box = card.querySelector('.detail-box');
-  const isOpen = box.classList.contains('open');
-  box.classList.toggle('open', !isOpen);
-  card.classList.toggle('open', !isOpen);
-}
+<div class="hero">
+  <h1>Vocabulary Review</h1>
+  <p>20 Words to Know</p>
+  <p style="font-size:14px; color:#c8d8f5; margin-top:-16px; margin-bottom:20px;">Five groups, organized by meaning. Tap any card to reveal roots, word families, and examples. A self-check quiz follows each group, and a full 20-word quiz is at the end.</p>
+  <div class="jump-links">
+    <a href="#group1">1. Taking a position</a>
+    <a href="#group2">2. Changing things</a>
+    <a href="#group3">3. Language and information</a>
+    <a href="#group4">4. Conscription</a>
+    <a href="#group5">5. Society and behavior</a>
+    <a href="#finalquiz">Final quiz</a>
+  </div>
+</div>
 
-function reveal(btn) {
-  const el = btn.nextElementSibling;
-  const isOpen = el.classList.contains('open');
-  el.classList.toggle('open', !isOpen);
-  btn.textContent = isOpen ? 'Reveal answer' : 'Hide answer';
-}
+<main>
+
+<!-- ===================== GROUP 1 ===================== -->
+<section class="group-section" id="group1">
+  <div class="group-label">Group 1 of 5</div>
+  <h2>Taking a Position</h2>
+  <p class="group-intro">These words describe how someone stands in relation to a belief, opinion, or outcome. Do they commit, dodge, shout, or stay calm?</p>
+
+  <div class="pair-label">Pair 1 — <span>do you commit, or dodge?</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Endorse</span>
+      <span class="word-pos">verb</span>
+      <span class="word-root">in + dorsum</span>
+    </div>
+    <div class="word-def">To publicly declare support for something or someone.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>in</strong> (on) + <strong>dorsum</strong> (back, Latin). To put your name on the back of something. Banks stamped the backs of checks to approve them.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>dorsal fin (on the back)</span><span>endorsement</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The senator endorsed the climate bill, saying it had her full support."</p>
+      </div>
+      <div class="memory-trick">A dolphin's dorsal fin is on its back. When you endorse something, you carry it on your back — publicly.</div>
+    </div>
+  </div>
+
+  <div class="vs-divider">vs.</div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Equivocate</span>
+      <span class="word-pos">verb</span>
+      <span class="word-root">aequi + vox</span>
+    </div>
+    <div class="word-def">To speak ambiguously to avoid committing to a position.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>aequi</strong> (equal) + <strong>vox/vocis</strong> (voice, Latin). Two equal voices, both canceling each other out. You say everything and nothing at once.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>equivocal</span><span>vocal</span><span>voice</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"When asked if he liked the plan, he equivocated: 'Well, there are certainly aspects worth considering...'"</p>
+      </div>
+      <div class="memory-trick">Politicians equivocate when they don't want to lose any voters. Both sides hear what they want.</div>
+    </div>
+  </div>
+
+  <div class="pair-label">Pair 2 — <span>confident, but loud or calm?</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Vociferous</span>
+      <span class="word-pos">adjective</span>
+      <span class="word-root">vox + ferre</span>
+    </div>
+    <div class="word-def">Expressing opinions loudly and forcefully; hard to ignore.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>vox/vocis</strong> (voice) + <strong>ferre</strong> (to carry, Latin). Carrying your voice everywhere, at full volume.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>vocal</span><span>advocate</span><span>provoke</span><span>revoke</span><span>vocation</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The crowd was vociferous in its opposition, chanting and shouting throughout the speech."</p>
+      </div>
+      <div class="memory-trick">Vociferous people are like megaphones. They do not equivocate — you cannot miss them.</div>
+    </div>
+  </div>
+
+  <div class="vs-divider">vs.</div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Sanguine</span>
+      <span class="word-pos">adjective</span>
+      <span class="word-root">sanguis</span>
+    </div>
+    <div class="word-def">Confidently optimistic, especially in a difficult situation.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>sanguis</strong> (blood, Latin). From medieval medicine: people with warm, blood-rich temperaments were considered naturally cheerful and optimistic.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>sanguinary (bloody)</span><span>consanguine (related by blood)</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"Despite the setbacks, she remained sanguine, confident the project would succeed in the end."</p>
+      </div>
+      <div class="memory-trick">Unlike vociferous people who shout, sanguine people smile quietly and say "it'll work out."</div>
+    </div>
+  </div>
+
+  <div class="root-callout">
+    <h4>Shared root: vox (voice)</h4>
+    <ul>
+      <li>equivocate — two equal voices</li>
+      <li>vociferous — carrying the voice</li>
+      <li>advocate — speaking for</li>
+      <li>provoke — calling out</li>
+      <li>revoke — calling back</li>
+    </ul>
+  </div>
+
+  <div class="self-check">
+    <h3>Group 1 self-check</h3>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q1</div>
+      <p>A coach stays calm and optimistic even though the team is losing badly. Which word fits?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Sanguine. The coach is quietly confident despite difficulty, not panicked or loud.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q2</div>
+      <p>A politician is asked "Do you support the new tax?" and replies: "There are many perspectives to consider, and I think it's important to look at all sides carefully." What are they doing?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Equivocating. Deliberately vague to avoid committing to yes or no.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q3</div>
+      <p>Vociferous and sanguine both describe someone with a strong position. What is the key difference?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Volume and tone. Vociferous = loud, forceful, impossible to ignore. Sanguine = calm, quietly optimistic. Both believe in their position; they express it very differently.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GROUP 2 ===================== -->
+<section class="group-section" id="group2">
+  <div class="group-label">Group 2 of 5</div>
+  <h2>Changing or Affecting Things</h2>
+  <p class="group-intro">These four words are all about actions that alter a situation: softening it, replacing it, adding to it, or taking away from it.</p>
+
+  <div class="pair-label">Pair 1 — <span>softening vs. replacing</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Mitigate</span>
+      <span class="word-pos">verb</span>
+      <span class="word-root">mitis + agere</span>
+    </div>
+    <div class="word-def">To make something less severe, harmful, or painful.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>mitis</strong> (mild, gentle) + <strong>agere</strong> (to do/act, Latin). To act to make something milder. You don't eliminate the problem — you reduce it.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>mitigation</span><span>mitigating circumstances</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"Wearing sunscreen mitigates the risk of sunburn on long hikes."</p>
+      </div>
+      <div class="memory-trick">Think "make it mild." Mitigate doesn't remove the danger — it turns it down.</div>
+    </div>
+  </div>
+
+  <div class="vs-divider">vs.</div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Supersede</span>
+      <span class="word-pos">verb</span>
+      <span class="word-root">super + sedere</span>
+    </div>
+    <div class="word-def">To take the place of something, making it outdated or no longer in use.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>super</strong> (above) + <strong>sedere</strong> (to sit, Latin). To sit above something — and push it out. Note the spelling: supersede, not "supercede."</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>preside</span><span>reside</span><span>sedentary</span><span>session</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"Streaming services have largely superseded DVD rentals."</p>
+      </div>
+      <div class="memory-trick">Super (above) + sit. The new thing sits above the old thing and replaces it entirely. Mitigate softens; supersede replaces.</div>
+    </div>
+  </div>
+
+  <div class="pair-label">Pair 2 — <span>creating something vs. taking something away</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Engender</span>
+      <span class="word-pos">verb</span>
+      <span class="word-root">en + genus</span>
+    </div>
+    <div class="word-def">To cause or give rise to a feeling, situation, or condition.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>en</strong> (cause to be) + <strong>genus/generare</strong> (to beget, produce, Latin). To bring something into being. Often used for abstract things: trust, conflict, fear.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>generate</span><span>gender</span><span>genre</span><span>general</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The principal's open-door policy engendered trust among students."</p>
+      </div>
+      <div class="memory-trick">Engender = generate. You are producing something new in the world — usually a feeling or situation.</div>
+    </div>
+  </div>
+
+  <div class="vs-divider">vs.</div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Detract</span>
+      <span class="word-pos">verb</span>
+      <span class="word-root">de + trahere</span>
+    </div>
+    <div class="word-def">To reduce the quality, value, or importance of something.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>de</strong> (away) + <strong>trahere</strong> (to pull, Latin). To pull value away from something. You don't destroy it — you diminish it.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>distract</span><span>extract</span><span>attract</span><span>tractor</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The spelling errors detracted from an otherwise strong essay."</p>
+      </div>
+      <div class="memory-trick">The tract root means pull. De-tract = pull away. Engender adds; detract subtracts.</div>
+    </div>
+  </div>
+
+  <div class="root-callout">
+    <h4>Shared root: trahere (to pull)</h4>
+    <ul>
+      <li>detract — pull away</li>
+      <li>distract — pull attention away</li>
+      <li>attract — pull toward</li>
+      <li>extract — pull out</li>
+      <li>contract — pull together</li>
+      <li>retract — pull back</li>
+    </ul>
+  </div>
+
+  <div class="self-check">
+    <h3>Group 2 self-check</h3>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q1</div>
+      <p>New safety regulations have replaced the old ones and made them no longer valid. Which word fits?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Supersede. The new regulations sit above and replace the old ones entirely.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q2</div>
+      <p>A loud argument at a dinner party ruins the warm atmosphere that had been building all evening. What did the argument do to the atmosphere, and what did the evening do before that?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">The warm evening engendered a good atmosphere (created/gave rise to it). The argument detracted from it (pulled away its value).</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q3</div>
+      <p>What is the difference between mitigating a problem and superseding it?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Mitigate = reduce the harm, but the problem still exists. Supersede = the old thing is replaced entirely by something new. One softens; the other replaces.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GROUP 3 ===================== -->
+<section class="group-section" id="group3">
+  <div class="group-label">Group 3 of 5</div>
+  <h2>Language and Information</h2>
+  <p class="group-intro">These words all relate to how we handle information: what a word points to, how we compress it, how we judge it, and how we organize it.</p>
+
+  <div class="pair-label">Pair 1 — <span>what a word means vs. a summary of what something means</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Denote</span>
+      <span class="word-pos">verb</span>
+      <span class="word-root">de + notare</span>
+    </div>
+    <div class="word-def">To be a sign of something; to indicate or represent directly.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>de</strong> (down, fully) + <strong>notare</strong> (to mark, Latin). To mark something down clearly. The literal, direct meaning of a word or symbol.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>note</span><span>notation</span><span>annotate</span><span>connote (implied meaning)</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The red traffic light denotes 'stop' in most countries."</p>
+      </div>
+      <div class="memory-trick">De-note = mark it down directly. The dictionary definition is what a word denotes. What it makes you feel is what it connotes.</div>
+    </div>
+  </div>
+
+  <div class="vs-divider">vs.</div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Synopsis</span>
+      <span class="word-pos">noun</span>
+      <span class="word-root">syn + opsis</span>
+    </div>
+    <div class="word-def">A brief summary or overview of a longer work or set of events.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>syn</strong> (together) + <strong>opsis</strong> (seeing, Greek). To see everything together at once — the whole story compressed into a single view.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>optic</span><span>optical</span><span>synoptic</span><span>synchronize</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The back cover of the novel gave a synopsis of the plot without revealing the ending."</p>
+      </div>
+      <div class="memory-trick">Think of a camera pulling back to see the whole picture at once. A synopsis = the bird's eye view.</div>
+    </div>
+  </div>
+
+  <div class="pair-label">Pair 2 — <span>evaluating vs. organizing</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Appraising</span>
+      <span class="word-pos">verb (present participle)</span>
+      <span class="word-root">ad + pretium</span>
+    </div>
+    <div class="word-def">Assessing the value, quality, or nature of something; evaluating carefully.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>ad</strong> (to) + <strong>pretium</strong> (price/value, Latin). To assign a price or value to something.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>appraise</span><span>appraisal</span><span>appreciate</span><span>precious</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"She stood appraising the painting for a long time before making an offer."</p>
+      </div>
+      <div class="confusion-note"><strong>Common confusion:</strong> Appraise (evaluate) vs. apprise (inform). "I appraised the car's value" vs. "I apprised him of the situation."</div>
+    </div>
+  </div>
+
+  <div class="vs-divider">vs.</div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Collate</span>
+      <span class="word-pos">verb</span>
+      <span class="word-root">com + latus</span>
+    </div>
+    <div class="word-def">To gather, arrange, and compare information or documents in an organized way.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>com</strong> (together) + <strong>latus</strong> (brought, Latin). To bring things together for comparison.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>collation</span><span>collect</span><span>correlate</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The researcher collated data from 40 different studies before drawing any conclusions."</p>
+      </div>
+      <div class="memory-trick">Appraising = judging what something is worth. Collating = gathering and sorting the material so you can judge it. Collating comes first.</div>
+    </div>
+  </div>
+
+  <div class="self-check">
+    <h3>Group 3 self-check</h3>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q1</div>
+      <p>A real estate agent visits a house and carefully evaluates it before setting a price. Which word fits?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Appraising. The agent is assessing value — literally the origin of the word.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q2</div>
+      <p>A student gathers notes from six different sources and organizes them before writing an essay. What are they doing to the notes?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Collating. Bringing together and organizing material from multiple sources.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q3</div>
+      <p>What does the word "synopsis" literally mean, based on its roots?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Seeing everything together at once (syn = together, opsis = seeing). A synopsis compresses a whole work into one view.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GROUP 4 ===================== -->
+<section class="group-section" id="group4">
+  <div class="group-label">Group 4 of 5</div>
+  <h2>Conscription</h2>
+  <p class="group-intro">This word stands on its own. It has a rich root and a precise meaning worth knowing well.</p>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Conscription</span>
+      <span class="word-pos">noun</span>
+      <span class="word-root">com + scribere</span>
+    </div>
+    <div class="word-def">The mandatory enrollment of people into national military service; the draft.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>com</strong> (together) + <strong>scribere</strong> (to write, Latin). Originally: to write names together on a list for military service. The state writes your name down — and you have no choice.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>script</span><span>describe</span><span>prescribe</span><span>inscription</span><span>manuscript</span><span>subscribe</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"During the war, conscription was introduced because not enough soldiers had volunteered."</p>
+      </div>
+      <div class="detail-block">
+        <h4>Key contrast</h4>
+        <p>Conscription is the opposite of voluntary enlistment. If you volunteer, you choose. If you are conscripted, the government chooses for you.</p>
+      </div>
+      <div class="memory-trick">The script root = writing. Con-scription = co-writing your name onto a list you didn't sign yourself.</div>
+    </div>
+  </div>
+
+  <div class="root-callout">
+    <h4>Shared root: scribere (to write)</h4>
+    <ul>
+      <li>conscription — writing names onto a list</li>
+      <li>describe — write down</li>
+      <li>prescribe — write before (a rule)</li>
+      <li>subscribe — write under (agree to)</li>
+      <li>transcribe — write across (copy)</li>
+      <li>manuscript — hand-written</li>
+      <li>inscription — written into</li>
+    </ul>
+  </div>
+
+  <div class="self-check">
+    <h3>Group 4 self-check</h3>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q1</div>
+      <p>What is the key difference between conscription and voluntary enlistment?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Conscription is mandatory — the state requires you to serve. Voluntary enlistment is a personal choice. Conscription removes the choice.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q2</div>
+      <p>Based on its root (scribere = to write), explain in your own words why "conscription" makes sense as a word for forced military service.</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">The government "writes your name together" with others on a military list. You didn't sign it yourself — it was written for you. The root captures the idea of being registered or recorded without consent.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GROUP 5 ===================== -->
+<section class="group-section" id="group5">
+  <div class="group-label">Group 5 of 5</div>
+  <h2>Society and Behavior</h2>
+  <p class="group-intro">These words describe how people relate to authority, how they react to surprising information, how conditions change over time, and how groups grow or claim meaning. Together they map the social world.</p>
+
+  <div class="pair-label">Pair 1 — <span>respect and connection: how do you relate to others?</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Deferential</span>
+      <span class="word-pos">adjective</span>
+      <span class="word-root">de + ferre</span>
+    </div>
+    <div class="word-def">Showing humble respect and willingness to yield to another's judgment or authority.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>de</strong> (down, away) + <strong>ferre</strong> (to carry, Latin). To carry yourself downward in the presence of another — to step back and let them lead. The same <em>ferre</em> root appears in vociferous (carrying the voice) and transfer (carry across).</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>defer</span><span>deference</span><span>transfer</span><span>confer</span><span>refer</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The new employee was deferential toward the senior staff, always asking for guidance rather than acting on her own."</p>
+      </div>
+      <div class="memory-trick">Deferential people defer — they step back. They don't push back or take over. They yield.</div>
+    </div>
+  </div>
+
+  <div class="vs-divider">vs.</div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Rapport</span>
+      <span class="word-pos">noun</span>
+      <span class="word-root">re + apporter</span>
+    </div>
+    <div class="word-def">A close, harmonious relationship built on mutual understanding and trust.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>re</strong> (back) + <strong>apporter</strong> (to bring, Old French). To bring things back together — to create a connection by returning to each other. Pronounced ra-POR; the final t is silent.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>rapport (no close English relatives)</span><span>report (bring back news)</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The teacher built strong rapport with her students by remembering their names and asking about their interests."</p>
+      </div>
+      <div class="memory-trick">Deferential is about hierarchy — one person steps back for another. Rapport is about equality — two people meet in the middle and connect.</div>
+    </div>
+  </div>
+
+  <div class="pair-label">Pair 2 — <span>disbelief and doubt</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Incredulous</span>
+      <span class="word-pos">adjective</span>
+      <span class="word-root">in + credere</span>
+    </div>
+    <div class="word-def">Unable or unwilling to believe something; showing disbelief.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>in</strong> (not) + <strong>credere</strong> (to believe, Latin). Not believing. The same root gives us incredible (unbelievable), credit (trust), and creed (what one believes).</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>incredible</span><span>credible</span><span>credit</span><span>creed</span><span>credence</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"She was incredulous when she heard the price — she stared at the receipt and asked the cashier to check again."</p>
+      </div>
+      <div class="detail-block">
+        <h4>Key distinction</h4>
+        <p>Incredulous describes the <em>person</em> who doesn't believe. Incredible describes the <em>thing</em> that is hard to believe. "She was incredulous about the incredible story."</p>
+      </div>
+      <div class="memory-trick">Incredulous face = raised eyebrows, open mouth, disbelief. You've just heard something you cannot credit as true.</div>
+    </div>
+  </div>
+
+  <div class="pair-label">Pair 3 — <span>improvement and growth: bouncing back vs. spreading out</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Remission</span>
+      <span class="word-pos">noun</span>
+      <span class="word-root">re + mittere</span>
+    </div>
+    <div class="word-def">A reduction or disappearance of symptoms, especially of a disease; also, the cancellation of a debt or punishment.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>re</strong> (back) + <strong>mittere</strong> (to send, Latin). To send back — to return something (the illness, the debt, the sentence) to a lesser or absent state. The same root gives us mission, dismiss, and submit.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>mission</span><span>dismiss</span><span>submit</span><span>emit</span><span>permit</span><span>transmit</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"After two years of treatment, the cancer went into remission and her doctors were cautiously optimistic."</p>
+      </div>
+      <div class="memory-trick">Re-mission = the disease is "sent back." It hasn't disappeared for good — it has retreated. Remission is hopeful, but not the same as cured.</div>
+    </div>
+  </div>
+
+  <div class="vs-divider">vs.</div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Proliferate</span>
+      <span class="word-pos">verb</span>
+      <span class="word-root">proles + ferre</span>
+    </div>
+    <div class="word-def">To increase rapidly in number; to spread or multiply quickly.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>proles</strong> (offspring, Latin) + <strong>ferre</strong> (to bear/carry). To carry offspring — to keep producing new generations. The same <em>ferre</em> root appears in deferential and vociferous.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>proliferation</span><span>proletariat (from proles)</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"Social media platforms proliferated rapidly in the 2010s, with dozens of new apps launching every year."</p>
+      </div>
+      <div class="memory-trick">Remission = pulling back. Proliferate = pushing outward. One shrinks; the other multiplies.</div>
+    </div>
+  </div>
+
+  <div class="pair-label">Pair 4 — <span>meaning and money: what does it claim vs. what does it cost?</span></div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Purport</span>
+      <span class="word-pos">verb / noun</span>
+      <span class="word-root">pur + porter</span>
+    </div>
+    <div class="word-def">To appear or claim to be something, often without proof; also, the meaning or intention of something.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>pur/pro</strong> (forth) + <strong>porter</strong> (to carry, Old French). To carry something forward as a claim — to put a meaning out into the world, whether or not it is true.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>purported</span><span>purportedly</span><span>import (carry in)</span><span>export (carry out)</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The document purported to be a letter from the governor, but the signature looked suspicious."</p>
+      </div>
+      <div class="detail-block">
+        <h4>As a noun</h4>
+        <p class="example-sentence">"The purport of the new policy was to reduce wait times, but critics said it would do the opposite."</p>
+      </div>
+      <div class="memory-trick">Purport carries a claim out into the world. It doesn't promise the claim is true — just that someone is making it.</div>
+    </div>
+  </div>
+
+  <div class="vs-divider">vs.</div>
+
+  <div class="word-card">
+    <div class="word-header">
+      <span class="word-title">Austerity</span>
+      <span class="word-pos">noun</span>
+      <span class="word-root">austerus</span>
+    </div>
+    <div class="word-def">Deliberate strictness and self-denial; in economics, government spending cuts and reduced services to lower debt.</div>
+    <button class="expand-btn" onclick="toggleCard(this)">tap for roots and examples</button>
+    <div class="expandable">
+      <div class="detail-block">
+        <h4>Root breakdown</h4>
+        <p class="root-breakdown"><strong>austerus</strong> (harsh, dry, bitter, Latin/Greek). Originally described dry, bitter-tasting things. The meaning shifted to describe harsh, stripped-down conditions — personal or economic.</p>
+      </div>
+      <div class="detail-block">
+        <h4>Word family</h4>
+        <div class="word-family"><span>austere</span><span>austerely</span></div>
+      </div>
+      <div class="detail-block">
+        <h4>Example</h4>
+        <p class="example-sentence">"The government announced a period of austerity, cutting funding for public programs to address the national deficit."</p>
+      </div>
+      <div class="detail-block">
+        <h4>Two uses</h4>
+        <p>Personal: an austere lifestyle (bare, no luxuries). Economic: austerity measures (spending cuts, reduced services). Both share the core meaning of deliberate hardship.</p>
+      </div>
+      <div class="memory-trick">Purport is about what something claims to be. Austerity is about what is actually being stripped away. One is about appearance; the other is about reality.</div>
+    </div>
+  </div>
+
+  <div class="root-callout">
+    <h4>Shared root: ferre (to carry/bear)</h4>
+    <ul>
+      <li>deferential — carry yourself downward (yield)</li>
+      <li>vociferous — carry the voice (be loud)</li>
+      <li>proliferate — carry offspring (multiply)</li>
+      <li>transfer — carry across</li>
+      <li>confer — carry together (discuss)</li>
+      <li>refer — carry back</li>
+    </ul>
+  </div>
+
+  <div class="self-check">
+    <h3>Group 5 self-check</h3>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q1</div>
+      <p>A student receives news that feels impossible to believe — her face shows total disbelief. Which word fits?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Incredulous. She is the person who cannot believe it. (The news itself might be incredible — but the word for her reaction is incredulous.)</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q2</div>
+      <p>A new intern always asks senior colleagues for their input before making decisions and never pushes her own agenda. How would you describe her manner?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Deferential. She consistently yields to others' judgment — she carries herself downward in their presence.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q3</div>
+      <p>What is the difference between remission and proliferation? Use a medical context.</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Remission = the disease retreats or symptoms decrease. Proliferation = cells multiply rapidly (often used to describe cancer spreading). They are nearly opposites: one pulls back, the other expands.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q4</div>
+      <p>A leaked memo purports to show that the company knew about the defect for years. What does "purports" signal here?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">That the memo claims or appears to show this — but the writer is not confirming it is genuine or true. Purport carries the claim without vouching for it.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-q-label">Q5</div>
+      <p>How are rapport and deferential different in how they describe relationships?</p>
+      <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+      <div class="answer-text">Rapport = mutual, equal connection built on trust. Deferential = one-sided yielding to someone with more authority. Rapport is horizontal; deferential is vertical.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FINAL QUIZ ===================== -->
+<div class="final-quiz" id="finalquiz">
+  <h2>Final Quiz: All 20 Words</h2>
+  <p style="font-size:14px; color:var(--text2); margin: 8px 0 0;">Use this to test yourself on everything. Write answers in the boxes, then reveal to check. No score — just honest self-assessment.</p>
+
+  <div class="word-bank">
+    <span>Endorse</span><span>Equivocate</span><span>Mitigate</span><span>Denote</span><span>Engender</span>
+    <span>Supersede</span><span>Synopsis</span><span>Vociferous</span><span>Appraising</span><span>Sanguine</span>
+    <span>Detract</span><span>Collate</span><span>Conscription</span><span>Deferential</span><span>Incredulous</span>
+    <span>Remission</span><span>Purport</span><span>Proliferate</span><span>Rapport</span><span>Austerity</span>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q1 — Definition match</div>
+    <p>Which word means "to make something less severe without eliminating it"?</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+    <div class="answer-text">Mitigate.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q2 — Scenario</div>
+    <p>A famous chef gives a glowing public recommendation for a new kitchen appliance. Which word fits?</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+    <div class="answer-text">Endorse. The chef is publicly backing the product.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q3 — Roots</div>
+    <p>Three words in this list share the Latin root ferre (to carry). Name them.</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+    <div class="answer-text">Vociferous, deferential, and proliferate. All involve carrying: carrying the voice, carrying yourself downward, carrying offspring.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q4 — Contrast</div>
+    <p>What is the difference between engender and detract? Use a single example situation to show both.</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+    <div class="answer-text">Engender = bring something into existence. Detract = reduce or take away from something. Example: a kind teacher engenders confidence in students; harsh criticism detracts from their motivation.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q5 — Sentence writing</div>
+    <p>Write a sentence using "supersede" correctly.</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal example</button>
+    <div class="answer-text">Example: "The updated guidelines superseded the 2019 version, making it officially outdated." Key: something old is replaced entirely by something new.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q6 — Scenario</div>
+    <p>A librarian is gathering articles from 12 journals, putting them in date order, and grouping them by topic. Which word describes what she is doing?</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+    <div class="answer-text">Collating. She is organizing and bringing together material from multiple sources.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q7 — Precision</div>
+    <p>What does "denote" mean, and how is it different from "connote"?</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+    <div class="answer-text">Denote = the direct, literal meaning. Connote = the implied or emotional meaning. "Snake" denotes a reptile. It connotes danger or deception.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q8 — Scenario</div>
+    <p>A country passes a law requiring all 18-year-olds to serve one year in the military. What is this policy called?</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+    <div class="answer-text">Conscription. It is mandatory, not voluntary.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q9 — New words: reaction</div>
+    <p>A journalist reads a report claiming that a trusted official has been lying for years. Her expression shows she simply cannot believe it. Which word describes her reaction?</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+    <div class="answer-text">Incredulous. She is the person who cannot believe it — her disbelief is the focus.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q10 — New words: society</div>
+    <p>Use remission, proliferate, austerity, and rapport in a short paragraph of 4 to 6 sentences on any topic.</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal a model example</button>
+    <div class="answer-text">Model: "During the years of austerity that followed the financial crisis, public services were cut and communities struggled. Yet in some neighborhoods, a surprising sense of rapport emerged — people who had never spoken began sharing resources and looking out for each other. Food banks proliferated across the city, turning empty storefronts into distribution centers overnight. For many families, this informal network felt like a remission of the worst pressures, even as the underlying problems remained."</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q-label">Q11 — New words: purport vs. denote</div>
+    <p>How is "purport" different from "denote"? Both involve meaning — what is the key distinction?</p>
+    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal answer</button>
+    <div class="answer-text">Denote = the direct, established meaning of a word or symbol (certain). Purport = what something claims or appears to mean, without confirming it is true (uncertain). A red light denotes "stop." A forged document purports to be official.</div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Vocabulary Review: 20 Words
+  <div class="word-list-footer">Endorse · Equivocate · Vociferous · Sanguine · Mitigate · Supersede · Engender · Detract · Denote · Synopsis · Appraising · Collate · Conscription · Deferential · Incredulous · Remission · Proliferate · Rapport · Purport · Austerity</div>
+</footer>
+
+<script>
+  function toggleCard(btn) {
+    btn.classList.toggle('open');
+    const panel = btn.nextElementSibling;
+    panel.classList.toggle('open');
+  }
+  function toggleAnswer(btn) {
+    const answer = btn.nextElementSibling;
+    answer.classList.toggle('open');
+    btn.textContent = answer.classList.contains('open') ? 'Hide answer' : 'Reveal answer';
+    if (btn.textContent === 'Hide answer' && btn.dataset.label) btn.textContent = 'Hide answer';
+  }
 </script>
+
 </body>
 </html>
