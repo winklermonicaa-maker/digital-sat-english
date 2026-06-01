@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>May Vocabulary Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --border: #e4ddd3;
+    --accent: #2d6a4f;
+    --accent-light: #e8f5ee;
+    --accent2: #b5632a;
+    --text: #1a1612;
+    --muted: #7a7168;
+    --correct: #2d6a4f;
+    --incorrect: #c0392b;
+    --correct-bg: #e8f5ee;
+    --incorrect-bg: #fdecea;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+  }
+
+  header .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 0.5rem;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  header p {
+    margin-top: 0.6rem;
+    font-size: 0.92rem;
+    opacity: 0.85;
+  }
+
+  /* Tab nav */
+  .tab-nav {
+    display: flex;
+    overflow-x: auto;
+    background: var(--accent);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    gap: 0;
+  }
+
+  .tab-nav button {
+    flex: 1 0 auto;
+    padding: 0.75rem 1.1rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.65);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .tab-nav button:hover { color: white; }
+  .tab-nav button.active {
+    color: white;
+    border-bottom-color: #f4c96e;
+  }
+
+  /* Panels */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .panel-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .week-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  .panel-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.35rem;
+  }
+
+  .panel-subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  /* Question cards */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .q-num {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.45rem;
+  }
+
+  .q-text {
+    font-size: 0.97rem;
+    line-height: 1.55;
+    margin-bottom: 0.9rem;
+  }
+
+  .q-text em { font-style: italic; }
+
+  .choices { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  .choice-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 0.75rem;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .choice-label:hover { border-color: var(--accent); background: var(--accent-light); }
+
+  .choice-label input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; }
+
+  .choice-label.correct-choice { border-color: var(--correct); background: var(--correct-bg); }
+  .choice-label.wrong-choice { border-color: var(--incorrect); background: var(--incorrect-bg); }
+
+  .feedback {
+    display: none;
+    margin-top: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+  .feedback.correct { display: block; background: var(--correct-bg); color: var(--correct); }
+  .feedback.incorrect { display: block; background: var(--incorrect-bg); color: var(--incorrect); }
+
+  /* Matching */
+  .match-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+  .match-table th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0 0 0.6rem;
+    text-align: left;
+  }
+  .match-table th:last-child { text-align: left; padding-left: 1rem; }
+  .match-table td { padding: 0.35rem 0; vertical-align: middle; }
+  .match-table td:first-child {
+    font-weight: 600;
+    font-size: 0.9rem;
+    width: 38%;
+    padding-right: 0.5rem;
+  }
+  .match-table td:last-child { padding-left: 1rem; }
+
+  .match-select {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .match-select:focus { outline: none; border-color: var(--accent); }
+  .match-select.correct-sel { border-color: var(--correct); background: var(--correct-bg); }
+  .match-select.wrong-sel { border-color: var(--incorrect); background: var(--incorrect-bg); }
+
+  /* Fill in blank */
+  .fitb-sentence {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 0.85rem;
+  }
+
+  .fitb-sentence .blank-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    vertical-align: super;
+    margin-right: 2px;
+  }
+
+  .blank-select {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+    min-width: 140px;
+    transition: border-color 0.15s;
+  }
+  .blank-select:focus { outline: none; border-color: var(--accent); }
+  .blank-select.correct-sel { border-color: var(--correct); background: var(--correct-bg); }
+  .blank-select.wrong-sel { border-color: var(--incorrect); background: var(--incorrect-bg); }
+
+  .word-bank {
+    margin-top: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    background: #f5f2ec;
+    border-radius: 7px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .word-bank strong { color: var(--text); font-weight: 600; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+  }
+  .btn-outline:hover { background: var(--accent-light); }
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.35rem;
+  }
+
+  .next-hint {
+    font-size: 0.83rem;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+
+  /* Writing panel */
+  .writing-prompt {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1.1rem;
+  }
+  .writing-prompt .prompt-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.4rem;
+  }
+  .writing-prompt p { font-size: 0.93rem; line-height: 1.6; }
+  .writing-prompt strong { font-weight: 600; }
+
+  /* Score panel */
+  #score-panel {
+    display: none;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  #score-panel.active { display: block; }
+  #score-panel .score-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    color: var(--accent);
+  }
+  #score-panel .score-label { font-size: 0.9rem; color: var(--muted); margin-top: 0.25rem; }
+  #score-panel .score-msg { font-size: 1rem; margin-top: 1rem; line-height: 1.55; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  .section-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    margin-top: 1.6rem;
+  }
+  .section-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+  }
+
+  .score-tally {
+    display: none;
+    padding: 0.5rem 0.85rem;
+    background: var(--accent-light);
+    border: 1px solid #b7dfc9;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-top: 0.75rem;
+  }
+  .score-tally.visible { display: inline-block; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">SAT Vocabulary · Units 15–19</div>
+  <h1>May Vocabulary Review</h1>
+  <p>Time to review! These activities are self-check. Submit your answers at the end to see your results. :)</p>
+</header>
+
+<nav class="tab-nav" id="tabNav">
+  <button class="active" onclick="showTab(0)">Week 15</button>
+  <button onclick="showTab(1)">Week 16</button>
+  <button onclick="showTab(2)">Week 17</button>
+  <button onclick="showTab(3)">Week 18</button>
+  <button onclick="showTab(4)">Week 19</button>
+</nav>
+
+<!-- WEEK 15 -->
+<div class="panel active" id="panel-0">
+<div class="panel-inner">
+  <div class="week-label">Week 15</div>
+  <div class="panel-title">Precision &amp; Structure</div>
+  <div class="panel-subtitle">Questions 1–8 · Multiple Choice</div>
+
+  <!-- Q1 -->
+  <div class="q-card">
+    <div class="q-num">Question 1</div>
+    <div class="q-text">The word <em>inherent</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q1" value="A"> A &nbsp; added on later as an optional feature</label>
+      <label class="choice-label"><input type="radio" name="q1" value="B"> B &nbsp; built into something and inseparable from it</label>
+      <label class="choice-label"><input type="radio" name="q1" value="C"> C &nbsp; borrowed from an outside source</label>
+      <label class="choice-label"><input type="radio" name="q1" value="D"> D &nbsp; visible only under specific conditions</label>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card">
+    <div class="q-num">Question 2</div>
+    <div class="q-text">Which sentence uses <em>intrinsic</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q2" value="A"> A &nbsp; Her intrinsic motivation came entirely from the reward her teacher offered.</label>
+      <label class="choice-label"><input type="radio" name="q2" value="B"> B &nbsp; The painting's intrinsic value lies in the artist's technique, not its sale price.</label>
+      <label class="choice-label"><input type="radio" name="q2" value="C"> C &nbsp; He found the class intrinsic because it was listed in the school catalog.</label>
+      <label class="choice-label"><input type="radio" name="q2" value="D"> D &nbsp; The company's intrinsic logo was added by a marketing consultant.</label>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card">
+    <div class="q-num">Question 3</div>
+    <div class="q-text">A student argues that wearing formal clothes to a comedy show creates an <em>incongruity</em>. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q3" value="A"> A &nbsp; The clothes match the relaxed mood of the event perfectly.</label>
+      <label class="choice-label"><input type="radio" name="q3" value="B"> B &nbsp; There is a mismatch between the outfit and the setting.</label>
+      <label class="choice-label"><input type="radio" name="q3" value="C"> C &nbsp; The clothing choice was practical and well-reasoned.</label>
+      <label class="choice-label"><input type="radio" name="q3" value="D"> D &nbsp; The student is dressed consistently with what others expect.</label>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card">
+    <div class="q-num">Question 4</div>
+    <div class="q-text">Which sentence correctly uses <em>inverse</em>?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q4" value="A"> A &nbsp; There is an inverse relationship between study time and test anxiety — the more you study, the less anxious you feel.</label>
+      <label class="choice-label"><input type="radio" name="q4" value="B"> B &nbsp; The inverse approach was identical to the original strategy in every way.</label>
+      <label class="choice-label"><input type="radio" name="q4" value="C"> C &nbsp; Both students had inverse opinions, agreeing on every point.</label>
+      <label class="choice-label"><input type="radio" name="q4" value="D"> D &nbsp; The teacher used an inverse method, which produced the same result as before.</label>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card">
+    <div class="q-num">Question 5</div>
+    <div class="q-text">A student receives a salary <em>commensurate</em> with her experience. This means her pay is:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q5" value="A"> A &nbsp; higher than what her experience would normally earn</label>
+      <label class="choice-label"><input type="radio" name="q5" value="B"> B &nbsp; unrelated to her level of experience</label>
+      <label class="choice-label"><input type="radio" name="q5" value="C"> C &nbsp; proportionate and appropriate to her experience level</label>
+      <label class="choice-label"><input type="radio" name="q5" value="D"> D &nbsp; determined randomly rather than by any standard</label>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card">
+    <div class="q-num">Question 6</div>
+    <div class="q-text">Which pair of words are most nearly <strong>opposite</strong> in meaning?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q6" value="A"> A &nbsp; tangential / extraneous</label>
+      <label class="choice-label"><input type="radio" name="q6" value="B"> B &nbsp; diffuse / concentrated</label>
+      <label class="choice-label"><input type="radio" name="q6" value="C"> C &nbsp; discrete / separate</label>
+      <label class="choice-label"><input type="radio" name="q6" value="D"> D &nbsp; latent / hidden</label>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card">
+    <div class="q-num">Question 7</div>
+    <div class="q-text">A researcher notices a <em>latent</em> tension in the community. What does this mean?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q7" value="A"> A &nbsp; The tension has already erupted into open conflict.</label>
+      <label class="choice-label"><input type="radio" name="q7" value="B"> B &nbsp; The tension is present but not yet visible or expressed.</label>
+      <label class="choice-label"><input type="radio" name="q7" value="C"> C &nbsp; The tension was resolved quickly before anyone noticed.</label>
+      <label class="choice-label"><input type="radio" name="q7" value="D"> D &nbsp; The tension is clearly visible to everyone in the area.</label>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card">
+    <div class="q-num">Question 8</div>
+    <div class="q-text">A comment is described as <em>tangential</em> to the discussion. What does this tell you about the comment?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q8" value="A"> A &nbsp; It directly addresses the central argument.</label>
+      <label class="choice-label"><input type="radio" name="q8" value="B"> B &nbsp; It is only slightly related to the main topic.</label>
+      <label class="choice-label"><input type="radio" name="q8" value="C"> C &nbsp; It contradicts every point made so far.</label>
+      <label class="choice-label"><input type="radio" name="q8" value="D"> D &nbsp; It summarizes the discussion clearly and efficiently.</label>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek15()">Check Answers</button>
+    <span class="score-tally" id="tally-15"></span>
+  </div>
+  <p class="next-hint" id="next-15" style="display:none;">Next: Week 16 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(1)">Go to Week 16</button></p>
+</div>
+</div>
+
+<!-- WEEK 16 -->
+<div class="panel" id="panel-1">
+<div class="panel-inner">
+  <div class="week-label">Week 16</div>
+  <div class="panel-title">Power &amp; Social Harm</div>
+
+  <div class="section-heading">Questions 9–13 · Matching</div>
+  <div class="section-sub">Match each word to its definition.</div>
+
+  <div class="q-card">
+    <table class="match-table">
+      <tr><th>Word</th><th></th><th>Definition</th></tr>
+      <tr>
+        <td>venerate</td>
+        <td></td>
+        <td><select class="match-select" id="m16-1">
+          <option value="">— select —</option>
+          <option>to regard with deep respect or reverence</option>
+          <option>to take unfair advantage of someone for personal gain</option>
+          <option>to cause something harmful to continue indefinitely</option>
+          <option>to treat a group as insignificant or push them aside</option>
+          <option>to mark something as shameful or unacceptable</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td>exploit</td>
+        <td></td>
+        <td><select class="match-select" id="m16-2">
+          <option value="">— select —</option>
+          <option>to regard with deep respect or reverence</option>
+          <option>to take unfair advantage of someone for personal gain</option>
+          <option>to cause something harmful to continue indefinitely</option>
+          <option>to treat a group as insignificant or push them aside</option>
+          <option>to mark something as shameful or unacceptable</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td>perpetuate</td>
+        <td></td>
+        <td><select class="match-select" id="m16-3">
+          <option value="">— select —</option>
+          <option>to regard with deep respect or reverence</option>
+          <option>to take unfair advantage of someone for personal gain</option>
+          <option>to cause something harmful to continue indefinitely</option>
+          <option>to treat a group as insignificant or push them aside</option>
+          <option>to mark something as shameful or unacceptable</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td>marginalize</td>
+        <td></td>
+        <td><select class="match-select" id="m16-4">
+          <option value="">— select —</option>
+          <option>to regard with deep respect or reverence</option>
+          <option>to take unfair advantage of someone for personal gain</option>
+          <option>to cause something harmful to continue indefinitely</option>
+          <option>to treat a group as insignificant or push them aside</option>
+          <option>to mark something as shameful or unacceptable</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td>stigmatize</td>
+        <td></td>
+        <td><select class="match-select" id="m16-5">
+          <option value="">— select —</option>
+          <option>to regard with deep respect or reverence</option>
+          <option>to take unfair advantage of someone for personal gain</option>
+          <option>to cause something harmful to continue indefinitely</option>
+          <option>to treat a group as insignificant or push them aside</option>
+          <option>to mark something as shameful or unacceptable</option>
+        </select></td>
+      </tr>
+    </table>
+    <div class="feedback" id="fb-match16"></div>
+  </div>
+
+  <div class="section-heading">Questions 14–17 · Fill in the Blank</div>
+  <div class="section-sub">Choose the best word from the word bank for each sentence.</div>
+
+  <div class="q-card">
+    <div class="fitb-sentence">
+      14. Media representations that always show one group in a negative light can
+      <select class="blank-select" id="b16-14">
+        <option value="">— select —</option>
+        <option>stratify</option><option>perpetuate</option><option>vilify</option><option>subjugate</option><option>disparage</option>
+      </select>
+      harmful stereotypes across generations.
+    </div>
+    <div class="fitb-sentence">
+      15. Critics argued that the new admissions policy would
+      <select class="blank-select" id="b16-15">
+        <option value="">— select —</option>
+        <option>venerate</option><option>stratify</option><option>exploit</option><option>stigmatize</option><option>marginalize</option>
+      </select>
+      students from lower-income backgrounds, leaving their voices unheard.
+    </div>
+    <div class="fitb-sentence">
+      16. The editorial chose to
+      <select class="blank-select" id="b16-16">
+        <option value="">— select —</option>
+        <option>stratify</option><option>venerate</option><option>vilify</option><option>perpetuate</option><option>marginalize</option>
+      </select>
+      the politician rather than engage with her actual policy proposals.
+    </div>
+    <div class="fitb-sentence">
+      17. Researchers found that social media can
+      <select class="blank-select" id="b16-17">
+        <option value="">— select —</option>
+        <option>subjugate</option><option>disparage</option><option>stratify</option><option>exploit</option><option>vilify</option>
+      </select>
+      mental health struggles by treating them as personal failures rather than medical conditions.
+    </div>
+    <div class="word-bank"><strong>Word bank:</strong> venerate · exploit · perpetuate · marginalize · stigmatize · stratify · disparage · subjugate · vilify</div>
+    <div class="feedback" id="fb-fitb16"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek16()">Check Answers</button>
+    <span class="score-tally" id="tally-16"></span>
+  </div>
+  <p class="next-hint" id="next-16" style="display:none;">Next: Week 17 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(2)">Go to Week 17</button></p>
+</div>
+</div>
+
+<!-- WEEK 17 -->
+<div class="panel" id="panel-2">
+<div class="panel-inner">
+  <div class="week-label">Week 17</div>
+  <div class="panel-title">Evidence &amp; Reasoning</div>
+  <div class="panel-subtitle">Questions 18–25 · Multiple Choice &amp; Fill in the Blank</div>
+
+  <!-- Q18 -->
+  <div class="q-card">
+    <div class="q-num">Question 18</div>
+    <div class="q-text">A researcher's argument is called <em>untenable</em>. What does this mean for the argument?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q18" value="A"> A &nbsp; It is well-supported and impossible to question.</label>
+      <label class="choice-label"><input type="radio" name="q18" value="B"> B &nbsp; It cannot be defended or maintained under scrutiny.</label>
+      <label class="choice-label"><input type="radio" name="q18" value="C"> C &nbsp; It is based on strong empirical evidence.</label>
+      <label class="choice-label"><input type="radio" name="q18" value="D"> D &nbsp; It is cautious and avoids making strong claims.</label>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card">
+    <div class="q-num">Question 19</div>
+    <div class="q-text">Which sentence uses <em>empirical</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q19" value="A"> A &nbsp; Her empirical belief was based purely on a feeling she could not explain.</label>
+      <label class="choice-label"><input type="radio" name="q19" value="B"> B &nbsp; The theory remained empirical because no one had tested it yet.</label>
+      <label class="choice-label"><input type="radio" name="q19" value="C"> C &nbsp; The study's empirical findings were drawn from surveys and lab tests, not assumptions.</label>
+      <label class="choice-label"><input type="radio" name="q19" value="D"> D &nbsp; His empirical argument relied on philosophical reasoning rather than data.</label>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card">
+    <div class="q-num">Question 20</div>
+    <div class="q-text">A scientist is described as <em>circumspect</em> in her conclusions. What does this suggest about her approach?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q20" value="A"> A &nbsp; She rushes to publish before fully reviewing her data.</label>
+      <label class="choice-label"><input type="radio" name="q20" value="B"> B &nbsp; She is cautious and carefully considers all factors before drawing conclusions.</label>
+      <label class="choice-label"><input type="radio" name="q20" value="C"> C &nbsp; She ignores counterarguments in order to stay focused.</label>
+      <label class="choice-label"><input type="radio" name="q20" value="D"> D &nbsp; She boldly states her conclusions without hesitation.</label>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <!-- Q21 -->
+  <div class="q-card">
+    <div class="q-num">Question 21</div>
+    <div class="q-text">Which pair of words are most nearly <strong>synonymous</strong>?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q21" value="A"> A &nbsp; vindicate / attenuate</label>
+      <label class="choice-label"><input type="radio" name="q21" value="B"> B &nbsp; rigorous / exhaustive</label>
+      <label class="choice-label"><input type="radio" name="q21" value="C"> C &nbsp; irrefutable / untenable</label>
+      <label class="choice-label"><input type="radio" name="q21" value="D"> D &nbsp; eschew / vindicate</label>
+    </div>
+    <div class="feedback" id="fb-q21"></div>
+  </div>
+
+  <div class="section-heading">Questions 22–25 · Fill in the Blank</div>
+  <div class="section-sub">Choose the best word from the word bank.</div>
+
+  <div class="q-card">
+    <div class="fitb-sentence">
+      22. The new data seemed to
+      <select class="blank-select" id="b17-22">
+        <option value="">— select —</option>
+        <option>attenuate</option><option>vindicate</option><option>eschew</option><option>circumspect</option><option>irrefutable</option>
+      </select>
+      the scientist, proving that her original hypothesis had been correct all along.
+    </div>
+    <div class="fitb-sentence">
+      23. Over time, exposure to the toxin seemed to
+      <select class="blank-select" id="b17-23">
+        <option value="">— select —</option>
+        <option>vindicate</option><option>rigorous</option><option>attenuate</option><option>exhaustive</option><option>eschew</option>
+      </select>
+      the immune system's response, making patients more vulnerable to infection.
+    </div>
+    <div class="fitb-sentence">
+      24. The defense attorney presented what she called
+      <select class="blank-select" id="b17-24">
+        <option value="">— select —</option>
+        <option>circumspect</option><option>irrefutable</option><option>untenable</option><option>empirical</option><option>rigorous</option>
+      </select>
+      evidence, arguing that no reasonable person could doubt her client's innocence.
+    </div>
+    <div class="fitb-sentence">
+      25. The author chose to
+      <select class="blank-select" id="b17-25">
+        <option value="">— select —</option>
+        <option>attenuate</option><option>vindicate</option><option>eschew</option><option>exhaustive</option><option>circumspect</option>
+      </select>
+      social media entirely, preferring to share her work only through direct conversation.
+    </div>
+    <div class="word-bank"><strong>Word bank:</strong> empirical · exhaustive · untenable · vindicate · irrefutable · rigorous · circumspect · attenuate · eschew</div>
+    <div class="feedback" id="fb-fitb17"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek17()">Check Answers</button>
+    <span class="score-tally" id="tally-17"></span>
+  </div>
+  <p class="next-hint" id="next-17" style="display:none;">Next: Week 18 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(3)">Go to Week 18</button></p>
+</div>
+</div>
+
+<!-- WEEK 18 -->
+<div class="panel" id="panel-3">
+<div class="panel-inner">
+  <div class="week-label">Week 18</div>
+  <div class="panel-title">Behavior &amp; Personality</div>
+
+  <div class="section-heading">Questions 26–30 · Matching</div>
+  <div class="section-sub">Match each word to its definition.</div>
+
+  <div class="q-card">
+    <table class="match-table">
+      <tr><th>Word</th><th></th><th>Definition</th></tr>
+      <tr>
+        <td>recalcitrant</td>
+        <td></td>
+        <td><select class="match-select" id="m18-1">
+          <option value="">— select —</option>
+          <option>stubbornly resistant to authority or change</option>
+          <option>refusing to compromise or change one's views</option>
+          <option>changing suddenly and unpredictably</option>
+          <option>inconsistent and unpredictable in behavior</option>
+          <option>having unique characteristics specific to an individual</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td>intransigent</td>
+        <td></td>
+        <td><select class="match-select" id="m18-2">
+          <option value="">— select —</option>
+          <option>stubbornly resistant to authority or change</option>
+          <option>refusing to compromise or change one's views</option>
+          <option>changing suddenly and unpredictably</option>
+          <option>inconsistent and unpredictable in behavior</option>
+          <option>having unique characteristics specific to an individual</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td>capricious</td>
+        <td></td>
+        <td><select class="match-select" id="m18-3">
+          <option value="">— select —</option>
+          <option>stubbornly resistant to authority or change</option>
+          <option>refusing to compromise or change one's views</option>
+          <option>changing suddenly and unpredictably</option>
+          <option>inconsistent and unpredictable in behavior</option>
+          <option>having unique characteristics specific to an individual</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td>erratic</td>
+        <td></td>
+        <td><select class="match-select" id="m18-4">
+          <option value="">— select —</option>
+          <option>stubbornly resistant to authority or change</option>
+          <option>refusing to compromise or change one's views</option>
+          <option>changing suddenly and unpredictably</option>
+          <option>inconsistent and unpredictable in behavior</option>
+          <option>having unique characteristics specific to an individual</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td>idiosyncratic</td>
+        <td></td>
+        <td><select class="match-select" id="m18-5">
+          <option value="">— select —</option>
+          <option>stubbornly resistant to authority or change</option>
+          <option>refusing to compromise or change one's views</option>
+          <option>changing suddenly and unpredictably</option>
+          <option>inconsistent and unpredictable in behavior</option>
+          <option>having unique characteristics specific to an individual</option>
+        </select></td>
+      </tr>
+    </table>
+    <div class="feedback" id="fb-match18"></div>
+  </div>
+
+  <div class="section-heading">Questions 31–34 · Multiple Choice</div>
+
+  <!-- Q31 -->
+  <div class="q-card">
+    <div class="q-num">Question 31</div>
+    <div class="q-text">Which sentence uses <em>propensity</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q31" value="A"> A &nbsp; He showed a propensity for staying focused, never getting distracted during class.</label>
+      <label class="choice-label"><input type="radio" name="q31" value="B"> B &nbsp; She had a natural propensity toward procrastination, always leaving work to the last minute.</label>
+      <label class="choice-label"><input type="radio" name="q31" value="C"> C &nbsp; The teacher's propensity was assigned at the start of the semester.</label>
+      <label class="choice-label"><input type="radio" name="q31" value="D"> D &nbsp; His propensity disappeared after just one lesson.</label>
+    </div>
+    <div class="feedback" id="fb-q31"></div>
+  </div>
+
+  <!-- Q32 -->
+  <div class="q-card">
+    <div class="q-num">Question 32</div>
+    <div class="q-text">What is the key distinction between <em>recalcitrant</em> and <em>intransigent</em>?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q32" value="A"> A &nbsp; Recalcitrant means agreeable; intransigent means hostile.</label>
+      <label class="choice-label"><input type="radio" name="q32" value="B"> B &nbsp; Recalcitrant refers to resistance to authority or control; intransigent refers specifically to refusing compromise on positions or views.</label>
+      <label class="choice-label"><input type="radio" name="q32" value="C"> C &nbsp; They are exact synonyms with no meaningful difference in usage.</label>
+      <label class="choice-label"><input type="radio" name="q32" value="D"> D &nbsp; Recalcitrant is positive; intransigent is always negative.</label>
+    </div>
+    <div class="feedback" id="fb-q32"></div>
+  </div>
+
+  <!-- Q33 -->
+  <div class="q-card">
+    <div class="q-num">Question 33</div>
+    <div class="q-text">A mediator is described as <em>sagacious</em>. What quality does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q33" value="A"> A &nbsp; She is inflexible and refuses to consider different viewpoints.</label>
+      <label class="choice-label"><input type="radio" name="q33" value="B"> B &nbsp; She is indecisive and avoids making difficult choices.</label>
+      <label class="choice-label"><input type="radio" name="q33" value="C"> C &nbsp; She is wise and shows good judgment in complex situations.</label>
+      <label class="choice-label"><input type="radio" name="q33" value="D"> D &nbsp; She is talkative and shares her opinions freely.</label>
+    </div>
+    <div class="feedback" id="fb-q33"></div>
+  </div>
+
+  <!-- Q34 -->
+  <div class="q-card">
+    <div class="q-num">Question 34</div>
+    <div class="q-text">Which pair of words are most nearly <strong>opposite</strong> in meaning?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q34" value="A"> A &nbsp; pragmatic / practical</label>
+      <label class="choice-label"><input type="radio" name="q34" value="B"> B &nbsp; taciturn / talkative</label>
+      <label class="choice-label"><input type="radio" name="q34" value="C"> C &nbsp; capricious / erratic</label>
+      <label class="choice-label"><input type="radio" name="q34" value="D"> D &nbsp; sagacious / wise</label>
+    </div>
+    <div class="feedback" id="fb-q34"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek18()">Check Answers</button>
+    <span class="score-tally" id="tally-18"></span>
+  </div>
+  <p class="next-hint" id="next-18" style="display:none;">Next: Week 19 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(4)">Go to Week 19</button></p>
+</div>
+</div>
+
+<!-- WEEK 19 -->
+<div class="panel" id="panel-4">
+<div class="panel-inner">
+  <div class="week-label">Week 19</div>
+  <div class="panel-title">Quality &amp; Judgment</div>
+  <div class="panel-subtitle">Questions 35–42 · Multiple Choice</div>
+
+  <!-- Q35 -->
+  <div class="q-card">
+    <div class="q-num">Question 35</div>
+    <div class="q-text">Which sentence uses <em>cursory</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q35" value="A"> A &nbsp; The detective gave the scene a cursory inspection, examining every detail for hours.</label>
+      <label class="choice-label"><input type="radio" name="q35" value="B"> B &nbsp; She gave the document only a cursory glance before signing it, missing several errors.</label>
+      <label class="choice-label"><input type="radio" name="q35" value="C"> C &nbsp; His cursory study habits helped him earn the highest grade in the class.</label>
+      <label class="choice-label"><input type="radio" name="q35" value="D"> D &nbsp; The report was cursory in its praise, offering detailed positive feedback on every section.</label>
+    </div>
+    <div class="feedback" id="fb-q35"></div>
+  </div>
+
+  <!-- Q36 -->
+  <div class="q-card">
+    <div class="q-num">Question 36</div>
+    <div class="q-text">The word <em>perfunctory</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q36" value="A"> A &nbsp; done with genuine enthusiasm and care</label>
+      <label class="choice-label"><input type="radio" name="q36" value="B"> B &nbsp; done as a formality with little effort or real engagement</label>
+      <label class="choice-label"><input type="radio" name="q36" value="C"> C &nbsp; done in secret to avoid detection</label>
+      <label class="choice-label"><input type="radio" name="q36" value="D"> D &nbsp; done in a way that is unnecessarily complicated</label>
+    </div>
+    <div class="feedback" id="fb-q36"></div>
+  </div>
+
+  <!-- Q37 -->
+  <div class="q-card">
+    <div class="q-num">Question 37</div>
+    <div class="q-text">An editor removes <em>superfluous</em> sentences from a draft. What kind of sentences is she removing?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q37" value="A"> A &nbsp; sentences that contain the most important information</label>
+      <label class="choice-label"><input type="radio" name="q37" value="B"> B &nbsp; sentences that contradict the main argument</label>
+      <label class="choice-label"><input type="radio" name="q37" value="C"> C &nbsp; sentences that are beyond what is needed and add no value</label>
+      <label class="choice-label"><input type="radio" name="q37" value="D"> D &nbsp; sentences that were added by another writer</label>
+    </div>
+    <div class="feedback" id="fb-q37"></div>
+  </div>
+
+  <!-- Q38 -->
+  <div class="q-card">
+    <div class="q-num">Question 38</div>
+    <div class="q-text">Which sentence uses <em>specious</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q38" value="A"> A &nbsp; The specious argument was easy to dismiss because it was obviously false from the start.</label>
+      <label class="choice-label"><input type="radio" name="q38" value="B"> B &nbsp; Her specious reasoning sounded convincing at first, but closer inspection revealed several flaws.</label>
+      <label class="choice-label"><input type="radio" name="q38" value="C"> C &nbsp; The specious data was gathered through a rigorous, peer-reviewed process.</label>
+      <label class="choice-label"><input type="radio" name="q38" value="D"> D &nbsp; The judge praised the lawyer's specious argument for its honesty and accuracy.</label>
+    </div>
+    <div class="feedback" id="fb-q38"></div>
+  </div>
+
+  <!-- Q39 -->
+  <div class="q-card">
+    <div class="q-num">Question 39</div>
+    <div class="q-text">A policy is described as <em>arbitrary</em>. What does this imply about how it was made?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q39" value="A"> A &nbsp; It was developed through careful research and consultation.</label>
+      <label class="choice-label"><input type="radio" name="q39" value="B"> B &nbsp; It was based on random choice rather than any clear reasoning or system.</label>
+      <label class="choice-label"><input type="radio" name="q39" value="C"> C &nbsp; It was designed to benefit the largest number of people possible.</label>
+      <label class="choice-label"><input type="radio" name="q39" value="D"> D &nbsp; It was updated frequently to reflect new evidence.</label>
+    </div>
+    <div class="feedback" id="fb-q39"></div>
+  </div>
+
+  <!-- Q40 -->
+  <div class="q-card">
+    <div class="q-num">Question 40</div>
+    <div class="q-text">A fee is described as <em>nominal</em>. What does this tell you about the fee?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q40" value="A"> A &nbsp; It is extremely expensive and difficult to afford.</label>
+      <label class="choice-label"><input type="radio" name="q40" value="B"> B &nbsp; It exists in name only or is very small in amount.</label>
+      <label class="choice-label"><input type="radio" name="q40" value="C"> C &nbsp; It is paid in installments over a long period.</label>
+      <label class="choice-label"><input type="radio" name="q40" value="D"> D &nbsp; It is unpredictable and changes without warning.</label>
+    </div>
+    <div class="feedback" id="fb-q40"></div>
+  </div>
+
+  <!-- Q41 -->
+  <div class="q-card">
+    <div class="q-num">Question 41</div>
+    <div class="q-text">Which pair of words are most nearly <strong>synonymous</strong>?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q41" value="A"> A &nbsp; cursory / scrupulous</label>
+      <label class="choice-label"><input type="radio" name="q41" value="B"> B &nbsp; arbitrary / systematic</label>
+      <label class="choice-label"><input type="radio" name="q41" value="C"> C &nbsp; perfunctory / cursory</label>
+      <label class="choice-label"><input type="radio" name="q41" value="D"> D &nbsp; nominal / excessive</label>
+    </div>
+    <div class="feedback" id="fb-q41"></div>
+  </div>
+
+  <!-- Q42 -->
+  <div class="q-card">
+    <div class="q-num">Question 42</div>
+    <div class="q-text">A <em>scrupulous</em> researcher would most likely:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q42" value="A"> A &nbsp; skip steps to finish the project faster</label>
+      <label class="choice-label"><input type="radio" name="q42" value="B"> B &nbsp; carefully verify every source and check all data for accuracy</label>
+      <label class="choice-label"><input type="radio" name="q42" value="C"> C &nbsp; rely only on a single source to keep the research simple</label>
+      <label class="choice-label"><input type="radio" name="q42" value="D"> D &nbsp; avoid documenting her methods to save time</label>
+    </div>
+    <div class="feedback" id="fb-q42"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek19()">Check Answers</button>
+    <span class="score-tally" id="tally-19"></span>
+  </div>
+
+  <hr class="divider">
+
+  <div style="text-align:center;">
+    <div style="font-family:'DM Serif Display',serif;font-size:1.25rem;margin-bottom:0.5rem;">All done!</div>
+    <p style="font-size:0.9rem;color:var(--muted);margin-bottom:1.25rem;">Great work reviewing May's vocabulary. Click below to see your final score.</p>
+    <button class="btn btn-primary" style="font-size:1rem;padding:0.85rem 2rem;" onclick="showFinalScore()">See My Results</button>
+  </div>
+
+  <div id="score-panel">
+    <div class="score-num" id="final-score-num">—</div>
+    <div class="score-label" id="final-score-label"></div>
+    <div class="score-msg" id="final-score-msg"></div>
+    <div style="margin-top:1.5rem;">
+      <button class="btn btn-outline" onclick="resetAll()">&#8635; Start Over</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<script>
+// Tab switching
+function showTab(i) {
+  document.querySelectorAll('.panel').forEach((p,idx)=>{
+    p.classList.toggle('active', idx===i);
+  });
+  document.querySelectorAll('.tab-nav button').forEach((b,idx)=>{
+    b.classList.toggle('active', idx===i);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Score tracking
+const scores = { w15:null, w16:null, w17:null, w18:null, w19:null };
+
+// --- WEEK 15 ---
+const w15Answers = { q1:'B', q2:'B', q3:'B', q4:'A', q5:'C', q6:'B', q7:'B', q8:'B' };
+const w15Explain = {
+  q1: 'Inherent means built into something and inseparable from it.',
+  q2: 'Intrinsic means coming from within; true intrinsic motivation is internal, not driven by rewards.',
+  q3: 'Incongruity describes a mismatch between things expected to go together, like formal clothes at a comedy show.',
+  q4: 'An inverse relationship means the variables move in opposite directions: one goes up as the other goes down.',
+  q5: 'Commensurate means proportionate and appropriate: the salary matches the experience level.',
+  q6: 'Diffuse means spread out or not concentrated, so its opposite is "concentrated."',
+  q7: 'Latent means present but hidden and not yet visible or active.',
+  q8: 'Tangential means only slightly related to the main topic.'
+};
+
+function checkWeek15() {
+  let correct=0, total=8;
+  Object.keys(w15Answers).forEach(q=>{
+    const sel = document.querySelector(`input[name="${q}"]:checked`);
+    const fb = document.getElementById(`fb-${q}`);
+    document.querySelectorAll(`input[name="${q}"]`).forEach(r=>{
+      r.parentElement.classList.remove('correct-choice','wrong-choice');
+    });
+    if(sel) {
+      if(sel.value===w15Answers[q]) {
+        sel.parentElement.classList.add('correct-choice');
+        fb.className='feedback correct';
+        fb.textContent='✓ Correct! '+w15Explain[q];
+        correct++;
+      } else {
+        sel.parentElement.classList.add('wrong-choice');
+        document.querySelector(`input[name="${q}"][value="${w15Answers[q]}"]`).parentElement.classList.add('correct-choice');
+        fb.className='feedback incorrect';
+        fb.textContent='✗ Not quite. '+w15Explain[q];
+      }
+    } else {
+      fb.className='feedback incorrect';
+      fb.textContent='Please select an answer. '+w15Explain[q];
+    }
+  });
+  scores.w15=correct;
+  const t=document.getElementById('tally-15');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  document.getElementById('next-15').style.display='block';
+}
+
+// --- WEEK 16 ---
+const m16Answers = {
+  'm16-1':'to regard with deep respect or reverence',
+  'm16-2':'to take unfair advantage of someone for personal gain',
+  'm16-3':'to cause something harmful to continue indefinitely',
+  'm16-4':'to treat a group as insignificant or push them aside',
+  'm16-5':'to mark something as shameful or unacceptable'
+};
+const b16Answers = { 'b16-14':'perpetuate', 'b16-15':'marginalize', 'b16-16':'vilify', 'b16-17':'stigmatize' };
+
+function checkWeek16() {
+  let correct=0, total=9;
+  // matching
+  let matchOk=true;
+  Object.keys(m16Answers).forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('correct-sel','wrong-sel');
+    if(el.value===m16Answers[id]){ el.classList.add('correct-sel'); correct++; }
+    else { el.classList.add('wrong-sel'); matchOk=false; }
+  });
+  const mfb=document.getElementById('fb-match16');
+  mfb.className=matchOk?'feedback correct':'feedback incorrect';
+  mfb.textContent=matchOk?'✓ All matching answers correct!':'✗ Check the highlighted selections. Review the definitions and try again.';
+  // fill in blank
+  let fitbOk=true;
+  Object.keys(b16Answers).forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('correct-sel','wrong-sel');
+    if(el.value===b16Answers[id]){ el.classList.add('correct-sel'); correct++; }
+    else { el.classList.add('wrong-sel'); fitbOk=false; }
+  });
+  const ffb=document.getElementById('fb-fitb16');
+  ffb.className=fitbOk?'feedback correct':'feedback incorrect';
+  ffb.textContent=fitbOk?'✓ All fill-in-the-blank answers correct!':'✗ Some answers need another look. Correct: 14-perpetuate, 15-marginalize, 16-vilify, 17-stigmatize.';
+  scores.w16=correct;
+  const t=document.getElementById('tally-16');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  document.getElementById('next-16').style.display='block';
+}
+
+// --- WEEK 17 ---
+const w17MC = { q18:'B', q19:'C', q20:'B', q21:'B' };
+const w17Explain = {
+  q18:'Untenable means impossible to defend or maintain under scrutiny.',
+  q19:'Empirical means based on observation and evidence, such as surveys and lab tests.',
+  q20:'Circumspect means cautious and considering all factors before acting or concluding.',
+  q21:'Rigorous and exhaustive are both synonymous with being extremely thorough and careful.'
+};
+const b17Answers = { 'b17-22':'vindicate', 'b17-23':'attenuate', 'b17-24':'irrefutable', 'b17-25':'eschew' };
+
+function checkWeek17() {
+  let correct=0, total=8;
+  Object.keys(w17MC).forEach(q=>{
+    const sel=document.querySelector(`input[name="${q}"]:checked`);
+    const fb=document.getElementById(`fb-${q}`);
+    document.querySelectorAll(`input[name="${q}"]`).forEach(r=>r.parentElement.classList.remove('correct-choice','wrong-choice'));
+    if(sel){
+      if(sel.value===w17MC[q]){ sel.parentElement.classList.add('correct-choice'); fb.className='feedback correct'; fb.textContent='✓ Correct! '+w17Explain[q]; correct++; }
+      else { sel.parentElement.classList.add('wrong-choice'); document.querySelector(`input[name="${q}"][value="${w17MC[q]}"]`).parentElement.classList.add('correct-choice'); fb.className='feedback incorrect'; fb.textContent='✗ Not quite. '+w17Explain[q]; }
+    } else { fb.className='feedback incorrect'; fb.textContent='Please select an answer. '+w17Explain[q]; }
+  });
+  let fitbOk=true;
+  Object.keys(b17Answers).forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('correct-sel','wrong-sel');
+    if(el.value===b17Answers[id]){ el.classList.add('correct-sel'); correct++; }
+    else { el.classList.add('wrong-sel'); fitbOk=false; }
+  });
+  const ffb=document.getElementById('fb-fitb17');
+  ffb.className=fitbOk?'feedback correct':'feedback incorrect';
+  ffb.textContent=fitbOk?'✓ All fill-in-the-blank answers correct!':'✗ Correct answers: 22-vindicate, 23-attenuate, 24-irrefutable, 25-eschew.';
+  scores.w17=correct;
+  const t=document.getElementById('tally-17');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  document.getElementById('next-17').style.display='block';
+}
+
+// --- WEEK 18 ---
+const m18Answers = {
+  'm18-1':'stubbornly resistant to authority or change',
+  'm18-2':'refusing to compromise or change one\'s views',
+  'm18-3':'changing suddenly and unpredictably',
+  'm18-4':'inconsistent and unpredictable in behavior',
+  'm18-5':'having unique characteristics specific to an individual'
+};
+const w18MC = { q31:'B', q32:'B', q33:'C', q34:'B' };
+const w18Explain = {
+  q31:'Propensity means a natural tendency or inclination toward something; it persists over time.',
+  q32:'Recalcitrant refers to resisting authority or control; intransigent specifically means refusing to compromise on views or positions.',
+  q33:'Sagacious means wise and showing good judgment.',
+  q34:'Taciturn means reserved or tending to say very little, the opposite of talkative.'
+};
+
+function checkWeek18() {
+  let correct=0, total=9;
+  let matchOk=true;
+  Object.keys(m18Answers).forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('correct-sel','wrong-sel');
+    if(el.value===m18Answers[id]){ el.classList.add('correct-sel'); correct++; }
+    else { el.classList.add('wrong-sel'); matchOk=false; }
+  });
+  const mfb=document.getElementById('fb-match18');
+  mfb.className=matchOk?'feedback correct':'feedback incorrect';
+  mfb.textContent=matchOk?'✓ All matching answers correct!':'✗ Check the highlighted selections and review the definitions.';
+  Object.keys(w18MC).forEach(q=>{
+    const sel=document.querySelector(`input[name="${q}"]:checked`);
+    const fb=document.getElementById(`fb-${q}`);
+    document.querySelectorAll(`input[name="${q}"]`).forEach(r=>r.parentElement.classList.remove('correct-choice','wrong-choice'));
+    if(sel){
+      if(sel.value===w18MC[q]){ sel.parentElement.classList.add('correct-choice'); fb.className='feedback correct'; fb.textContent='✓ Correct! '+w18Explain[q]; correct++; }
+      else { sel.parentElement.classList.add('wrong-choice'); document.querySelector(`input[name="${q}"][value="${w18MC[q]}"]`).parentElement.classList.add('correct-choice'); fb.className='feedback incorrect'; fb.textContent='✗ Not quite. '+w18Explain[q]; }
+    } else { fb.className='feedback incorrect'; fb.textContent='Please select an answer. '+w18Explain[q]; }
+  });
+  scores.w18=correct;
+  const t=document.getElementById('tally-18');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  document.getElementById('next-18').style.display='block';
+}
+
+// --- WEEK 19 ---
+const w19MC = { q35:'B', q36:'B', q37:'C', q38:'B', q39:'B', q40:'B', q41:'C', q42:'B' };
+const w19Explain = {
+  q35:'Cursory means hasty and superficial; a cursory glance means you are not reading carefully.',
+  q36:'Perfunctory means done as a routine with little genuine effort or care.',
+  q37:'Superfluous means more than what is needed, so superfluous sentences add nothing essential.',
+  q38:'Specious means something that sounds convincing but is actually flawed upon closer inspection.',
+  q39:'Arbitrary means based on random choice rather than any clear reason or system.',
+  q40:'Nominal means existing in name only or very small in amount.',
+  q41:'Perfunctory and cursory are both synonyms meaning hasty and lacking real care or thoroughness.',
+  q42:'Scrupulous means careful, thorough, and attentive to accuracy.'
+};
+
+function checkWeek19() {
+  let correct=0, total=8;
+  Object.keys(w19MC).forEach(q=>{
+    const sel=document.querySelector(`input[name="${q}"]:checked`);
+    const fb=document.getElementById(`fb-${q}`);
+    document.querySelectorAll(`input[name="${q}"]`).forEach(r=>r.parentElement.classList.remove('correct-choice','wrong-choice'));
+    if(sel){
+      if(sel.value===w19MC[q]){ sel.parentElement.classList.add('correct-choice'); fb.className='feedback correct'; fb.textContent='✓ Correct! '+w19Explain[q]; correct++; }
+      else { sel.parentElement.classList.add('wrong-choice'); document.querySelector(`input[name="${q}"][value="${w19MC[q]}"]`).parentElement.classList.add('correct-choice'); fb.className='feedback incorrect'; fb.textContent='✗ Not quite. '+w19Explain[q]; }
+    } else { fb.className='feedback incorrect'; fb.textContent='Please select an answer. '+w19Explain[q]; }
+  });
+  scores.w19=correct;
+  const t=document.getElementById('tally-19');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  document.getElementById('next-19').style.display='block';
+}
+
+// Final score
+function showFinalScore() {
+  const maxes = { w15:8, w16:9, w17:8, w18:9, w19:8 };
+  let total=0, earned=0;
+  Object.keys(maxes).forEach(k=>{ total+=maxes[k]; if(scores[k]!==null) earned+=scores[k]; });
+  const pct = Math.round((earned/total)*100);
+  document.getElementById('final-score-num').textContent=`${earned}/${total}`;
+  document.getElementById('final-score-label').textContent=`${pct}% · May Vocabulary`;
+  const msgs = [
+    [90,'Outstanding! You have a strong command of all five weeks.'],
+    [75,'Great work! A few more passes on the trickier sets will get you there.'],
+    [60,'Solid effort. Focus on the sections where you lost points and review the definitions.'],
+    [0,'Keep reviewing! Go back through the words you missed and try the week checks again.']
+  ];
+  document.getElementById('final-score-msg').textContent = msgs.find(([t])=>pct>=t)[1];
+  const panel=document.getElementById('score-panel');
+  panel.classList.add('active');
+  panel.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetAll() {
+  Object.keys(scores).forEach(k=>scores[k]=null);
+  document.querySelectorAll('input[type=radio]').forEach(r=>{ r.checked=false; r.parentElement.classList.remove('correct-choice','wrong-choice'); });
+  document.querySelectorAll('select').forEach(s=>{ s.selectedIndex=0; s.classList.remove('correct-sel','wrong-sel'); });
+  document.querySelectorAll('.feedback').forEach(f=>{ f.className='feedback'; f.textContent=''; });
+  document.querySelectorAll('.score-tally').forEach(t=>{ t.textContent=''; t.classList.remove('visible'); });
+  document.querySelectorAll('.next-hint').forEach(n=>n.style.display='none');
+  document.getElementById('score-panel').classList.remove('active');
+  showTab(0);
+}
+</script>
+
+<footer style="text-align:center;padding:1.5rem 1rem 2rem;font-size:0.78rem;color:#a09880;border-top:1px solid #e4ddd3;">
+  This review was created with the assistance of AI and reviewed by Monica Winkler.
+</footer>
+</body>
+</html>
