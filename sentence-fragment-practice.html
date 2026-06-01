@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Is It a Standalone Sentence? — Digital SAT English Prep</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: #f9f8f4;
+    color: #1a1a1a;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  header {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.1rem;
+    font-weight: normal;
+    letter-spacing: 0.01em;
+  }
+
+  header span {
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #e0ddd5;
+    display: flex;
+    gap: 0;
+  }
+
+  nav button {
+    padding: 0.75rem 1.75rem;
+    border: none;
+    background: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: #555;
+    border-bottom: 3px solid transparent;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+
+  nav button.active {
+    color: #1a1a2e;
+    border-bottom: 3px solid #1a1a2e;
+    font-weight: bold;
+  }
+
+  nav button:hover:not(.active) {
+    background: #f5f4ef;
+    color: #1a1a2e;
+  }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Review styles */
+  .step-block {
+    margin-bottom: 2.5rem;
+  }
+
+  .step-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 0.3rem;
+  }
+
+  .step-block h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1a1a2e;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #1a1a2e;
+  }
+
+  .step-block h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 1.4rem 0 0.4rem;
+    color: #1a1a2e;
+  }
+
+  .step-block p, .step-block li {
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: #2a2a2a;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-block ul, .step-block ol {
+    padding-left: 1.4rem;
+  }
+
+  .step-block li { margin-bottom: 0.3rem; }
+
+  .example-box {
+    background: #fff;
+    border-left: 4px solid #1a1a2e;
+    padding: 0.9rem 1.2rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.95rem;
+  }
+
+  .example-box em { color: #555; }
+
+  .label-box {
+    display: inline-block;
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    margin-right: 0.4rem;
+  }
+
+  .label-box.bad {
+    background: #8b1a1a;
+  }
+
+  .label-box.good {
+    background: #1a5c2e;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .col-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    background: #fff;
+  }
+
+  .col-card .col-title {
+    font-weight: bold;
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+    color: #1a1a2e;
+  }
+
+  .col-card .item {
+    font-size: 0.9rem;
+    padding: 0.2rem 0;
+    color: #333;
+    font-style: italic;
+  }
+
+  .tip-box {
+    background: #f0ede3;
+    border: 1px solid #d9d3c0;
+    border-radius: 6px;
+    padding: 0.9rem 1.2rem;
+    margin: 1.2rem 0;
+    font-size: 0.95rem;
+  }
+
+  .tip-box strong { color: #1a1a2e; }
+
+  .strategy-list {
+    counter-reset: strat;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .strategy-list li {
+    counter-increment: strat;
+    padding: 0.4rem 0 0.4rem 2.2rem;
+    position: relative;
+    border-bottom: 1px solid #eee;
+  }
+
+  .strategy-list li::before {
+    content: counter(strat);
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    background: #1a1a2e;
+    color: #fff;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Practice styles */
+  .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 0.9rem 1.2rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .score-num {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #1a1a2e;
+  }
+
+  .start-over-btn {
+    margin-left: auto;
+    padding: 0.4rem 1rem;
+    background: none;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-family: inherit;
+    color: #555;
+    transition: all 0.15s;
+  }
+
+  .start-over-btn:hover {
+    background: #f0ede3;
+    border-color: #999;
+    color: #1a1a2e;
+  }
+
+  .question-block {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .question-num {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #aaa;
+    margin-bottom: 0.5rem;
+  }
+
+  .question-text {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    font-style: italic;
+    color: #1a1a1a;
+    line-height: 1.65;
+  }
+
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .choice-btn {
+    text-align: left;
+    padding: 0.55rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f9f8f4;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-family: inherit;
+    color: #2a2a2a;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+
+  .choice-btn:hover:not(:disabled) {
+    background: #eeeae0;
+    border-color: #999;
+  }
+
+  .choice-btn.correct {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+  }
+
+  .choice-btn.wrong {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+  }
+
+  .choice-btn.reveal-correct {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+    opacity: 0.75;
+  }
+
+  .choice-btn:disabled { cursor: default; }
+
+  .explanation {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: #f0ede3;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    display: none;
+    line-height: 1.6;
+  }
+
+  .explanation.show { display: block; }
+  .explanation strong { color: #1a1a2e; }
+
+  @media (max-width: 600px) {
+    main { padding: 1.5rem 1rem; }
+    .two-col { grid-template-columns: 1fr; }
+    header { padding: 1rem; }
+    nav button { padding: 0.65rem 1rem; font-size: 0.88rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Is It a Standalone Sentence? — Digital SAT English Prep</h1>
+  <span>Monica Winkler | Digital SAT English Prep</span>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('review', this)">Review</button>
+  <button onclick="showTab('practice', this)">Practice</button>
+</nav>
+
+<main>
+
+<!-- ==================== REVIEW TAB ==================== -->
+<div id="review" class="tab-panel active">
+
+  <div class="step-block">
+    <div class="step-label">Step 1</div>
+    <h2>Know the three possibilities</h2>
+
+    <p>Every group of words you see on the SAT is one of three things:</p>
+
+    <div class="two-col">
+      <div class="col-card">
+        <div class="col-title" style="color:#1a5c2e;">Standalone sentence</div>
+        <div class="item">Has a subject + a working verb. Can stand alone. A complete thought.</div>
+      </div>
+      <div class="col-card">
+        <div class="col-title" style="color:#7a5c00;">Dependent clause</div>
+        <div class="item">Has a subject + a working verb, but begins with a word that makes it lean on another clause.</div>
+      </div>
+    </div>
+    <div class="col-card" style="margin-top:1rem;">
+      <div class="col-title" style="color:#8b1a1a;">Fragment</div>
+      <div class="item">Missing a subject, a working verb, or both. Cannot stand alone no matter what.</div>
+    </div>
+
+    <div class="example-box" style="margin-top:1.2rem;">
+      <span class="label-box good">Standalone</span> <em>The committee approved the proposal.</em><br>
+      <span class="label-box" style="background:#7a5c00;">Dependent</span> <em>Although the committee approved the proposal</em><br>
+      <span class="label-box bad">Fragment</span> <em>The committee, having approved the proposal</em>
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-label">Step 2</div>
+    <h2>How to spot a dependent clause</h2>
+
+    <h3>Subordinating conjunctions make a clause dependent</h3>
+    <p>A subordinating conjunction attached to the front of a subject-verb pair removes its independence. The most common ones on the SAT:</p>
+
+    <div class="tip-box">
+      <strong>although, because, since, while, when, if, unless, after, before, even though, as, whereas, until, whether, once</strong>
+    </div>
+
+    <div class="example-box">
+      <span class="label-box good">Standalone</span> <em>The data supports the hypothesis.</em><br>
+      <span class="label-box" style="background:#7a5c00;">Dependent</span> <em>Because the data supports the hypothesis</em><br><br>
+      Adding <em>because</em> creates a clause that raises a question: so what? It needs a main clause to complete the thought.
+    </div>
+
+    <h3>Relative pronouns also create dependent clauses</h3>
+    <p>Words like <em>which, who, whose, that,</em> and <em>where</em> introduce relative clauses that cannot stand alone.</p>
+
+    <div class="example-box">
+      <span class="label-box bad">Fragment</span> <em>The scientist who discovered the new element</em><br>
+      This has a subject (<em>scientist</em>) but the relative clause <em>who discovered the new element</em> has swallowed the main verb slot. There is no main verb left for <em>scientist</em> to perform.
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-label">Step 3</div>
+    <h2>The SAT's trickiest fragments</h2>
+
+    <h3>Infinitive phrases (starting with "to")</h3>
+    <p>An infinitive (<em>to run, to argue, to establish</em>) is not a working verb. A sentence that uses only an infinitive has no real verb.</p>
+
+    <div class="example-box">
+      <span class="label-box bad">Fragment</span> <em>To improve air quality in densely populated urban centers</em><br>
+      This looks impressive, but <em>to improve</em> is not a verb that tells us what a subject does. There is no subject performing an action.
+    </div>
+
+    <h3>Participial / gerund phrases (starting with -ing or -ed)</h3>
+    <p>An -ing word used as a noun (gerund) or as a modifier (participle) is not a working verb either.</p>
+
+    <div class="example-box">
+      <span class="label-box bad">Fragment</span> <em>Studying the effects of deforestation on regional rainfall patterns</em><br>
+      <em>Studying</em> here is a participle acting as a modifier, not a working verb. Ask: who is doing this? The sentence never tells us.
+    </div>
+
+    <div class="tip-box">
+      <strong>Quick test:</strong> Can you replace the underlined words with <em>he/she/it does something</em> or <em>they do something</em> and have it make sense as a complete sentence? If not, it is not a standalone sentence.
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-label">Strategy</div>
+    <h2>Put it all together</h2>
+
+    <ol class="strategy-list">
+      <li>Find the main subject: who or what is the sentence about?</li>
+      <li>Find the main verb: what does that subject do or what links it to a description? The verb must be a working verb, not an infinitive or a participle.</li>
+      <li>Check the first word: is it a subordinating conjunction? If yes, the group is a dependent clause, not a standalone sentence.</li>
+      <li>Watch for <em>to + verb</em> at the start: that is always a fragment.</li>
+      <li>Watch for an -ing word with no helping verb (<em>is running</em> is fine; <em>running alone</em> is not).</li>
+      <li>If subject and working verb are both present and no subordinating conjunction is at the front, the group is a standalone sentence.</li>
+    </ol>
+  </div>
+
+</div><!-- end review -->
+
+<!-- ==================== PRACTICE TAB ==================== -->
+<div id="practice" class="tab-panel">
+
+  <div class="score-bar">
+    <span><span class="score-num" id="score">0</span> / <span id="total">0</span> correct so far</span>
+    <button class="start-over-btn" onclick="resetPractice()">Start over</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+</div><!-- end practice -->
+
+</main>
+
+<footer style="text-align:center; padding: 1.5rem 2rem; font-size: 0.82rem; color: #888; border-top: 1px solid #e0ddd5; background: #fff;">
+  This review was created with the assistance of AI and reviewed by Monica Winkler.
+</footer>
+
+<script>
+const questions = [
+  {
+    text: "Although researchers have documented significant increases in global average temperatures over the past century.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 1,
+    explanation: "<strong>Dependent clause.</strong> The group has a subject (<em>researchers</em>) and a working verb (<em>have documented</em>), but it begins with the subordinating conjunction <em>although</em>. That word signals that this clause leans on a main clause that never arrives."
+  },
+  {
+    text: "To address the growing concerns about data privacy in the age of artificial intelligence.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 2,
+    explanation: "<strong>Fragment.</strong> This group begins with the infinitive <em>to address</em>. An infinitive is not a working verb; there is no subject performing an action here. Despite its length and complexity, the group cannot stand alone."
+  },
+  {
+    text: "The novel's narrator, an unreliable young soldier with little formal education, misinterprets nearly every event he witnesses.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 0,
+    explanation: "<strong>Standalone sentence.</strong> The subject is <em>narrator</em>, and the main verb is <em>misinterprets</em>. The long phrase between the commas is extra information about the narrator, but it does not change the core structure. Cross it out: <em>The narrator misinterprets nearly every event he witnesses.</em> Complete."
+  },
+  {
+    text: "Because the city's infrastructure was built before modern earthquake safety codes were established.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 1,
+    explanation: "<strong>Dependent clause.</strong> Subject: <em>infrastructure</em>. Working verb: <em>was built</em>. However, the subordinating conjunction <em>because</em> at the start makes this clause incomplete on its own. It invites the question: so what? A main clause is needed."
+  },
+  {
+    text: "Running along the shoreline every morning before sunrise, the athlete prepared for the upcoming marathon.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 0,
+    explanation: "<strong>Standalone sentence.</strong> The participial phrase <em>Running along the shoreline every morning before sunrise</em> modifies the subject, but it is not the main verb. The subject is <em>athlete</em> and the main verb is <em>prepared</em>. The sentence is complete."
+  },
+  {
+    text: "Studying the migration patterns of monarch butterflies across three continents over a decade.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 2,
+    explanation: "<strong>Fragment.</strong> <em>Studying</em> here is a participle acting as a modifier, not a working verb. There is no subject that performs a main action. Compare this to the previous question: here, there is no subject + working verb pair at all."
+  },
+  {
+    text: "While the editorial board praised the author's prose style, the novel's plot received harsher criticism.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 0,
+    explanation: "<strong>Standalone sentence.</strong> This sentence has two clauses. The first, beginning with <em>while</em>, is dependent. But the second, <em>the novel's plot received harsher criticism</em>, is an independent main clause. A dependent clause can be attached to a main clause and still form a complete standalone sentence."
+  },
+  {
+    text: "The policy, which had been debated for over two years and revised multiple times by a bipartisan committee.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 2,
+    explanation: "<strong>Fragment.</strong> The subject is <em>policy</em>, but <em>which had been debated</em> is a relative clause describing the policy, not a main verb. After the relative clause ends, the sentence stops. <em>Policy</em> never gets its own working verb."
+  },
+  {
+    text: "Even though the results of the initial experiment seemed promising, the research team decided to conduct additional trials before publishing their findings.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 0,
+    explanation: "<strong>Standalone sentence.</strong> Like question 7, this sentence opens with a dependent clause (<em>Even though the results seemed promising</em>), but it is followed by a full independent clause: <em>the research team decided to conduct additional trials before publishing their findings.</em> The whole sentence is complete."
+  },
+  {
+    text: "To have proposed such a bold restructuring of the organization's leadership without consulting the board of directors.",
+    choices: [
+      "Standalone sentence",
+      "Dependent clause",
+      "Fragment"
+    ],
+    correct: 2,
+    explanation: "<strong>Fragment.</strong> This group begins with the infinitive phrase <em>To have proposed</em>. There is no subject and no working verb; <em>to have proposed</em> names an action but does not say who performs it. No matter how polished it sounds, it cannot stand on its own."
+  }
+];
+
+let answered = new Array(questions.length).fill(false);
+let correct = 0;
+
+function buildQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.id = 'q' + i;
+
+    const num = document.createElement('div');
+    num.className = 'question-num';
+    num.textContent = 'Question ' + (i + 1) + ' of ' + questions.length;
+    block.appendChild(num);
+
+    const text = document.createElement('div');
+    text.className = 'question-text';
+    text.textContent = '\u201C' + q.text + '\u201D';
+    block.appendChild(text);
+
+    const choices = document.createElement('div');
+    choices.className = 'choices';
+
+    q.choices.forEach((c, ci) => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = c;
+      btn.onclick = () => handleAnswer(i, ci, btn, choices);
+      choices.appendChild(btn);
+    });
+
+    block.appendChild(choices);
+
+    const exp = document.createElement('div');
+    exp.className = 'explanation';
+    exp.id = 'exp' + i;
+    exp.innerHTML = q.explanation;
+    block.appendChild(exp);
+
+    container.appendChild(block);
+  });
+
+  updateScore();
+}
+
+function handleAnswer(qi, ci, btn, choicesEl) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+
+  const q = questions[qi];
+  const allBtns = choicesEl.querySelectorAll('.choice-btn');
+
+  allBtns.forEach(b => b.disabled = true);
+
+  if (ci === q.correct) {
+    btn.classList.add('correct');
+    correct++;
+  } else {
+    btn.classList.add('wrong');
+    allBtns[q.correct].classList.add('reveal-correct');
+  }
+
+  document.getElementById('exp' + qi).classList.add('show');
+  updateScore();
+}
+
+function updateScore() {
+  const total = answered.filter(Boolean).length;
+  document.getElementById('score').textContent = correct;
+  document.getElementById('total').textContent = total;
+}
+
+function resetPractice() {
+  answered = new Array(questions.length).fill(false);
+  correct = 0;
+  buildQuestions();
+}
+
+function showTab(tabId, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+buildQuestions();
+</script>
+
+</body>
+</html>
