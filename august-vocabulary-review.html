@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>August Vocabulary Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --border: #e4ddd3;
+    --accent: #2d6a4f;
+    --accent-light: #e8f5ee;
+    --accent2: #b5632a;
+    --text: #1a1612;
+    --muted: #7a7168;
+    --correct: #2d6a4f;
+    --incorrect: #c0392b;
+    --correct-bg: #e8f5ee;
+    --incorrect-bg: #fdecea;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+  }
+
+  header .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 0.5rem;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  header p {
+    margin-top: 0.6rem;
+    font-size: 0.92rem;
+    opacity: 0.85;
+  }
+
+  /* Tab nav */
+  .tab-nav {
+    display: flex;
+    overflow-x: auto;
+    background: var(--accent);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    gap: 0;
+  }
+
+  .tab-nav button {
+    flex: 1 0 auto;
+    padding: 0.75rem 1.1rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.65);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .tab-nav button:hover { color: white; }
+  .tab-nav button.active {
+    color: white;
+    border-bottom-color: #f4c96e;
+  }
+
+  /* Panels */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .panel-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .week-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  .panel-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.35rem;
+  }
+
+  .panel-subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  /* Question cards */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .q-num {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.45rem;
+  }
+
+  .q-text {
+    font-size: 0.97rem;
+    line-height: 1.55;
+    margin-bottom: 0.9rem;
+  }
+
+  .q-text em { font-style: italic; }
+
+  .choices { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  .choice-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 0.75rem;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .choice-label:hover { border-color: var(--accent); background: var(--accent-light); }
+
+  .choice-label input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; }
+
+  .choice-label.correct-choice { border-color: var(--correct); background: var(--correct-bg); }
+  .choice-label.wrong-choice { border-color: var(--incorrect); background: var(--incorrect-bg); }
+
+  .feedback {
+    display: none;
+    margin-top: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+  .feedback.correct { display: block; background: var(--correct-bg); color: var(--correct); }
+  .feedback.incorrect { display: block; background: var(--incorrect-bg); color: var(--incorrect); }
+
+  /* Matching */
+  .match-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+  .match-table th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0 0 0.6rem;
+    text-align: left;
+  }
+  .match-table th:last-child { text-align: left; padding-left: 1rem; }
+  .match-table td { padding: 0.35rem 0; vertical-align: middle; }
+  .match-table td:first-child {
+    font-weight: 600;
+    font-size: 0.9rem;
+    width: 38%;
+    padding-right: 0.5rem;
+  }
+  .match-table td:last-child { padding-left: 1rem; }
+
+  .match-select {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .match-select:focus { outline: none; border-color: var(--accent); }
+  .match-select.correct-sel { border-color: var(--correct); background: var(--correct-bg); }
+  .match-select.wrong-sel { border-color: var(--incorrect); background: var(--incorrect-bg); }
+
+  /* Fill in blank */
+  .fitb-sentence {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 0.85rem;
+  }
+
+  .fitb-sentence .blank-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    vertical-align: super;
+    margin-right: 2px;
+  }
+
+  .blank-select {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+    min-width: 140px;
+    transition: border-color 0.15s;
+  }
+  .blank-select:focus { outline: none; border-color: var(--accent); }
+  .blank-select.correct-sel { border-color: var(--correct); background: var(--correct-bg); }
+  .blank-select.wrong-sel { border-color: var(--incorrect); background: var(--incorrect-bg); }
+
+  .word-bank {
+    margin-top: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    background: #f5f2ec;
+    border-radius: 7px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .word-bank strong { color: var(--text); font-weight: 600; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+  }
+  .btn-outline:hover { background: var(--accent-light); }
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.35rem;
+  }
+
+  .next-hint {
+    font-size: 0.83rem;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+
+  /* Score panel */
+  #score-panel {
+    display: none;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  #score-panel.active { display: block; }
+  #score-panel .score-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    color: var(--accent);
+  }
+  #score-panel .score-label { font-size: 0.9rem; color: var(--muted); margin-top: 0.25rem; }
+  #score-panel .score-msg { font-size: 1rem; margin-top: 1rem; line-height: 1.55; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  .section-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    margin-top: 1.6rem;
+  }
+  .section-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+  }
+
+  .score-tally {
+    display: none;
+    padding: 0.5rem 0.85rem;
+    background: var(--accent-light);
+    border: 1px solid #b7dfc9;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-top: 0.75rem;
+  }
+  .score-tally.visible { display: inline-block; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">SAT Vocabulary &middot; Units 29&ndash;33</div>
+  <h1>August Vocabulary Review</h1>
+  <p>Time to review! These activities are self-check. Submit your answers at the end to see your results. :)</p>
+</header>
+
+<nav class="tab-nav" id="tabNav">
+  <button class="active" onclick="showTab(0)">Week 29</button>
+  <button onclick="showTab(1)">Week 30</button>
+  <button onclick="showTab(2)">Week 31</button>
+  <button onclick="showTab(3)">Week 32</button>
+  <button onclick="showTab(4)">Week 33</button>
+</nav>
+
+<!-- WEEK 29 -->
+<div class="panel active" id="panel-0">
+<div class="panel-inner">
+  <div class="week-label">Week 29</div>
+  <div class="panel-title">Change &amp; Variation</div>
+  <div class="panel-subtitle">Questions 43&ndash;50 &middot; Multiple Choice</div>
+
+  <!-- Q43 -->
+  <div class="q-card">
+    <div class="q-num">Question 43</div>
+    <div class="q-text">The word <em>diminish</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q43" value="A"> A &nbsp; to remain fixed and unchanging despite outside pressure</label>
+      <label class="choice-label"><input type="radio" name="q43" value="B"> B &nbsp; to become or make smaller, weaker, or less important</label>
+      <label class="choice-label"><input type="radio" name="q43" value="C"> C &nbsp; to be evaluated according to a strict standard</label>
+      <label class="choice-label"><input type="radio" name="q43" value="D"> D &nbsp; to grow larger and more powerful over time</label>
+    </div>
+    <div class="feedback" id="fb-q43"></div>
+  </div>
+
+  <!-- Q44 -->
+  <div class="q-card">
+    <div class="q-num">Question 44</div>
+    <div class="q-text">Which sentence uses <em>robust</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q44" value="A"> A &nbsp; The robust economy collapsed overnight, leaving investors stunned.</label>
+      <label class="choice-label"><input type="radio" name="q44" value="B"> B &nbsp; Her robust health had confined her to bed for months.</label>
+      <label class="choice-label"><input type="radio" name="q44" value="C"> C &nbsp; Despite years of neglect, the robust old oak tree still thrived.</label>
+      <label class="choice-label"><input type="radio" name="q44" value="D"> D &nbsp; The robust argument fell apart under the slightest scrutiny.</label>
+    </div>
+    <div class="feedback" id="fb-q44"></div>
+  </div>
+
+  <!-- Q45 -->
+  <div class="q-card">
+    <div class="q-num">Question 45</div>
+    <div class="q-text">A biology class is described as <em>heterogeneous</em> in its makeup. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q45" value="A"> A &nbsp; The class was split into two perfectly equal groups.</label>
+      <label class="choice-label"><input type="radio" name="q45" value="B"> B &nbsp; Every student was assigned the exact same coursework.</label>
+      <label class="choice-label"><input type="radio" name="q45" value="C"> C &nbsp; The students come from a wide variety of different backgrounds and abilities.</label>
+      <label class="choice-label"><input type="radio" name="q45" value="D"> D &nbsp; All the students share identical backgrounds and academic strengths.</label>
+    </div>
+    <div class="feedback" id="fb-q45"></div>
+  </div>
+
+  <!-- Q46 -->
+  <div class="q-card">
+    <div class="q-num">Question 46</div>
+    <div class="q-text">Which sentence uses <em>homogeneous</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q46" value="A"> A &nbsp; The soup was homogeneous, with large visible chunks of vegetables floating on top.</label>
+      <label class="choice-label"><input type="radio" name="q46" value="B"> B &nbsp; His taste in music was homogeneous, ranging from classical to punk to jazz.</label>
+      <label class="choice-label"><input type="radio" name="q46" value="C"> C &nbsp; The committee was homogeneous, drawing members from a dozen countries and professions.</label>
+      <label class="choice-label"><input type="radio" name="q46" value="D"> D &nbsp; The neighborhood was remarkably homogeneous, with nearly every resident sharing the same occupation and background.</label>
+    </div>
+    <div class="feedback" id="fb-q46"></div>
+  </div>
+
+  <!-- Q47 -->
+  <div class="q-card">
+    <div class="q-num">Question 47</div>
+    <div class="q-text">A start-up's business plan is judged <em>viable</em> by investors. What does this mean?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q47" value="A"> A &nbsp; It has already failed several times in the past.</label>
+      <label class="choice-label"><input type="radio" name="q47" value="B"> B &nbsp; It depends entirely on illegal methods to succeed.</label>
+      <label class="choice-label"><input type="radio" name="q47" value="C"> C &nbsp; It exists only as a rough idea with no real details.</label>
+      <label class="choice-label"><input type="radio" name="q47" value="D"> D &nbsp; It is capable of working successfully and surviving in the market.</label>
+    </div>
+    <div class="feedback" id="fb-q47"></div>
+  </div>
+
+  <!-- Q48 -->
+  <div class="q-card">
+    <div class="q-num">Question 48</div>
+    <div class="q-text">Which pair of words are most nearly <strong>synonymous</strong>?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q48" value="A"> A &nbsp; disparate / robust</label>
+      <label class="choice-label"><input type="radio" name="q48" value="B"> B &nbsp; disparate / viable</label>
+      <label class="choice-label"><input type="radio" name="q48" value="C"> C &nbsp; disparate / heterogeneous</label>
+      <label class="choice-label"><input type="radio" name="q48" value="D"> D &nbsp; disparate / homogeneous</label>
+    </div>
+    <div class="feedback" id="fb-q48"></div>
+  </div>
+
+  <!-- Q49 -->
+  <div class="q-card">
+    <div class="q-num">Question 49</div>
+    <div class="q-text">The word <em>deleterious</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q49" value="A"> A &nbsp; helpful and beneficial over the long term</label>
+      <label class="choice-label"><input type="radio" name="q49" value="B"> B &nbsp; entirely neutral, with no measurable effect at all</label>
+      <label class="choice-label"><input type="radio" name="q49" value="C"> C &nbsp; sudden and highly dramatic in its effect</label>
+      <label class="choice-label"><input type="radio" name="q49" value="D"> D &nbsp; harmful or damaging, often in a gradual or subtle way</label>
+    </div>
+    <div class="feedback" id="fb-q49"></div>
+  </div>
+
+  <!-- Q50 -->
+  <div class="q-card">
+    <div class="q-num">Question 50</div>
+    <div class="q-text">A patient's limp becomes more <em>pronounced</em> after the injury. What does this mean?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q50" value="A"> A &nbsp; It disappeared completely within a day.</label>
+      <label class="choice-label"><input type="radio" name="q50" value="B"> B &nbsp; It became very noticeable or strongly marked.</label>
+      <label class="choice-label"><input type="radio" name="q50" value="C"> C &nbsp; It became barely noticeable at all.</label>
+      <label class="choice-label"><input type="radio" name="q50" value="D"> D &nbsp; It was corrected through physical therapy.</label>
+    </div>
+    <div class="feedback" id="fb-q50"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek29()">Check Answers</button>
+    <span class="score-tally" id="tally-29"></span>
+  </div>
+  <p class="next-hint" id="next-29" style="display:none;">Next: Week 30 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(1)">Go to Week 30</button></p>
+</div>
+</div>
+
+<!-- WEEK 30 -->
+<div class="panel" id="panel-1">
+<div class="panel-inner">
+  <div class="week-label">Week 30</div>
+  <div class="panel-title">The Everyday &amp; the Imagined</div>
+
+  <div class="section-heading">Questions 51&ndash;55 &middot; Matching</div>
+  <div class="section-sub">Match each word to its definition.</div>
+
+  <div class="q-card">
+    <table class="match-table">
+      <tr><th>Word</th><th></th><th>Definition</th></tr>
+      <tr>
+        <td>quotidian</td>
+        <td></td>
+        <td><select class="match-select" id="m30-1">
+          <option value="">— select —</option>
+          <option>small or trivial details</option>
+          <option>not fully formed or developed</option>
+          <option>excessively sweet or sentimental</option>
+          <option>ordinary, commonplace, or lacking imagination</option>
+          <option>ordinary or occurring every day</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>prosaic</td>
+        <td></td>
+        <td><select class="match-select" id="m30-2">
+          <option value="">— select —</option>
+          <option>ordinary, commonplace, or lacking imagination</option>
+          <option>excessively sweet or sentimental</option>
+          <option>small or trivial details</option>
+          <option>ordinary or occurring every day</option>
+          <option>not fully formed or developed</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>minutiae</td>
+        <td></td>
+        <td><select class="match-select" id="m30-3">
+          <option value="">— select —</option>
+          <option>ordinary or occurring every day</option>
+          <option>small or trivial details</option>
+          <option>excessively sweet or sentimental</option>
+          <option>ordinary, commonplace, or lacking imagination</option>
+          <option>not fully formed or developed</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>saccharine</td>
+        <td></td>
+        <td><select class="match-select" id="m30-4">
+          <option value="">— select —</option>
+          <option>ordinary or occurring every day</option>
+          <option>ordinary, commonplace, or lacking imagination</option>
+          <option>not fully formed or developed</option>
+          <option>excessively sweet or sentimental</option>
+          <option>small or trivial details</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>inchoate</td>
+        <td></td>
+        <td><select class="match-select" id="m30-5">
+          <option value="">— select —</option>
+          <option>ordinary, commonplace, or lacking imagination</option>
+          <option>excessively sweet or sentimental</option>
+          <option>ordinary or occurring every day</option>
+          <option>not fully formed or developed</option>
+          <option>small or trivial details</option>
+          </select></td>
+      </tr>
+    </table>
+    <div class="feedback" id="fb-match30"></div>
+  </div>
+
+  <div class="section-heading">Questions 56&ndash;59 &middot; Fill in the Blank</div>
+  <div class="section-sub">Choose the best word from the word bank.</div>
+
+  <div class="q-card">
+    <div class="fitb-sentence">
+      56. His
+      <select class="blank-select" id="b30-56">
+        <option value="">— select —</option>
+        <option>envisage</option>
+        <option>prosaic</option>
+        <option>vanity</option>
+        <option>putative</option>
+        </select>
+      made it nearly impossible for him to accept even gentle criticism of his own work.
+    </div>
+    <div class="fitb-sentence">
+      57. The
+      <select class="blank-select" id="b30-57">
+        <option value="">— select —</option>
+        <option>putative</option>
+        <option>saccharine</option>
+        <option>quotidian</option>
+        <option>minutiae</option>
+        </select>
+      leader of the coup was never officially identified, though several names circulated.
+    </div>
+    <div class="fitb-sentence">
+      58. It's difficult to
+      <select class="blank-select" id="b30-58">
+        <option value="">— select —</option>
+        <option>inchoate</option>
+        <option>envisage</option>
+        <option>prosaic</option>
+        <option>vanity</option>
+        </select>
+      a future where paper maps are still in common use.
+    </div>
+    <div class="fitb-sentence">
+      59. After the fireworks and fanfare ended, the
+      <select class="blank-select" id="b30-59">
+        <option value="">— select —</option>
+        <option>minutiae</option>
+        <option>saccharine</option>
+        <option>putative</option>
+        <option>prosaic</option>
+        </select>
+      business of cleaning up began.
+    </div>
+    <div class="word-bank"><strong>Word bank:</strong> quotidian &middot; prosaic &middot; minutiae &middot; saccharine &middot; vanity &middot; putative &middot; inchoate &middot; envisage</div>
+    <div class="feedback" id="fb-fitb30"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek30()">Check Answers</button>
+    <span class="score-tally" id="tally-30"></span>
+  </div>
+  <p class="next-hint" id="next-30" style="display:none;">Next: Week 31 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(2)">Go to Week 31</button></p>
+</div>
+</div>
+
+<!-- WEEK 31 -->
+<div class="panel" id="panel-2">
+<div class="panel-inner">
+  <div class="week-label">Week 31</div>
+  <div class="panel-title">Endurance &amp; Decline</div>
+  <div class="panel-subtitle">Questions 60&ndash;67 &middot; Multiple Choice &amp; Fill in the Blank</div>
+
+  <!-- Q60 -->
+  <div class="q-card">
+    <div class="q-num">Question 60</div>
+    <div class="q-text">A dog is described as <em>tenacious</em> in refusing to let go of its favorite toy. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q60" value="A"> A &nbsp; It shares its belongings generously with others.</label>
+      <label class="choice-label"><input type="radio" name="q60" value="B"> B &nbsp; It is easily startled and quick to flee.</label>
+      <label class="choice-label"><input type="radio" name="q60" value="C"> C &nbsp; It holds firmly and persistently refuses to give up.</label>
+      <label class="choice-label"><input type="radio" name="q60" value="D"> D &nbsp; It quickly loses interest in anything it is holding.</label>
+    </div>
+    <div class="feedback" id="fb-q60"></div>
+  </div>
+
+  <!-- Q61 -->
+  <div class="q-card">
+    <div class="q-num">Question 61</div>
+    <div class="q-text">Which sentence uses <em>resurgent</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q61" value="A"> A &nbsp; The resurgent volcano has been extinct for a million years.</label>
+      <label class="choice-label"><input type="radio" name="q61" value="B"> B &nbsp; His resurgent interest in painting faded completely, and he never picked up a brush again.</label>
+      <label class="choice-label"><input type="radio" name="q61" value="C"> C &nbsp; The resurgent company shut its doors permanently after decades of decline.</label>
+      <label class="choice-label"><input type="radio" name="q61" value="D"> D &nbsp; The resurgent team clawed back from years of losing seasons to win the championship.</label>
+    </div>
+    <div class="feedback" id="fb-q61"></div>
+  </div>
+
+  <!-- Q62 -->
+  <div class="q-card">
+    <div class="q-num">Question 62</div>
+    <div class="q-text">An old family business is described as <em>moribund</em>. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q62" value="A"> A &nbsp; It was just sold for a record profit.</label>
+      <label class="choice-label"><input type="radio" name="q62" value="B"> B &nbsp; It is in decline and close to the end of its existence.</label>
+      <label class="choice-label"><input type="radio" name="q62" value="C"> C &nbsp; It is thriving and expanding rapidly into new markets.</label>
+      <label class="choice-label"><input type="radio" name="q62" value="D"> D &nbsp; It was founded only last year.</label>
+    </div>
+    <div class="feedback" id="fb-q62"></div>
+  </div>
+
+  <!-- Q63 -->
+  <div class="q-card">
+    <div class="q-num">Question 63</div>
+    <div class="q-text">Which pair of words are most nearly <strong>opposite</strong> in meaning?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q63" value="A"> A &nbsp; abiding / transient</label>
+      <label class="choice-label"><input type="radio" name="q63" value="B"> B &nbsp; entrenched / vestigial</label>
+      <label class="choice-label"><input type="radio" name="q63" value="C"> C &nbsp; perennial / abiding</label>
+      <label class="choice-label"><input type="radio" name="q63" value="D"> D &nbsp; tenacious / resurgent</label>
+    </div>
+    <div class="feedback" id="fb-q63"></div>
+  </div>
+  <div class="section-heading">Questions 64&ndash;67 &middot; Fill in the Blank</div>
+  <div class="section-sub">Choose the best word from the word bank.</div>
+
+  <div class="q-card">
+    <div class="fitb-sentence">
+      64. Budget disputes are a
+      <select class="blank-select" id="b31-64">
+        <option value="">— select —</option>
+        <option>perennial</option>
+        <option>moribund</option>
+        <option>transient</option>
+        <option>abiding</option>
+        </select>
+      problem in the department, resurfacing every single fiscal year.
+    </div>
+    <div class="fitb-sentence">
+      65. Corruption had become so
+      <select class="blank-select" id="b31-65">
+        <option value="">— select —</option>
+        <option>entrenched</option>
+        <option>perennial</option>
+        <option>vestigial</option>
+        <option>tenacious</option>
+        </select>
+      in the agency that even new leadership struggled to root it out.
+    </div>
+    <div class="fitb-sentence">
+      66. The appendix is often called a
+      <select class="blank-select" id="b31-66">
+        <option value="">— select —</option>
+        <option>resurgent</option>
+        <option>moribund</option>
+        <option>abiding</option>
+        <option>vestigial</option>
+        </select>
+      organ, a remnant of a digestive structure our ancestors relied on.
+    </div>
+    <div class="fitb-sentence">
+      67. Their excitement about the new gadget proved
+      <select class="blank-select" id="b31-67">
+        <option value="">— select —</option>
+        <option>abiding</option>
+        <option>transient</option>
+        <option>perennial</option>
+        <option>entrenched</option>
+        </select>
+      fading within a week of purchase.
+    </div>
+    <div class="word-bank"><strong>Word bank:</strong> perennial &middot; entrenched &middot; tenacious &middot; resurgent &middot; vestigial &middot; moribund &middot; abiding &middot; transient</div>
+    <div class="feedback" id="fb-fitb31"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek31()">Check Answers</button>
+    <span class="score-tally" id="tally-31"></span>
+  </div>
+  <p class="next-hint" id="next-31" style="display:none;">Next: Week 32 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(3)">Go to Week 32</button></p>
+</div>
+</div>
+
+<!-- WEEK 32 -->
+<div class="panel" id="panel-3">
+<div class="panel-inner">
+  <div class="week-label">Week 32</div>
+  <div class="panel-title">Effort &amp; Burden</div>
+
+  <div class="section-heading">Questions 68&ndash;72 &middot; Matching</div>
+  <div class="section-sub">Match each word to its definition.</div>
+
+  <div class="q-card">
+    <table class="match-table">
+      <tr><th>Word</th><th></th><th>Definition</th></tr>
+      <tr>
+        <td>protracted</td>
+        <td></td>
+        <td><select class="match-select" id="m32-1">
+          <option value="">— select —</option>
+          <option>awkward, bulky, or overly complicated to use</option>
+          <option>done without plan, order, or system; left to chance</option>
+          <option>too simple to be convincing; easy in a way that ignores real complexity</option>
+          <option>failing to produce the intended result; not effective</option>
+          <option>lasting far longer than expected; drawn out over time</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>haphazard</td>
+        <td></td>
+        <td><select class="match-select" id="m32-2">
+          <option value="">— select —</option>
+          <option>lasting far longer than expected; drawn out over time</option>
+          <option>done without plan, order, or system; left to chance</option>
+          <option>awkward, bulky, or overly complicated to use</option>
+          <option>too simple to be convincing; easy in a way that ignores real complexity</option>
+          <option>failing to produce the intended result; not effective</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>ineffectual</td>
+        <td></td>
+        <td><select class="match-select" id="m32-3">
+          <option value="">— select —</option>
+          <option>failing to produce the intended result; not effective</option>
+          <option>awkward, bulky, or overly complicated to use</option>
+          <option>done without plan, order, or system; left to chance</option>
+          <option>too simple to be convincing; easy in a way that ignores real complexity</option>
+          <option>lasting far longer than expected; drawn out over time</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>facile</td>
+        <td></td>
+        <td><select class="match-select" id="m32-4">
+          <option value="">— select —</option>
+          <option>failing to produce the intended result; not effective</option>
+          <option>too simple to be convincing; easy in a way that ignores real complexity</option>
+          <option>done without plan, order, or system; left to chance</option>
+          <option>lasting far longer than expected; drawn out over time</option>
+          <option>awkward, bulky, or overly complicated to use</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>cumbersome</td>
+        <td></td>
+        <td><select class="match-select" id="m32-5">
+          <option value="">— select —</option>
+          <option>awkward, bulky, or overly complicated to use</option>
+          <option>too simple to be convincing; easy in a way that ignores real complexity</option>
+          <option>lasting far longer than expected; drawn out over time</option>
+          <option>failing to produce the intended result; not effective</option>
+          <option>done without plan, order, or system; left to chance</option>
+          </select></td>
+      </tr>
+    </table>
+    <div class="feedback" id="fb-match32"></div>
+  </div>
+
+  <div class="section-heading">Questions 73&ndash;76 &middot; Multiple Choice</div>
+  <div class="section-sub">Choose the best answer.</div>
+
+  <!-- Q73 -->
+  <div class="q-card">
+    <div class="q-num">Question 73</div>
+    <div class="q-text">Climbing the mountain without proper gear proved <em>arduous</em>. What does this mean?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q73" value="A"> A &nbsp; It required great effort and was difficult and tiring.</label>
+      <label class="choice-label"><input type="radio" name="q73" value="B"> B &nbsp; It was surprisingly easy and needed no preparation.</label>
+      <label class="choice-label"><input type="radio" name="q73" value="C"> C &nbsp; It took only a few minutes to complete.</label>
+      <label class="choice-label"><input type="radio" name="q73" value="D"> D &nbsp; It was canceled because of bad weather.</label>
+    </div>
+    <div class="feedback" id="fb-q73"></div>
+  </div>
+
+  <!-- Q74 -->
+  <div class="q-card">
+    <div class="q-num">Question 74</div>
+    <div class="q-text">A labor dispute is described as <em>intractable</em>. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q74" value="A"> A &nbsp; It is extremely difficult to manage, control, or solve.</label>
+      <label class="choice-label"><input type="radio" name="q74" value="B"> B &nbsp; It was settled before it ever became public.</label>
+      <label class="choice-label"><input type="radio" name="q74" value="C"> C &nbsp; It was resolved within a single afternoon.</label>
+      <label class="choice-label"><input type="radio" name="q74" value="D"> D &nbsp; It involves only a minor, unimportant disagreement.</label>
+    </div>
+    <div class="feedback" id="fb-q74"></div>
+  </div>
+
+  <!-- Q75 -->
+  <div class="q-card">
+    <div class="q-num">Question 75</div>
+    <div class="q-text">Which sentence uses <em>onerous</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q75" value="A"> A &nbsp; The onerous gift required nothing of her in return.</label>
+      <label class="choice-label"><input type="radio" name="q75" value="B"> B &nbsp; The new regulations imposed an onerous burden on small business owners already stretched thin.</label>
+      <label class="choice-label"><input type="radio" name="q75" value="C"> C &nbsp; Her onerous schedule left her with weeks of free time.</label>
+      <label class="choice-label"><input type="radio" name="q75" value="D"> D &nbsp; The onerous paperwork took less than a minute to complete.</label>
+    </div>
+    <div class="feedback" id="fb-q75"></div>
+  </div>
+
+  <!-- Q76 -->
+  <div class="q-card">
+    <div class="q-num">Question 76</div>
+    <div class="q-text">Which pair of words are most nearly <strong>opposite</strong> in meaning?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q76" value="A"> A &nbsp; arduous / laborious</label>
+      <label class="choice-label"><input type="radio" name="q76" value="B"> B &nbsp; onerous / burdensome</label>
+      <label class="choice-label"><input type="radio" name="q76" value="C"> C &nbsp; cumbersome / bulky</label>
+      <label class="choice-label"><input type="radio" name="q76" value="D"> D &nbsp; facile / complex</label>
+    </div>
+    <div class="feedback" id="fb-q76"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek32()">Check Answers</button>
+    <span class="score-tally" id="tally-32"></span>
+  </div>
+  <p class="next-hint" id="next-32" style="display:none;">Next: Week 33 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(4)">Go to Week 33</button></p>
+</div>
+</div>
+
+<!-- WEEK 33 -->
+<div class="panel" id="panel-4">
+<div class="panel-inner">
+  <div class="week-label">Week 33</div>
+  <div class="panel-title">Assumption &amp; Reality</div>
+  <div class="panel-subtitle">Questions 77&ndash;84 &middot; Multiple Choice</div>
+
+  <!-- Q77 -->
+  <div class="q-card">
+    <div class="q-num">Question 77</div>
+    <div class="q-text">The word <em>presuppose</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q77" value="A"> A &nbsp; to postpone a decision indefinitely</label>
+      <label class="choice-label"><input type="radio" name="q77" value="B"> B &nbsp; to reject an idea without any consideration</label>
+      <label class="choice-label"><input type="radio" name="q77" value="C"> C &nbsp; to prove something conclusively with hard evidence</label>
+      <label class="choice-label"><input type="radio" name="q77" value="D"> D &nbsp; to assume something is true beforehand, without proving it</label>
+    </div>
+    <div class="feedback" id="fb-q77"></div>
+  </div>
+
+  <!-- Q78 -->
+  <div class="q-card">
+    <div class="q-num">Question 78</div>
+    <div class="q-text">Detectives <em>surmised</em> that the missing necklace was hidden somewhere in the house. What were they doing?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q78" value="A"> A &nbsp; Announcing a fact they had already confirmed with certainty.</label>
+      <label class="choice-label"><input type="radio" name="q78" value="B"> B &nbsp; Concluding or guessing something from limited evidence.</label>
+      <label class="choice-label"><input type="radio" name="q78" value="C"> C &nbsp; Ignoring the case entirely.</label>
+      <label class="choice-label"><input type="radio" name="q78" value="D"> D &nbsp; Publishing an official police report.</label>
+    </div>
+    <div class="feedback" id="fb-q78"></div>
+  </div>
+
+  <!-- Q79 -->
+  <div class="q-card">
+    <div class="q-num">Question 79</div>
+    <div class="q-text">Which sentence uses <em>supposition</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q79" value="A"> A &nbsp; The scientist's supposition had already been proven true by a thousand experiments.</label>
+      <label class="choice-label"><input type="radio" name="q79" value="B"> B &nbsp; The supposition was carved in stone and unquestionably factual.</label>
+      <label class="choice-label"><input type="radio" name="q79" value="C"> C &nbsp; Without any real evidence, his theory rested on nothing more than supposition.</label>
+      <label class="choice-label"><input type="radio" name="q79" value="D"> D &nbsp; Her supposition was measured precisely with a ruler.</label>
+    </div>
+    <div class="feedback" id="fb-q79"></div>
+  </div>
+
+  <!-- Q80 -->
+  <div class="q-card">
+    <div class="q-num">Question 80</div>
+    <div class="q-text">A document is described as the <em>purported</em> will of a wealthy businessman. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q80" value="A"> A &nbsp; The will's authenticity has been thoroughly verified by experts.</label>
+      <label class="choice-label"><input type="radio" name="q80" value="B"> B &nbsp; The will is claimed to be genuine, but this has not been proven or confirmed.</label>
+      <label class="choice-label"><input type="radio" name="q80" value="C"> C &nbsp; The will has been officially rejected by the court.</label>
+      <label class="choice-label"><input type="radio" name="q80" value="D"> D &nbsp; The will was written by the businessman's lawyer and notarized.</label>
+    </div>
+    <div class="feedback" id="fb-q80"></div>
+  </div>
+
+  <!-- Q81 -->
+  <div class="q-card">
+    <div class="q-num">Question 81</div>
+    <div class="q-text">Which sentence uses <em>notional</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q81" value="A"> A &nbsp; The company's notional profits existed only on paper and never materialized as real cash.</label>
+      <label class="choice-label"><input type="radio" name="q81" value="B"> B &nbsp; Her notional injury required immediate surgery.</label>
+      <label class="choice-label"><input type="radio" name="q81" value="C"> C &nbsp; The notional bridge has carried traffic for a century.</label>
+      <label class="choice-label"><input type="radio" name="q81" value="D"> D &nbsp; The notional profits were deposited directly into the shareholders' bank accounts.</label>
+    </div>
+    <div class="feedback" id="fb-q81"></div>
+  </div>
+
+  <!-- Q82 -->
+  <div class="q-card">
+    <div class="q-num">Question 82</div>
+    <div class="q-text">A historian explores a <em>counterfactual</em> scenario in which a key battle was lost instead of won. What is she doing?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q82" value="A"> A &nbsp; Imagining an alternative outcome contrary to what actually happened.</label>
+      <label class="choice-label"><input type="radio" name="q82" value="B"> B &nbsp; Interviewing survivors of the real battle.</label>
+      <label class="choice-label"><input type="radio" name="q82" value="C"> C &nbsp; Correcting a factual error in an earlier account.</label>
+      <label class="choice-label"><input type="radio" name="q82" value="D"> D &nbsp; Recording exactly what happened, without any speculation.</label>
+    </div>
+    <div class="feedback" id="fb-q82"></div>
+  </div>
+
+  <!-- Q83 -->
+  <div class="q-card">
+    <div class="q-num">Question 83</div>
+    <div class="q-text">The word <em>proxy</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q83" value="A"> A &nbsp; a person or thing that stands in for another; a substitute measure</label>
+      <label class="choice-label"><input type="radio" name="q83" value="B"> B &nbsp; a formal legal accusation</label>
+      <label class="choice-label"><input type="radio" name="q83" value="C"> C &nbsp; a device used to measure temperature</label>
+      <label class="choice-label"><input type="radio" name="q83" value="D"> D &nbsp; the original, unaltered version of something</label>
+    </div>
+    <div class="feedback" id="fb-q83"></div>
+  </div>
+
+  <!-- Q84 -->
+  <div class="q-card">
+    <div class="q-num">Question 84</div>
+    <div class="q-text">Which sentence uses <em>veritable</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q84" value="A"> A &nbsp; His veritable excuse was later exposed as a total lie.</label>
+      <label class="choice-label"><input type="radio" name="q84" value="B"> B &nbsp; The veritable rumor turned out to be completely false.</label>
+      <label class="choice-label"><input type="radio" name="q84" value="C"> C &nbsp; The dusty attic was a veritable treasure trove of old photographs and letters.</label>
+      <label class="choice-label"><input type="radio" name="q84" value="D"> D &nbsp; The veritable myth had no basis in reality whatsoever.</label>
+    </div>
+    <div class="feedback" id="fb-q84"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek33()">Check Answers</button>
+    <span class="score-tally" id="tally-33"></span>
+  </div>
+
+  <hr class="divider">
+
+  <div style="text-align:center;">
+    <div style="font-family:'DM Serif Display',serif;font-size:1.25rem;margin-bottom:0.5rem;">All done!</div>
+    <p style="font-size:0.9rem;color:var(--muted);margin-bottom:1.25rem;">Great work reviewing August's vocabulary. Click below to see your final score.</p>
+    <button class="btn btn-primary" style="font-size:1rem;padding:0.85rem 2rem;" onclick="showFinalScore()">See My Results</button>
+  </div>
+
+  <div id="score-panel">
+    <div class="score-num" id="final-score-num">&mdash;</div>
+    <div class="score-label" id="final-score-label"></div>
+    <div class="score-msg" id="final-score-msg"></div>
+    <div style="margin-top:1.5rem;">
+      <button class="btn btn-outline" onclick="resetAll()">&#8635; Start Over</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<script>
+// Tab switching
+function showTab(i) {
+  document.querySelectorAll('.panel').forEach((p,idx)=>{
+    p.classList.toggle('active', idx===i);
+  });
+  document.querySelectorAll('.tab-nav button').forEach((b,idx)=>{
+    b.classList.toggle('active', idx===i);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Score tracking
+const scores = { w29:null, w30:null, w31:null, w32:null, w33:null };
+
+// --- WEEK 29 ---
+const w29Answers = { 'q43':'B', 'q44':'C', 'q45':'C', 'q46':'D', 'q47':'D', 'q48':'C', 'q49':'D', 'q50':'B' };
+const w29Explain = {
+  q43: 'Diminish means to become or make smaller, weaker, or less important.',
+  q44: 'Robust means strong, healthy, and vigorous, able to withstand strain, which fits a tree that keeps thriving despite neglect, not something that collapses, weakens, or falls apart.',
+  q45: 'Heterogeneous means made up of many different kinds, or varied in composition.',
+  q46: 'Homogeneous means made up of parts that are all the same kind, or uniform throughout, which fits a neighborhood where residents share the same background, not a group defined by wide variety.',
+  q47: 'Viable means capable of working successfully, or able to survive or succeed.',
+  q48: 'Disparate means fundamentally different in kind, not able to be meaningfully compared, which is close in meaning to heterogeneous, made up of many different kinds. Homogeneous is actually the opposite of disparate.',
+  q49: 'Deleterious means harmful or damaging, often in a gradual or subtle way.',
+  q50: 'Pronounced means very noticeable or strongly marked.'
+};
+
+function checkWeek29() {
+  let correct=0, total=8;
+  Object.keys(w29Answers).forEach(q=>{
+    const sel = document.querySelector(`input[name="${q}"]:checked`);
+    const fb = document.getElementById(`fb-${q}`);
+    document.querySelectorAll(`input[name="${q}"]`).forEach(r=>{
+      r.parentElement.classList.remove('correct-choice','wrong-choice');
+    });
+    if(sel) {
+      if(sel.value===w29Answers[q]) {
+        sel.parentElement.classList.add('correct-choice');
+        fb.className='feedback correct';
+        fb.textContent='✓ Correct! '+w29Explain[q];
+        correct++;
+      } else {
+        sel.parentElement.classList.add('wrong-choice');
+        document.querySelector(`input[name="${q}"][value="${w29Answers[q]}"]`).parentElement.classList.add('correct-choice');
+        fb.className='feedback incorrect';
+        fb.textContent='✗ Not quite. '+w29Explain[q];
+      }
+    } else {
+      fb.className='feedback incorrect';
+      fb.textContent='Please select an answer. '+w29Explain[q];
+    }
+  });
+  scores.w29=correct;
+  const t=document.getElementById('tally-29');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  document.getElementById('next-29').style.display='block';
+}
+
+// --- WEEK 30 ---
+const m30Answers = { 'm30-1':'ordinary or occurring every day', 'm30-2':'ordinary, commonplace, or lacking imagination', 'm30-3':'small or trivial details', 'm30-4':'excessively sweet or sentimental', 'm30-5':'not fully formed or developed' };
+const b30Answers = { 'b30-56':'vanity', 'b30-57':'putative', 'b30-58':'envisage', 'b30-59':'prosaic' };
+
+function checkWeek30() {
+  let correct=0, total=9;
+  let matchOk=true;
+  Object.keys(m30Answers).forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('correct-sel','wrong-sel');
+    if(el.value===m30Answers[id]){ el.classList.add('correct-sel'); correct++; }
+    else { el.classList.add('wrong-sel'); matchOk=false; }
+  });
+  const mfb=document.getElementById('fb-match30');
+  mfb.className=matchOk?'feedback correct':'feedback incorrect';
+  mfb.textContent=matchOk?'✓ All matching answers correct!':'✗ Check the highlighted selections. Review the definitions and try again.';
+  let fitbOk=true;
+  Object.keys(b30Answers).forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('correct-sel','wrong-sel');
+    if(el.value===b30Answers[id]){ el.classList.add('correct-sel'); correct++; }
+    else { el.classList.add('wrong-sel'); fitbOk=false; }
+  });
+  const ffb=document.getElementById('fb-fitb30');
+  ffb.className=fitbOk?'feedback correct':'feedback incorrect';
+  ffb.textContent=fitbOk?'✓ All fill-in-the-blank answers correct!':'✗ Some answers need another look. Correct: 56-vanity, 57-putative, 58-envisage, 59-prosaic.';
+  scores.w30=correct;
+  const t=document.getElementById('tally-30');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  document.getElementById('next-30').style.display='block';
+}
+
+// --- WEEK 31 ---
+const w31MC = { 'q60':'C', 'q61':'D', 'q62':'B', 'q63':'A' };
+const w31Explain = {
+  q60: 'Tenacious means holding firmly, persistent and not easily stopped or removed.',
+  q61: 'Resurgent means rising or growing strong again after a period of decline, which fits a team returning to success, not something that shuts down, fades away, or stays extinct.',
+  q62: 'Moribund means in decline and close to the end of its existence.',
+  q63: 'Abiding means lasting a long time without weakening, while transient means lasting only a short time before passing quickly, so the two are nearly opposite.'
+};
+const b31Answers = { 'b31-64':'perennial', 'b31-65':'entrenched', 'b31-66':'vestigial', 'b31-67':'transient' };
+
+function checkWeek31() {
+  let correct=0, total=8;
+  Object.keys(w31MC).forEach(q=>{
+    const sel=document.querySelector(`input[name="${q}"]:checked`);
+    const fb=document.getElementById(`fb-${q}`);
+    document.querySelectorAll(`input[name="${q}"]`).forEach(r=>r.parentElement.classList.remove('correct-choice','wrong-choice'));
+    if(sel){
+      if(sel.value===w31MC[q]){ sel.parentElement.classList.add('correct-choice'); fb.className='feedback correct'; fb.textContent='✓ Correct! '+w31Explain[q]; correct++; }
+      else { sel.parentElement.classList.add('wrong-choice'); document.querySelector(`input[name="${q}"][value="${w31MC[q]}"]`).parentElement.classList.add('correct-choice'); fb.className='feedback incorrect'; fb.textContent='✗ Not quite. '+w31Explain[q]; }
+    } else { fb.className='feedback incorrect'; fb.textContent='Please select an answer. '+w31Explain[q]; }
+  });
+  let fitbOk=true;
+  Object.keys(b31Answers).forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('correct-sel','wrong-sel');
+    if(el.value===b31Answers[id]){ el.classList.add('correct-sel'); correct++; }
+    else { el.classList.add('wrong-sel'); fitbOk=false; }
+  });
+  const ffb=document.getElementById('fb-fitb31');
+  ffb.className=fitbOk?'feedback correct':'feedback incorrect';
+  ffb.textContent=fitbOk?'✓ All fill-in-the-blank answers correct!':'✗ Correct answers: 64-perennial, 65-entrenched, 66-vestigial, 67-transient.';
+  scores.w31=correct;
+  const t=document.getElementById('tally-31');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  document.getElementById('next-31').style.display='block';
+}
+
+// --- WEEK 32 ---
+const m32Answers = { 'm32-1':'lasting far longer than expected; drawn out over time', 'm32-2':'done without plan, order, or system; left to chance', 'm32-3':'failing to produce the intended result; not effective', 'm32-4':'too simple to be convincing; easy in a way that ignores real complexity', 'm32-5':'awkward, bulky, or overly complicated to use' };
+const w32MC = { 'q73':'A', 'q74':'A', 'q75':'B', 'q76':'D' };
+const w32Explain = {
+  q73: 'Arduous means requiring great effort; difficult and tiring.',
+  q74: 'Intractable means extremely difficult to manage, control, or solve.',
+  q75: 'Onerous means involving a heavy burden or obligation, hard to bear, which fits regulations that weigh heavily on struggling business owners, not something quick, light, or free of obligation.',
+  q76: 'Facile means too simple to be convincing, easy in a way that ignores real complexity, so its opposite is complex. The other pairs are near-synonyms, not opposites.'
+};
+
+function checkWeek32() {
+  let correct=0, total=9;
+  let matchOk=true;
+  Object.keys(m32Answers).forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('correct-sel','wrong-sel');
+    if(el.value===m32Answers[id]){ el.classList.add('correct-sel'); correct++; }
+    else { el.classList.add('wrong-sel'); matchOk=false; }
+  });
+  const mfb=document.getElementById('fb-match32');
+  mfb.className=matchOk?'feedback correct':'feedback incorrect';
+  mfb.textContent=matchOk?'✓ All matching answers correct!':'✗ Check the highlighted selections and review the definitions.';
+  Object.keys(w32MC).forEach(q=>{
+    const sel=document.querySelector(`input[name="${q}"]:checked`);
+    const fb=document.getElementById(`fb-${q}`);
+    document.querySelectorAll(`input[name="${q}"]`).forEach(r=>r.parentElement.classList.remove('correct-choice','wrong-choice'));
+    if(sel){
+      if(sel.value===w32MC[q]){ sel.parentElement.classList.add('correct-choice'); fb.className='feedback correct'; fb.textContent='✓ Correct! '+w32Explain[q]; correct++; }
+      else { sel.parentElement.classList.add('wrong-choice'); document.querySelector(`input[name="${q}"][value="${w32MC[q]}"]`).parentElement.classList.add('correct-choice'); fb.className='feedback incorrect'; fb.textContent='✗ Not quite. '+w32Explain[q]; }
+    } else { fb.className='feedback incorrect'; fb.textContent='Please select an answer. '+w32Explain[q]; }
+  });
+  scores.w32=correct;
+  const t=document.getElementById('tally-32');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  document.getElementById('next-32').style.display='block';
+}
+
+// --- WEEK 33 ---
+const w33Answers = { 'q77':'D', 'q78':'B', 'q79':'C', 'q80':'B', 'q81':'A', 'q82':'A', 'q83':'A', 'q84':'C' };
+const w33Explain = {
+  q77: 'Presuppose means to assume something is true beforehand, without proving it.',
+  q78: 'Surmise means to conclude or guess something from limited evidence.',
+  q79: 'Supposition is an idea taken to be true without proof, an assumption, which fits a theory resting on nothing more than assumption, not one proven by evidence or measured with a ruler.',
+  q80: 'Purported means claimed to be true or to exist, but not proven or confirmed.',
+  q81: 'Notional means existing only as an idea or on paper, not real in practice, which fits profits that never became real cash, not real deposited money or a real injury or bridge.',
+  q82: 'Counterfactual means contrary to what actually happened, imagining an alternative outcome.',
+  q83: 'Proxy means a person or thing that stands in for another, a substitute measure.',
+  q84: 'Veritable means genuine, truly deserving the name given to it, which fits an attic that truly is a treasure trove, not a rumor, excuse, or myth that turns out to be false.'
+};
+
+function checkWeek33() {
+  let correct=0, total=8;
+  Object.keys(w33Answers).forEach(q=>{
+    const sel = document.querySelector(`input[name="${q}"]:checked`);
+    const fb = document.getElementById(`fb-${q}`);
+    document.querySelectorAll(`input[name="${q}"]`).forEach(r=>{
+      r.parentElement.classList.remove('correct-choice','wrong-choice');
+    });
+    if(sel) {
+      if(sel.value===w33Answers[q]) {
+        sel.parentElement.classList.add('correct-choice');
+        fb.className='feedback correct';
+        fb.textContent='✓ Correct! '+w33Explain[q];
+        correct++;
+      } else {
+        sel.parentElement.classList.add('wrong-choice');
+        document.querySelector(`input[name="${q}"][value="${w33Answers[q]}"]`).parentElement.classList.add('correct-choice');
+        fb.className='feedback incorrect';
+        fb.textContent='✗ Not quite. '+w33Explain[q];
+      }
+    } else {
+      fb.className='feedback incorrect';
+      fb.textContent='Please select an answer. '+w33Explain[q];
+    }
+  });
+  scores.w33=correct;
+  const t=document.getElementById('tally-33');
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+}
+
+// Final score
+function showFinalScore() {
+  const maxes = { w29:8, w30:9, w31:8, w32:9, w33:8 };
+  let total=0, earned=0;
+  Object.keys(maxes).forEach(k=>{ total+=maxes[k]; if(scores[k]!==null) earned+=scores[k]; });
+  const pct = Math.round((earned/total)*100);
+  document.getElementById('final-score-num').textContent=`${earned}/${total}`;
+  document.getElementById('final-score-label').textContent=`${pct}% · August Vocabulary`;
+  const msgs = [
+    [90,'Outstanding! You have a strong command of all five weeks.'],
+    [75,'Great work! A few more passes on the trickier sets will get you there.'],
+    [60,'Solid effort. Focus on the sections where you lost points and review the definitions.'],
+    [0,'Keep reviewing! Go back through the words you missed and try the week checks again.']
+  ];
+  document.getElementById('final-score-msg').textContent = msgs.find(([t])=>pct>=t)[1];
+  const panel=document.getElementById('score-panel');
+  panel.classList.add('active');
+  panel.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetAll() {
+  Object.keys(scores).forEach(k=>scores[k]=null);
+  document.querySelectorAll('input[type=radio]').forEach(r=>{ r.checked=false; r.parentElement.classList.remove('correct-choice','wrong-choice'); });
+  document.querySelectorAll('select').forEach(s=>{ s.selectedIndex=0; s.classList.remove('correct-sel','wrong-sel'); });
+  document.querySelectorAll('.feedback').forEach(f=>{ f.className='feedback'; f.textContent=''; });
+  document.querySelectorAll('.score-tally').forEach(t=>{ t.textContent=''; t.classList.remove('visible'); });
+  document.querySelectorAll('.next-hint').forEach(n=>n.style.display='none');
+  document.getElementById('score-panel').classList.remove('active');
+  showTab(0);
+}
+</script>
+<footer style="text-align:center;padding:1.5rem 1rem 2rem;font-size:0.78rem;color:#a09880;border-top:1px solid #e4ddd3;">
+  This review was created with the assistance of AI and reviewed by Monica Winkler.
+</footer>
+</body>
+</html>
