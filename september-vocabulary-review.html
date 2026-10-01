@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>September Vocabulary Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --border: #e4ddd3;
+    --accent: #2d6a4f;
+    --accent-light: #e8f5ee;
+    --accent2: #b5632a;
+    --text: #1a1612;
+    --muted: #7a7168;
+    --correct: #2d6a4f;
+    --incorrect: #c0392b;
+    --correct-bg: #e8f5ee;
+    --incorrect-bg: #fdecea;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+  }
+
+  header .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 0.5rem;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  header p {
+    margin-top: 0.6rem;
+    font-size: 0.92rem;
+    opacity: 0.85;
+  }
+
+  /* Tab nav */
+  .tab-nav {
+    display: flex;
+    overflow-x: auto;
+    background: var(--accent);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    gap: 0;
+  }
+
+  .tab-nav button {
+    flex: 1 0 auto;
+    padding: 0.75rem 1.1rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.65);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .tab-nav button:hover { color: white; }
+  .tab-nav button.active {
+    color: white;
+    border-bottom-color: #f4c96e;
+  }
+
+  /* Panels */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .panel-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .week-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  .panel-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.35rem;
+  }
+
+  .panel-subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  /* Question cards */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .q-num {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.45rem;
+  }
+
+  .q-text {
+    font-size: 0.97rem;
+    line-height: 1.55;
+    margin-bottom: 0.9rem;
+  }
+
+  .q-text em { font-style: italic; }
+
+  .choices { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  .choice-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 0.75rem;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .choice-label:hover { border-color: var(--accent); background: var(--accent-light); }
+
+  .choice-label input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; }
+
+  .choice-label.correct-choice { border-color: var(--correct); background: var(--correct-bg); }
+  .choice-label.wrong-choice { border-color: var(--incorrect); background: var(--incorrect-bg); }
+
+  .feedback {
+    display: none;
+    margin-top: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+  .feedback.correct { display: block; background: var(--correct-bg); color: var(--correct); }
+  .feedback.incorrect { display: block; background: var(--incorrect-bg); color: var(--incorrect); }
+
+  /* Matching */
+  .match-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+  .match-table th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0 0 0.6rem;
+    text-align: left;
+  }
+  .match-table th:last-child { text-align: left; padding-left: 1rem; }
+  .match-table td { padding: 0.35rem 0; vertical-align: middle; }
+  .match-table td:first-child {
+    font-weight: 600;
+    font-size: 0.9rem;
+    width: 38%;
+    padding-right: 0.5rem;
+  }
+  .match-table td:last-child { padding-left: 1rem; }
+
+  .match-select {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .match-select:focus { outline: none; border-color: var(--accent); }
+  .match-select.correct-sel { border-color: var(--correct); background: var(--correct-bg); }
+  .match-select.wrong-sel { border-color: var(--incorrect); background: var(--incorrect-bg); }
+
+  /* Fill in blank */
+  .fitb-sentence {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 0.85rem;
+  }
+
+  .fitb-sentence .blank-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    vertical-align: super;
+    margin-right: 2px;
+  }
+
+  .blank-select {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+    min-width: 140px;
+    transition: border-color 0.15s;
+  }
+  .blank-select:focus { outline: none; border-color: var(--accent); }
+  .blank-select.correct-sel { border-color: var(--correct); background: var(--correct-bg); }
+  .blank-select.wrong-sel { border-color: var(--incorrect); background: var(--incorrect-bg); }
+
+  .word-bank {
+    margin-top: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    background: #f5f2ec;
+    border-radius: 7px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .word-bank strong { color: var(--text); font-weight: 600; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+  }
+  .btn-outline:hover { background: var(--accent-light); }
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.35rem;
+  }
+
+  .next-hint {
+    font-size: 0.83rem;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+
+  /* Score panel */
+  #score-panel {
+    display: none;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  #score-panel.active { display: block; }
+  #score-panel .score-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    color: var(--accent);
+  }
+  #score-panel .score-label { font-size: 0.9rem; color: var(--muted); margin-top: 0.25rem; }
+  #score-panel .score-msg { font-size: 1rem; margin-top: 1rem; line-height: 1.55; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  .section-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    margin-top: 1.6rem;
+  }
+  .section-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+  }
+
+  .score-tally {
+    display: none;
+    padding: 0.5rem 0.85rem;
+    background: var(--accent-light);
+    border: 1px solid #b7dfc9;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-top: 0.75rem;
+  }
+  .score-tally.visible { display: inline-block; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">SAT Vocabulary &middot; Units 34&ndash;37</div>
+  <h1>September Vocabulary Review</h1>
+  <p>Time to review! These activities are self-check. Submit your answers at the end to see your results. :)</p>
+</header>
+
+<nav class="tab-nav" id="tabNav">
+  <button class="active" onclick="showTab(0)">Week 34</button>
+  <button onclick="showTab(1)">Week 35</button>
+  <button onclick="showTab(2)">Week 36</button>
+  <button onclick="showTab(3)">Week 37</button>
+</nav>
+
+<!-- WEEK 34 -->
+<div class="panel active" id="panel-0">
+<div class="panel-inner">
+  <div class="week-label">Week 34</div>
+  <div class="panel-title">Boundaries &amp; Connections</div>
+
+  <div class="section-heading">Questions 1&ndash;5 &middot; Matching</div>
+  <div class="section-sub">Match each word to its definition.</div>
+
+  <div class="q-card">
+    <table class="match-table">
+      <tr><th>Word</th><th></th><th>Definition</th></tr>
+      <tr>
+        <td>demarcated from</td>
+        <td></td>
+        <td><select class="match-select" id="m34-1">
+          <option value="">Select one</option>
+          <option>existing or occurring before something else</option>
+          <option>included or absorbed within a larger category, group, or idea</option>
+          <option>separated or distinguished from by a clear boundary or difference</option>
+          <option>separated from; made independent of something previously connected to it</option>
+          <option>unaware of, unresponsive to, or unaffected by</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>decoupled from</td>
+        <td></td>
+        <td><select class="match-select" id="m34-2">
+          <option value="">Select one</option>
+          <option>separated or distinguished from by a clear boundary or difference</option>
+          <option>unaware of, unresponsive to, or unaffected by</option>
+          <option>included or absorbed within a larger category, group, or idea</option>
+          <option>existing or occurring before something else</option>
+          <option>separated from; made independent of something previously connected to it</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>subsumed in</td>
+        <td></td>
+        <td><select class="match-select" id="m34-3">
+          <option value="">Select one</option>
+          <option>included or absorbed within a larger category, group, or idea</option>
+          <option>existing or occurring before something else</option>
+          <option>separated from; made independent of something previously connected to it</option>
+          <option>separated or distinguished from by a clear boundary or difference</option>
+          <option>unaware of, unresponsive to, or unaffected by</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>antecedent to</td>
+        <td></td>
+        <td><select class="match-select" id="m34-4">
+          <option value="">Select one</option>
+          <option>existing or occurring before something else</option>
+          <option>separated or distinguished from by a clear boundary or difference</option>
+          <option>unaware of, unresponsive to, or unaffected by</option>
+          <option>included or absorbed within a larger category, group, or idea</option>
+          <option>separated from; made independent of something previously connected to it</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>insensible to</td>
+        <td></td>
+        <td><select class="match-select" id="m34-5">
+          <option value="">Select one</option>
+          <option>existing or occurring before something else</option>
+          <option>separated from; made independent of something previously connected to it</option>
+          <option>unaware of, unresponsive to, or unaffected by</option>
+          <option>separated or distinguished from by a clear boundary or difference</option>
+          <option>included or absorbed within a larger category, group, or idea</option>
+          </select></td>
+      </tr>
+    </table>
+    <div class="feedback" id="fb-match34"></div>
+  </div>
+
+  <div class="section-heading">Questions 6&ndash;9 &middot; Fill in the Blank</div>
+  <div class="section-sub">Choose the best word from the word bank.</div>
+
+  <div class="q-card">
+    <div class="fitb-sentence">
+      6. The effect of exercise on mood appears to be
+      <select class="blank-select" id="b34-6">
+        <option value="">Select one</option>
+        <option>manifest in</option>
+        <option>subsumed in</option>
+        <option>mediated by</option>
+        <option>antecedent to</option>
+        </select>
+      changes in sleep quality rather than acting directly on the brain.
+    </div>
+    <div class="fitb-sentence">
+      7. The single typo on page 40 was
+      <select class="blank-select" id="b34-7">
+        <option value="">Select one</option>
+        <option>demarcated from</option>
+        <option>inconsequential to</option>
+        <option>insensible to</option>
+        <option>antecedent to</option>
+        </select>
+      the report's overall argument, which remained just as convincing.
+    </div>
+    <div class="fitb-sentence">
+      8. The poet's grief over her brother's death is
+      <select class="blank-select" id="b34-8">
+        <option value="">Select one</option>
+        <option>antecedent to</option>
+        <option>inconsequential to</option>
+        <option>manifest in</option>
+        <option>decoupled from</option>
+        </select>
+      nearly every poem in the collection, even those about entirely different subjects.
+    </div>
+    <div class="fitb-sentence">
+      9. Under the new policy, teachers' pay will be
+      <select class="blank-select" id="b34-9">
+        <option value="">Select one</option>
+        <option>manifest in</option>
+        <option>mediated by</option>
+        <option>demarcated from</option>
+        <option>decoupled from</option>
+        </select>
+      test scores, so one bad testing year can no longer lower a salary.
+    </div>
+    <div class="word-bank"><strong>Word bank:</strong> demarcated from &middot; decoupled from &middot; subsumed in &middot; mediated by &middot; antecedent to &middot; inconsequential to &middot; insensible to &middot; manifest in</div>
+    <div class="feedback" id="fb-fitb34"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek34()">Check Answers</button>
+    <span class="score-tally" id="tally-34"></span>
+  </div>
+  <p class="next-hint" id="next-34" style="display:none;">Next: Week 35 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(1)">Go to Week 35</button></p>
+</div>
+</div>
+
+<!-- WEEK 35 -->
+<div class="panel" id="panel-1">
+<div class="panel-inner">
+  <div class="week-label">Week 35</div>
+  <div class="panel-title">Obstacles &amp; Motives</div>
+  <div class="panel-subtitle">Questions 10&ndash;17 &middot; Multiple Choice</div>
+
+  <!-- Q10 -->
+  <div class="q-card">
+    <div class="q-num">Question 10</div>
+    <div class="q-text">The word <em>stymie</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q10" value="A"> A &nbsp; to reward someone for completing a task</label>
+      <label class="choice-label"><input type="radio" name="q10" value="B"> B &nbsp; to explain something in simple terms</label>
+      <label class="choice-label"><input type="radio" name="q10" value="C"> C &nbsp; to block or frustrate something so that it cannot move forward</label>
+      <label class="choice-label"><input type="radio" name="q10" value="D"> D &nbsp; to speed up a process by removing obstacles</label>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card">
+    <div class="q-num">Question 11</div>
+    <div class="q-text">A city council is criticized for its <em>inertia</em> on the housing crisis. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q11" value="A"> A &nbsp; The council has moved too quickly and recklessly.</label>
+      <label class="choice-label"><input type="radio" name="q11" value="B"> B &nbsp; The council has introduced several bold reforms.</label>
+      <label class="choice-label"><input type="radio" name="q11" value="C"> C &nbsp; The council has spent too much money on new housing.</label>
+      <label class="choice-label"><input type="radio" name="q11" value="D"> D &nbsp; The council has failed to act or make changes.</label>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card">
+    <div class="q-num">Question 12</div>
+    <div class="q-text">Which sentence uses <em>desultory</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q12" value="A"> A &nbsp; The two strangers made desultory conversation, drifting from the weather to sports to traffic without settling on anything.</label>
+      <label class="choice-label"><input type="radio" name="q12" value="B"> B &nbsp; The desultory surgeon followed every step of the procedure with exact precision.</label>
+      <label class="choice-label"><input type="radio" name="q12" value="C"> C &nbsp; The desultory parade marched in tight, orderly rows toward the capital.</label>
+      <label class="choice-label"><input type="radio" name="q12" value="D"> D &nbsp; Her desultory study plan, organized hour by hour for the entire semester, helped her earn top grades.</label>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card">
+    <div class="q-num">Question 13</div>
+    <div class="q-text">A senator is accused of acting out of <em>expediency</em> when she suddenly changed her position on a bill. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q13" value="A"> A &nbsp; She acted out of deep moral conviction.</label>
+      <label class="choice-label"><input type="radio" name="q13" value="B"> B &nbsp; She refused to change her mind despite heavy pressure.</label>
+      <label class="choice-label"><input type="radio" name="q13" value="C"> C &nbsp; She carefully studied the bill for years before deciding.</label>
+      <label class="choice-label"><input type="radio" name="q13" value="D"> D &nbsp; She chose what was convenient or practical rather than what she believed was right.</label>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card">
+    <div class="q-num">Question 14</div>
+    <div class="q-text">Which sentence uses <em>appeasement</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q14" value="A"> A &nbsp; The appeasement of the river caused severe flooding downstream.</label>
+      <label class="choice-label"><input type="radio" name="q14" value="B"> B &nbsp; Her appeasement of the bully took the form of refusing every one of his demands.</label>
+      <label class="choice-label"><input type="radio" name="q14" value="C"> C &nbsp; Critics argued that the policy of appeasement only encouraged the rival nation to make even bolder demands.</label>
+      <label class="choice-label"><input type="radio" name="q14" value="D"> D &nbsp; The general&#x27;s appeasement consisted of launching a surprise attack on the enemy.</label>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card">
+    <div class="q-num">Question 15</div>
+    <div class="q-text">A company offers a signing bonus as an <em>inducement</em> to new hires. What is the bonus meant to do?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q15" value="A"> A &nbsp; Persuade candidates to accept the job.</label>
+      <label class="choice-label"><input type="radio" name="q15" value="B"> B &nbsp; Discourage people from applying.</label>
+      <label class="choice-label"><input type="radio" name="q15" value="C"> C &nbsp; Replace the employees&#x27; regular salary.</label>
+      <label class="choice-label"><input type="radio" name="q15" value="D"> D &nbsp; Punish employees who arrive late.</label>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card">
+    <div class="q-num">Question 16</div>
+    <div class="q-text">The word <em>arcane</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q16" value="A"> A &nbsp; widely known and easily understood by everyone</label>
+      <label class="choice-label"><input type="radio" name="q16" value="B"> B &nbsp; understood by very few; obscure through age or specialization</label>
+      <label class="choice-label"><input type="radio" name="q16" value="C"> C &nbsp; loud, colorful, and attention-grabbing</label>
+      <label class="choice-label"><input type="radio" name="q16" value="D"> D &nbsp; recently invented and very fashionable</label>
+    </div>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card">
+    <div class="q-num">Question 17</div>
+    <div class="q-text">Which pair of words are most nearly <strong>opposite</strong> in meaning?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q17" value="A"> A &nbsp; inducement / incentive</label>
+      <label class="choice-label"><input type="radio" name="q17" value="B"> B &nbsp; stymie / block</label>
+      <label class="choice-label"><input type="radio" name="q17" value="C"> C &nbsp; arcane / obscure</label>
+      <label class="choice-label"><input type="radio" name="q17" value="D"> D &nbsp; surreptitiously / openly</label>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek35()">Check Answers</button>
+    <span class="score-tally" id="tally-35"></span>
+  </div>
+  <p class="next-hint" id="next-35" style="display:none;">Next: Week 36 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(2)">Go to Week 36</button></p>
+</div>
+</div>
+
+<!-- WEEK 36 -->
+<div class="panel" id="panel-2">
+<div class="panel-inner">
+  <div class="week-label">Week 36</div>
+  <div class="panel-title">Abundance &amp; Scarcity</div>
+  <div class="panel-subtitle">Questions 18&ndash;25 &middot; Multiple Choice &amp; Fill in the Blank</div>
+
+  <!-- Q18 -->
+  <div class="q-card">
+    <div class="q-num">Question 18</div>
+    <div class="q-text">A researcher notes a <em>paucity of</em> reliable data on the topic. What does this mean?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q18" value="A"> A &nbsp; The data has been carefully organized into categories.</label>
+      <label class="choice-label"><input type="radio" name="q18" value="B"> B &nbsp; There is far less reliable data than is needed.</label>
+      <label class="choice-label"><input type="radio" name="q18" value="C"> C &nbsp; The data was collected only very recently.</label>
+      <label class="choice-label"><input type="radio" name="q18" value="D"> D &nbsp; There is an overwhelming amount of reliable data.</label>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card">
+    <div class="q-num">Question 19</div>
+    <div class="q-text">The word <em>fecundity</em> most nearly means:</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q19" value="A"> A &nbsp; a sudden and unexpected loss</label>
+      <label class="choice-label"><input type="radio" name="q19" value="B"> B &nbsp; a feeling of deep disappointment</label>
+      <label class="choice-label"><input type="radio" name="q19" value="C"> C &nbsp; the capacity to produce a great deal; fruitfulness</label>
+      <label class="choice-label"><input type="radio" name="q19" value="D"> D &nbsp; a state of complete barrenness and inactivity</label>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card">
+    <div class="q-num">Question 20</div>
+    <div class="q-text">Which sentence uses <em>attrition</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q20" value="A"> A &nbsp; Attrition led the small start-up to hire a hundred new workers in a single month.</label>
+      <label class="choice-label"><input type="radio" name="q20" value="B"> B &nbsp; Through steady attrition, the club&#x27;s membership dropped from two hundred to fewer than fifty over a decade.</label>
+      <label class="choice-label"><input type="radio" name="q20" value="C"> C &nbsp; The garden&#x27;s attrition produced more tomatoes than the family could eat.</label>
+      <label class="choice-label"><input type="radio" name="q20" value="D"> D &nbsp; The sudden attrition of new members doubled the club&#x27;s size overnight.</label>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <!-- Q21 -->
+  <div class="q-card">
+    <div class="q-num">Question 21</div>
+    <div class="q-text">A historian describes the <em>ubiquity</em> of smartphones in modern life. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q21" value="A"> A &nbsp; Smartphones are found nearly everywhere.</label>
+      <label class="choice-label"><input type="radio" name="q21" value="B"> B &nbsp; Smartphones are banned in most public places.</label>
+      <label class="choice-label"><input type="radio" name="q21" value="C"> C &nbsp; Smartphones are rare and expensive.</label>
+      <label class="choice-label"><input type="radio" name="q21" value="D"> D &nbsp; Smartphones are declining in popularity.</label>
+    </div>
+    <div class="feedback" id="fb-q21"></div>
+  </div>
+
+  <div class="section-heading">Questions 22&ndash;25 &middot; Fill in the Blank</div>
+  <div class="section-sub">Choose the best word from the word bank.</div>
+
+  <div class="q-card">
+    <div class="fitb-sentence">
+      22. The jury was persuaded by the
+      <select class="blank-select" id="b36-22">
+        <option value="">Select one</option>
+        <option>fecundity</option>
+        <option>ubiquity</option>
+        <option>preponderance</option>
+        <option>attrition</option>
+        </select>
+      of evidence, which pointed overwhelmingly toward the defendant's guilt.
+    </div>
+    <div class="fitb-sentence">
+      23. Ignoring a small leak will only
+      <select class="blank-select" id="b36-23">
+        <option value="">Select one</option>
+        <option>burgeon</option>
+        <option>compound</option>
+        <option>preponderance</option>
+        <option>ubiquity</option>
+        </select>
+      the problem, turning a simple repair into a costly one.
+    </div>
+    <div class="fitb-sentence">
+      24. After the spring rains, wildflowers began to
+      <select class="blank-select" id="b36-24">
+        <option value="">Select one</option>
+        <option>burgeon</option>
+        <option>attrition</option>
+        <option>paucity of</option>
+        <option>compound</option>
+        </select>
+      across the valley, covering hillsides that had been bare weeks before.
+    </div>
+    <div class="fitb-sentence">
+      25. Visitors were amazed by the
+      <select class="blank-select" id="b36-25">
+        <option value="">Select one</option>
+        <option>profusion of</option>
+        <option>paucity of</option>
+        <option>fecundity</option>
+        <option>ubiquity</option>
+        </select>
+      colorful blooms that filled every corner of the greenhouse.
+    </div>
+    <div class="word-bank"><strong>Word bank:</strong> paucity of &middot; profusion of &middot; preponderance &middot; burgeon &middot; compound &middot; attrition &middot; fecundity &middot; ubiquity</div>
+    <div class="feedback" id="fb-fitb36"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek36()">Check Answers</button>
+    <span class="score-tally" id="tally-36"></span>
+  </div>
+  <p class="next-hint" id="next-36" style="display:none;">Next: Week 37 &rarr; <button class="btn btn-outline" style="margin-left:0.5rem;padding:0.45rem 1rem;" onclick="showTab(3)">Go to Week 37</button></p>
+</div>
+</div>
+
+<!-- WEEK 37 -->
+<div class="panel" id="panel-3">
+<div class="panel-inner">
+  <div class="week-label">Week 37</div>
+  <div class="panel-title">Temperament &amp; Expression</div>
+
+  <div class="section-heading">Questions 26&ndash;30 &middot; Matching</div>
+  <div class="section-sub">Match each word to its definition.</div>
+
+  <div class="q-card">
+    <table class="match-table">
+      <tr><th>Word</th><th></th><th>Definition</th></tr>
+      <tr>
+        <td>dispassionate</td>
+        <td></td>
+        <td><select class="match-select" id="m37-1">
+          <option value="">Select one</option>
+          <option>shortness of expression; saying much in few words</option>
+          <option>not swayed by strong emotion; calm and rational</option>
+          <option>intensely passionate or enthusiastic</option>
+          <option>to stray from the main subject in speech or writing</option>
+          <option>a restrained manner; a tendency to keep thoughts and feelings private</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>ardent</td>
+        <td></td>
+        <td><select class="match-select" id="m37-2">
+          <option value="">Select one</option>
+          <option>intensely passionate or enthusiastic</option>
+          <option>shortness of expression; saying much in few words</option>
+          <option>not swayed by strong emotion; calm and rational</option>
+          <option>to stray from the main subject in speech or writing</option>
+          <option>a restrained manner; a tendency to keep thoughts and feelings private</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>reserve</td>
+        <td></td>
+        <td><select class="match-select" id="m37-3">
+          <option value="">Select one</option>
+          <option>intensely passionate or enthusiastic</option>
+          <option>to stray from the main subject in speech or writing</option>
+          <option>shortness of expression; saying much in few words</option>
+          <option>a restrained manner; a tendency to keep thoughts and feelings private</option>
+          <option>not swayed by strong emotion; calm and rational</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>brevity</td>
+        <td></td>
+        <td><select class="match-select" id="m37-4">
+          <option value="">Select one</option>
+          <option>shortness of expression; saying much in few words</option>
+          <option>not swayed by strong emotion; calm and rational</option>
+          <option>intensely passionate or enthusiastic</option>
+          <option>a restrained manner; a tendency to keep thoughts and feelings private</option>
+          <option>to stray from the main subject in speech or writing</option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>digress</td>
+        <td></td>
+        <td><select class="match-select" id="m37-5">
+          <option value="">Select one</option>
+          <option>a restrained manner; a tendency to keep thoughts and feelings private</option>
+          <option>intensely passionate or enthusiastic</option>
+          <option>to stray from the main subject in speech or writing</option>
+          <option>not swayed by strong emotion; calm and rational</option>
+          <option>shortness of expression; saying much in few words</option>
+          </select></td>
+      </tr>
+    </table>
+    <div class="feedback" id="fb-match37"></div>
+  </div>
+
+  <div class="section-heading">Questions 31&ndash;34 &middot; Multiple Choice</div>
+  <div class="section-sub">Choose the best answer.</div>
+
+  <!-- Q31 -->
+  <div class="q-card">
+    <div class="q-num">Question 31</div>
+    <div class="q-text">Which sentence uses <em>assertive</em> correctly?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q31" value="A"> A &nbsp; The assertive witness refused to make any claim at all.</label>
+      <label class="choice-label"><input type="radio" name="q31" value="B"> B &nbsp; The assertive student never shared her opinions, preferring to agree with whatever others said.</label>
+      <label class="choice-label"><input type="radio" name="q31" value="C"> C &nbsp; In the debate, Maya was assertive, stating her position clearly and defending it against every challenge.</label>
+      <label class="choice-label"><input type="radio" name="q31" value="D"> D &nbsp; Too assertive to speak up, he sat silently through the entire meeting.</label>
+    </div>
+    <div class="feedback" id="fb-q31"></div>
+  </div>
+
+  <!-- Q32 -->
+  <div class="q-card">
+    <div class="q-num">Question 32</div>
+    <div class="q-text">A <em>disinterested</em> judge is assigned to the case. What does this suggest?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q32" value="A"> A &nbsp; The judge is a close friend of the defendant.</label>
+      <label class="choice-label"><input type="radio" name="q32" value="B"> B &nbsp; The judge has a financial interest in the verdict.</label>
+      <label class="choice-label"><input type="radio" name="q32" value="C"> C &nbsp; The judge is bored and does not care about the case.</label>
+      <label class="choice-label"><input type="radio" name="q32" value="D"> D &nbsp; The judge has no personal stake in the outcome and can rule impartially.</label>
+    </div>
+    <div class="feedback" id="fb-q32"></div>
+  </div>
+
+  <!-- Q33 -->
+  <div class="q-card">
+    <div class="q-num">Question 33</div>
+    <div class="q-text">Many residents were <em>apathetic</em> about the local election. What does this mean?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q33" value="A"> A &nbsp; They were furious about the results.</label>
+      <label class="choice-label"><input type="radio" name="q33" value="B"> B &nbsp; They showed no interest, enthusiasm, or concern about it.</label>
+      <label class="choice-label"><input type="radio" name="q33" value="C"> C &nbsp; They were passionately involved in the campaigns.</label>
+      <label class="choice-label"><input type="radio" name="q33" value="D"> D &nbsp; They had no personal stake and judged the candidates fairly.</label>
+    </div>
+    <div class="feedback" id="fb-q33"></div>
+  </div>
+
+  <!-- Q34 -->
+  <div class="q-card">
+    <div class="q-num">Question 34</div>
+    <div class="q-text">Which pair of words are most nearly <strong>opposite</strong> in meaning?</div>
+    <div class="choices">
+      <label class="choice-label"><input type="radio" name="q34" value="A"> A &nbsp; dispassionate / ardent</label>
+      <label class="choice-label"><input type="radio" name="q34" value="B"> B &nbsp; brevity / reserve</label>
+      <label class="choice-label"><input type="radio" name="q34" value="C"> C &nbsp; digress / assertive</label>
+      <label class="choice-label"><input type="radio" name="q34" value="D"> D &nbsp; disinterested / apathetic</label>
+    </div>
+    <div class="feedback" id="fb-q34"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="checkWeek37()">Check Answers</button>
+    <span class="score-tally" id="tally-37"></span>
+  </div>
+
+  <hr class="divider">
+
+  <div style="text-align:center;">
+    <div style="font-family:'DM Serif Display',serif;font-size:1.25rem;margin-bottom:0.5rem;">All done!</div>
+    <p style="font-size:0.9rem;color:var(--muted);margin-bottom:1.25rem;">Great work reviewing September's vocabulary. Click below to see your final score.</p>
+    <button class="btn btn-primary" style="font-size:1rem;padding:0.85rem 2rem;" onclick="showFinalScore()">See My Results</button>
+  </div>
+
+  <div id="score-panel">
+    <div class="score-num" id="final-score-num"></div>
+    <div class="score-label" id="final-score-label"></div>
+    <div class="score-msg" id="final-score-msg"></div>
+    <div style="margin-top:1.5rem;">
+      <button class="btn btn-outline" onclick="resetAll()">&#8635; Start Over</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+// Tab switching
+function showTab(i) {
+  document.querySelectorAll('.panel').forEach((p,idx)=>{
+    p.classList.toggle('active', idx===i);
+  });
+  document.querySelectorAll('.tab-nav button').forEach((b,idx)=>{
+    b.classList.toggle('active', idx===i);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Score tracking
+const scores = { w34:null, w35:null, w36:null, w37:null };
+
+function gradeMC(answers, explain){
+  let correct=0;
+  Object.keys(answers).forEach(q=>{
+    const sel=document.querySelector(`input[name="${q}"]:checked`);
+    const fb=document.getElementById(`fb-${q}`);
+    document.querySelectorAll(`input[name="${q}"]`).forEach(r=>r.parentElement.classList.remove('correct-choice','wrong-choice'));
+    if(sel){
+      if(sel.value===answers[q]){ sel.parentElement.classList.add('correct-choice'); fb.className='feedback correct'; fb.textContent='✓ Correct! '+explain[q]; correct++; }
+      else { sel.parentElement.classList.add('wrong-choice'); document.querySelector(`input[name="${q}"][value="${answers[q]}"]`).parentElement.classList.add('correct-choice'); fb.className='feedback incorrect'; fb.textContent='✗ Not quite. '+explain[q]; }
+    } else { fb.className='feedback incorrect'; fb.textContent='Please select an answer. '+explain[q]; }
+  });
+  return correct;
+}
+
+function gradeSelects(answers, fbId, okMsg, badMsg){
+  let correct=0, ok=true;
+  Object.keys(answers).forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('correct-sel','wrong-sel');
+    if(el.value===answers[id]){ el.classList.add('correct-sel'); correct++; }
+    else { el.classList.add('wrong-sel'); ok=false; }
+  });
+  const fb=document.getElementById(fbId);
+  fb.className=ok?'feedback correct':'feedback incorrect';
+  fb.textContent=ok?okMsg:badMsg;
+  return correct;
+}
+
+function finishWeek(w, correct, total, hasNext){
+  scores['w'+w]=correct;
+  const t=document.getElementById('tally-'+w);
+  t.textContent=`${correct}/${total}`;
+  t.classList.add('visible');
+  if(hasNext) document.getElementById('next-'+w).style.display='block';
+}
+
+// --- WEEK 34 ---
+const m34Answers = {"m34-1": "separated or distinguished from by a clear boundary or difference", "m34-2": "separated from; made independent of something previously connected to it", "m34-3": "included or absorbed within a larger category, group, or idea", "m34-4": "existing or occurring before something else", "m34-5": "unaware of, unresponsive to, or unaffected by"};
+const b34Answers = {"b34-6": "mediated by", "b34-7": "inconsequential to", "b34-8": "manifest in", "b34-9": "decoupled from"};
+function checkWeek34() {
+  let c = gradeSelects(m34Answers, 'fb-match34', '✓ All matching answers correct!', '✗ Check the highlighted selections. Review the definitions and try again.');
+  c += gradeSelects(b34Answers, 'fb-fitb34', '✓ All fill-in-the-blank answers correct!', '✗ Some answers need another look. Correct: 6-mediated by, 7-inconsequential to, 8-manifest in, 9-decoupled from.');
+  finishWeek(34, c, 9, true);
+}
+
+// --- WEEK 35 ---
+const w35Answers = {"q10": "C", "q11": "D", "q12": "A", "q13": "D", "q14": "C", "q15": "A", "q16": "B", "q17": "D"};
+const w35Explain = {"q10": "Stymie means to block or frustrate something so that it cannot move forward.", "q11": "Inertia is the tendency to stay as things are, a failure to act or change.", "q12": "Desultory means moving from one thing to another without plan, order, or method, which fits a conversation that drifts between topics, not a carefully organized plan, a precise procedure, or orderly rows.", "q13": "Expediency is the quality of being convenient or practical, sometimes at the expense of principle or thoroughness.", "q14": "Appeasement is the act of giving in to demands in order to avoid conflict, which fits a policy that gives in to a rival nation, not an attack or a refusal of demands.", "q15": "An inducement is something offered to persuade a person to act.", "q16": "Arcane means understood by very few; obscure through age or specialization.", "q17": "Surreptitiously means done secretly, in a way meant to escape notice, so its opposite is openly. The other pairs are near-synonyms, not opposites."};
+function checkWeek35() {
+  finishWeek(35, gradeMC(w35Answers, w35Explain), 8, true);
+}
+
+// --- WEEK 36 ---
+const w36MC = {"q18": "B", "q19": "C", "q20": "B", "q21": "A"};
+const w36Explain = {"q18": "A paucity of something is a scarcity of it, far less than is needed.", "q19": "Fecundity is the capacity to produce a great deal; fruitfulness.", "q20": "Attrition is a gradual reduction in number or strength over time, which fits a membership that slowly shrinks, not one that doubles, hires, or produces more.", "q21": "Ubiquity is the state of being found everywhere; presence throughout."};
+const b36Answers = {"b36-22": "preponderance", "b36-23": "compound", "b36-24": "burgeon", "b36-25": "profusion of"};
+function checkWeek36() {
+  let c = gradeMC(w36MC, w36Explain);
+  c += gradeSelects(b36Answers, 'fb-fitb36', '✓ All fill-in-the-blank answers correct!', '✗ Correct answers: 22-preponderance, 23-compound, 24-burgeon, 25-profusion of.');
+  finishWeek(36, c, 8, true);
+}
+
+// --- WEEK 37 ---
+const m37Answers = {"m37-1": "not swayed by strong emotion; calm and rational", "m37-2": "intensely passionate or enthusiastic", "m37-3": "a restrained manner; a tendency to keep thoughts and feelings private", "m37-4": "shortness of expression; saying much in few words", "m37-5": "to stray from the main subject in speech or writing"};
+const w37MC = {"q31": "C", "q32": "D", "q33": "B", "q34": "A"};
+const w37Explain = {"q31": "Assertive means confident and forceful in stating one's views or claims, which fits someone who states and defends a position, not someone who stays silent or avoids making claims.", "q32": "Disinterested means having no personal stake; impartial and unbiased. It does not mean bored or uninterested; that meaning belongs to apathetic.", "q33": "Apathetic means showing no interest, enthusiasm, or concern. Having no personal stake and judging fairly describes disinterested, not apathetic.", "q34": "Dispassionate means not swayed by strong emotion, calm and rational, while ardent means intensely passionate or enthusiastic, so the two are nearly opposite. Disinterested and apathetic are often confused, but they are not opposites."};
+function checkWeek37() {
+  let c = gradeSelects(m37Answers, 'fb-match37', '✓ All matching answers correct!', '✗ Check the highlighted selections and review the definitions.');
+  c += gradeMC(w37MC, w37Explain);
+  finishWeek(37, c, 9, false);
+}
+
+// Final score
+function showFinalScore() {
+  const maxes = { w34:9, w35:8, w36:8, w37:9 };
+  let total=0, earned=0;
+  Object.keys(maxes).forEach(k=>{ total+=maxes[k]; if(scores[k]!==null) earned+=scores[k]; });
+  const pct = Math.round((earned/total)*100);
+  document.getElementById('final-score-num').textContent=`${earned}/${total}`;
+  document.getElementById('final-score-label').textContent=`${pct}% · September Vocabulary`;
+  const msgs = [
+    [90,'Outstanding! You have a strong command of all four weeks.'],
+    [75,'Great work! A few more passes on the trickier sets will get you there.'],
+    [60,'Solid effort. Focus on the sections where you lost points and review the definitions.'],
+    [0,'Keep reviewing! Go back through the words you missed and try the week checks again.']
+  ];
+  document.getElementById('final-score-msg').textContent = msgs.find(([t])=>pct>=t)[1];
+  const panel=document.getElementById('score-panel');
+  panel.classList.add('active');
+  panel.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetAll() {
+  Object.keys(scores).forEach(k=>scores[k]=null);
+  document.querySelectorAll('input[type=radio]').forEach(r=>{ r.checked=false; r.parentElement.classList.remove('correct-choice','wrong-choice'); });
+  document.querySelectorAll('select').forEach(s=>{ s.selectedIndex=0; s.classList.remove('correct-sel','wrong-sel'); });
+  document.querySelectorAll('.feedback').forEach(f=>{ f.className='feedback'; f.textContent=''; });
+  document.querySelectorAll('.score-tally').forEach(t=>{ t.textContent=''; t.classList.remove('visible'); });
+  document.querySelectorAll('.next-hint').forEach(n=>n.style.display='none');
+  document.getElementById('score-panel').classList.remove('active');
+  showTab(0);
+}
+</script>
+<footer style="text-align:center;padding:1.5rem 1rem 2rem;font-size:0.78rem;color:#a09880;border-top:1px solid #e4ddd3;">
+  This review was created with the assistance of AI and reviewed by Monica Winkler.
+</footer>
+</body>
+</html>
